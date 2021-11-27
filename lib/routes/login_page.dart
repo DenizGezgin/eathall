@@ -73,207 +73,209 @@ class _LoginState extends State<Login> {
         padding: const EdgeInsets.all(8.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+          child: SingleChildScrollView(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
 
 
-              Image.asset('assets/images/appLogo_login.jpg',
-                width: MediaQuery.of(context).size.width/2.2,
-              ),
+                Image.asset('assets/images/appLogo_login.jpg',
+                  width: MediaQuery.of(context).size.width/2.2,
+                ),
 
-              Text("Eathall", style: TextStyle(
-                fontFamily: 'Sansita_Swashed',
-                color: Colors.white,
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
-                letterSpacing: -0.7,
-              ),
-              ),
-              SizedBox(height: 50,),
-              /*Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    child:
-                      Image.asset(
-                          'assets/images/appLogo_login.jpg',
-                      fit: BoxFit.contain),
-                    width: 150,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("EatHall",
-                  style: mainTitleTextStyle,)
-                ],
-              ),*/
-              Row( //MAIL FIELD
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                      fillColor: AppColors.background,
-                      filled: true,
-                      hintText: 'E-mail',
-                      errorStyle: loginErrorStyle,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: AppColors.primary,
-                        ),
+                Text("Eathall", style: TextStyle(
+                  fontFamily: 'Sansita_Swashed',
+                  color: Colors.white,
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -0.7,
+                ),
+                ),
+                SizedBox(height: 50,),
+                /*Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child:
+                          Image.asset(
+                              'assets/images/appLogo_login.jpg',
+                          fit: BoxFit.contain),
+                        width: 150,
                       ),
-                    ),
-                      keyboardType: TextInputType.emailAddress,
-
-                      validator: (value) {
-                        if(value == null) {
-                          return 'E-mail field cannot be empty';
-                        } else {
-                          String trimmedValue = value.trim();
-                          if(trimmedValue.isEmpty) {
-                            return 'E-mail field cannot be empty';
-                          }
-                          if(!EmailValidator.validate(trimmedValue)) {
-                            return 'Please enter a valid email';
-                          }
-                        }
-                        return null;
-                      },
-
-                      onSaved: (value) {
-                        if(value != null) {
-                          mail = value;
-                        }
-                      },
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(height: 16,),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        fillColor: AppColors.background,
-                        filled: true,
-                        hintText: 'Password',
-                        errorStyle: loginErrorStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.text,
-                      //text from field passwords
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-
-                      validator: (value) {
-                        if(value == null) {
-                          return 'Password field cannot be empty';
-                        } else {
-                          String trimmedValue = value.trim();
-                          if(trimmedValue.isEmpty) {
-                            return 'Password field cannot be empty';
-                          }
-                          if(trimmedValue.length < 8) {
-                            return 'Password must be at least 8 characters long';
-                          }
-                        }
-                        return null;
-                      },
-
-                      onSaved: (value) {
-                        if(value != null) {
-                          pass = value;
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16,),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        if(_formKey.currentState!.validate()) {
-                          print('Mail: '+mail+"\nPass: "+pass);
-                          _formKey.currentState!.save();
-                          print('Mail: '+mail+"\nPass: "+pass);
-                          //getUser();
-                        }
-                        else{
-                          setState(() {
-                            showAlertDialog("Invalid Login Info", "Please check mail and password fields and try again.");
-                          });
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: Text("Login",
-                          style: loginButtonTextStyle,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 40,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                            child: Divider(
-                              color: Colors.black26,
-                                thickness: 1.2,
-                            )
+                    children: [
+                      Text("EatHall",
+                      style: mainTitleTextStyle,)
+                    ],
+                  ),*/
+                Row( //MAIL FIELD
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          fillColor: AppColors.background,
+                          filled: true,
+                          hintText: 'E-mail',
+                          errorStyle: loginErrorStyle,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.primary,
+                            ),
+                          ),
                         ),
+                        keyboardType: TextInputType.emailAddress,
 
-                        Text("  Or  ",
-                          style: loginSignupOrContinueSmallTextStyleBlack,),
-                        Expanded(
-                            child: Divider(
-                              color: Colors.black26,
-                              thickness: 1.2,
-                            )
+                        validator: (value) {
+                          if(value == null) {
+                            return 'E-mail field cannot be empty';
+                          } else {
+                            String trimmedValue = value.trim();
+                            if(trimmedValue.isEmpty) {
+                              return 'E-mail field cannot be empty';
+                            }
+                            if(!EmailValidator.validate(trimmedValue)) {
+                              return 'Please enter a valid email';
+                            }
+                          }
+                          return null;
+                        },
+
+                        onSaved: (value) {
+                          if(value != null) {
+                            mail = value;
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          fillColor: AppColors.background,
+                          filled: true,
+                          hintText: 'Password',
+                          errorStyle: loginErrorStyle,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.primary,
+                            ),
+                          ),
                         ),
-                      ]
-                  ),
-                  SizedBox(height: 16,),
-                  SignInButton(
-                    Buttons.Google,
-                    onPressed: () {},
-                  ),
-                  SizedBox(height: 16,),
-                  SignInButton(
-                    Buttons.FacebookNew,
-                    onPressed: () {},
-                  )
-                ],
-              )
-            ],
+                        keyboardType: TextInputType.text,
+                        //text from field passwords
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+
+                        validator: (value) {
+                          if(value == null) {
+                            return 'Password field cannot be empty';
+                          } else {
+                            String trimmedValue = value.trim();
+                            if(trimmedValue.isEmpty) {
+                              return 'Password field cannot be empty';
+                            }
+                            if(trimmedValue.length < 8) {
+                              return 'Password must be at least 8 characters long';
+                            }
+                          }
+                          return null;
+                        },
+
+                        onSaved: (value) {
+                          if(value != null) {
+                            pass = value;
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16,),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()) {
+                            print('Mail: '+mail+"\nPass: "+pass);
+                            _formKey.currentState!.save();
+                            print('Mail: '+mail+"\nPass: "+pass);
+                            //getUser();
+                          }
+                          else{
+                            setState(() {
+                              showAlertDialog("Invalid Login Info", "Please check mail and password fields and try again.");
+                            });
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          child: Text("Login",
+                            style: loginButtonTextStyle,
+                          ),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: AppColors.secondary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 40,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: Divider(
+                                color: Colors.black26,
+                                thickness: 1.2,
+                              )
+                          ),
+
+                          Text("  Or  ",
+                            style: loginSignupOrContinueSmallTextStyleBlack,),
+                          Expanded(
+                              child: Divider(
+                                color: Colors.black26,
+                                thickness: 1.2,
+                              )
+                          ),
+                        ]
+                    ),
+                    SizedBox(height: 16,),
+                    SignInButton(
+                      Buttons.Google,
+                      onPressed: () {},
+                    ),
+                    SizedBox(height: 16,),
+                    SignInButton(
+                      Buttons.FacebookNew,
+                      onPressed: () {},
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
