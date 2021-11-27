@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '/routes/login_page.dart';
+import '/routes/welcome_page.dart';
+import '/routes/signup_page.dart';
 
 
 void main() {
@@ -7,9 +9,9 @@ void main() {
     //home: Welcome(),
     //initialRoute: '/login',
     routes: {
-      '/': (context) => Login(),
+      '/': (context) => Welcome(),
       '/login': (context) => Login(),
-      '/signup': (context) => Login(),
+      '/signup': (context) => Signup(),
     },
   ));
 }

@@ -77,7 +77,21 @@ class _LoginState extends State<Login> {
             //mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 24,),
+
+
+              Image.asset('assets/images/appLogo_login.jpg',
+                width: MediaQuery.of(context).size.width/2.2,
+              ),
+
+              Text("Eathall", style: TextStyle(
+                fontFamily: 'Sansita_Swashed',
+                color: Colors.white,
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -0.7,
+              ),
+              ),
+              SizedBox(height: 50,),
               /*Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -222,7 +236,7 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
-              SizedBox(height: 150,),
+              SizedBox(height: 40,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
