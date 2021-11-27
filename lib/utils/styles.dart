@@ -23,7 +23,7 @@ final mainTitleTextStyle = TextStyle(
 );
 
 final loginButtonTextStyle = TextStyle(
-  color: Colors.black,
+  color: Colors.white,
   fontSize: 14,
   fontWeight: FontWeight.normal,
   letterSpacing: -0.7,
@@ -36,6 +36,13 @@ final loginSignupOrContinueSmallTextStyle = TextStyle(
   letterSpacing: -0.7,
 );
 
+final loginSignupOrContinueSmallTextStyleBlack = TextStyle(
+  color: Colors.black,
+  fontSize: 14,
+  fontWeight: FontWeight.normal,
+  letterSpacing: -0.7,
+);
+
 final smallTitleBlackTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 18,
@@ -43,6 +50,15 @@ final smallTitleBlackTextStyle = TextStyle(
   letterSpacing: -0.7,
   
 );
+
+final loginErrorStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 14,
+  fontWeight: FontWeight.normal,
+  letterSpacing: -0.7,
+
+);
+
 
 final pageTitleBlackTextStyle = TextStyle(
   color: Colors.black,

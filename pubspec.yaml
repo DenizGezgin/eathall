@@ -45,12 +45,18 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  email_validator: ^2.0.1
+  flutter_signin_button: ^2.0.0
+  font_awesome_flutter: ^9.2.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/images/
   fonts:
     - family: Sansita_Swashed
       fonts:
