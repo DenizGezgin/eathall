@@ -7,6 +7,8 @@ import '/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class Login extends StatefulWidget {
@@ -21,8 +23,15 @@ class Login extends StatefulWidget {
   String pass = "";
 
 
+
+
+
 class _LoginState extends State<Login> {
+
+
+
   @override
+
   Widget build(BuildContext context) {
     Future<void> showAlertDialog(String title, String message) async {
       return showDialog(context: context,
@@ -273,6 +282,7 @@ class _LoginState extends State<Login> {
                       onPressed: () {},
                     )
                   ],
+
                 )
               ],
             ),

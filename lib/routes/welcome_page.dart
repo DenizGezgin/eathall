@@ -1,5 +1,7 @@
 import 'dart:io' show Platform;
 
+import 'package:cs310_step3/routes/login_page.dart';
+import 'package:cs310_step3/routes/signup_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '/utils/color.dart';
@@ -53,8 +55,10 @@ class Welcome extends StatelessWidget {
                     flex: 1,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/login');
-
+                        //Navigator.pushNamed(context, '/login');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()),);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical:12.0),
@@ -80,7 +84,11 @@ class Welcome extends StatelessWidget {
                   flex: 1,
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      //Navigator.pushNamed(context, '/signup');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Signup()),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical:12.0),
