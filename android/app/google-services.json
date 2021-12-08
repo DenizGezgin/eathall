@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520079782631",
+    "project_id": "eathall-ea871",
+    "storage_bucket": "eathall-ea871.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520079782631:android:5dcf5513fa9e8aa8f7e842",
+        "android_client_info": {
+          "package_name": "com.example.cs310_step3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520079782631-abm19n2bhhqrq2chkqmobu17hbvqtjfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_tuVr4rm_kItlhSJB5QjMrZrQ_wFBGZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520079782631-abm19n2bhhqrq2chkqmobu17hbvqtjfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
