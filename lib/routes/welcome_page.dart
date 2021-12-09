@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:cs310_step3/routes/login_page.dart';
 import 'package:cs310_step3/routes/signup_page.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '/utils/color.dart';
@@ -10,8 +11,28 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Welcome extends StatelessWidget {
-  const Welcome({Key? key}) : super(key: key);
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:cs310_step3/services/analytics.dart';
+
+class Welcome extends StatefulWidget {
+  const Welcome({Key? key,required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+
+  @override
+  State<Welcome> createState() => _WelcomeState();
+}
+
+class _WelcomeState extends State<Welcome> {
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => setCurrentScreen(widget.analytics, 'Welcome Page', 'welcome_page.dart'));
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +79,7 @@ class Welcome extends StatelessWidget {
                         //Navigator.pushNamed(context, '/login');
                         Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Login()),);
+                            MaterialPageRoute(builder: (context) => Login(analytics: widget.analytics, observer: widget.observer)),);
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical:12.0),
@@ -87,7 +108,7 @@ class Welcome extends StatelessWidget {
                       //Navigator.pushNamed(context, '/signup');
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Signup()),
+                        MaterialPageRoute(builder: (context) => Signup(analytics: widget.analytics, observer: widget.observer)),
                       );
                     },
                     child: Padding(

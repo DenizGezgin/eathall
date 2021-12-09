@@ -14,10 +14,18 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 
 void main() {
   runApp(_FirebaseAppState());
 }
+
+
+
 
 class MyApp extends StatefulWidget {
   @override
@@ -32,6 +40,9 @@ class MyAppState extends State<MyApp> {
 
   bool isLoggedIn = false;
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
   MyAppState() {
     MySharedPreferences.instance
         .getBooleanValue("isfirstRun")
@@ -43,7 +54,8 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-      home: isLoggedIn ? Welcome() : WalkThrough(),
+        navigatorObservers: <NavigatorObserver>[observer],
+      home: isLoggedIn ? Welcome(analytics: analytics, observer: observer) : WalkThrough(analytics: analytics, observer: observer),
       //initialRoute:
 
     );

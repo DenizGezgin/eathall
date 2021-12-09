@@ -1,6 +1,9 @@
 import 'dart:io' show Platform;
 
 import 'package:cs310_step3/routes/welcome_page.dart';
+import 'package:cs310_step3/services/analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +29,25 @@ class MySharedPreferences {
 }
 
 class WalkThrough extends StatefulWidget {
-  const WalkThrough({Key? key}) : super(key: key);
+  const WalkThrough({Key? key, required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
   _WalkThroughState createState() => _WalkThroughState();
 }
 
 class _WalkThroughState extends State<WalkThrough> {
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => setCurrentScreen(widget.analytics, 'Walkthrough Page', 'walkthrough.dart'));
+  }
 
 
 
@@ -91,7 +106,7 @@ class _WalkThroughState extends State<WalkThrough> {
     //Navigator.pop(context);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Welcome()),);
+      MaterialPageRoute(builder: (context) => Welcome(analytics: analytics, observer: observer)),);
     MySharedPreferences.instance.setBooleanValue("isfirstRun", true);
     MySharedPreferences.instance.setBooleanValue("loggedin", true);
   }

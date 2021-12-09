@@ -1,5 +1,9 @@
 import 'dart:io' show Platform;
 
+import 'package:cs310_step3/services/analytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '/utils/color.dart';
@@ -11,8 +15,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
+
+
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({Key? key,required this.analytics, required this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   @override
   _LoginState createState() => _LoginState();
@@ -28,7 +37,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => setCurrentScreen(widget.analytics, 'Login Page', 'login_page.dart'));
+  }
 
   @override
 
