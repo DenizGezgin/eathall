@@ -33,15 +33,49 @@ class _FeedViewState extends State<FeedView> {
           icon: Icon(Icons.logout),
         ),
       ),
-      body: Center(
-        child: Text(
-          'FEED VIEW',
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w900,
-            color: Colors.black,
+      body: Scaffold(
+        bottomNavigationBar:
+          BottomNavigationBar(
+
+            type: BottomNavigationBarType.fixed,
+            iconSize: 35,
+            fixedColor: Colors.black,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.view_headline),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_box),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+            ],
           ),
-        ),
+
+
+
       ),
     );
   }
