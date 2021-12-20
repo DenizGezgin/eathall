@@ -36,37 +36,38 @@ class _FeedViewState extends State<FeedView> {
       body: Scaffold(
         bottomNavigationBar:
           BottomNavigationBar(
-
+            backgroundColor: AppColors.primary,
             type: BottomNavigationBarType.fixed,
             iconSize: 35,
             fixedColor: Colors.black,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.view_headline),
+                icon: Icon(Icons.view_headline, color: Colors.white),
+
                 title: SizedBox(
                   height: 0,
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.search),
+                icon: Icon(Icons.search, color: Colors.white,),
                 title: SizedBox(
                   height: 0,
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.add_box),
+                icon: Icon(Icons.add_box, color: Colors.white, ),
                 title: SizedBox(
                   height: 0,
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
+                icon: Icon(Icons.favorite, color: Colors.white,),
                 title: SizedBox(
                   height: 0,
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.person, color: Colors.white,),
                 title: SizedBox(
                   height: 0,
                 ),
