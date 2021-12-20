@@ -1,11 +1,15 @@
 import 'dart:io' show Platform;
 
 import 'package:cs310_step3/services/analytics.dart';
+import 'package:cs310_step3/services/authentication_file.dart';
+import 'package:cs310_step3/utils/dimension.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
@@ -13,13 +17,12 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
+import 'feedView.dart';
 
 
 class Login extends StatefulWidget {
-  const Login({Key? key,required this.analytics, required this.observer}) : super(key: key);
-
+  Login({Key? key,required this.analytics, required this.observer}) : super(key: key);
+  final formKey = GlobalKey<FormState>();
   final FirebaseAnalytics analytics;
   final FirebaseAnalyticsObserver observer;
 
@@ -27,13 +30,10 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
   bool isIOS = Platform.isIOS;
-  final _formKey = GlobalKey<FormState>();
   String mail = "";
   String pass = "";
 
-
-
-
+  AuthService auth = AuthService();
 
 class _LoginState extends State<Login> {
 
@@ -46,6 +46,8 @@ class _LoginState extends State<Login> {
   @override
 
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
     Future<void> showAlertDialog(String title, String message) async {
       return showDialog(context: context,
           barrierDismissible: false, //must take action
@@ -81,7 +83,7 @@ class _LoginState extends State<Login> {
           }
       );
     }
-
+  if(user == null) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.primary,
@@ -94,16 +96,20 @@ class _LoginState extends State<Login> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
-          key: _formKey,
+          key: widget.formKey,
           child: SingleChildScrollView(
             child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
+
+
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
 
                 Image.asset('assets/images/appLogo_login.jpg',
-                  width: MediaQuery.of(context).size.width/2.2,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 2.2,
                 ),
 
                 Text("Eathall", style: TextStyle(
@@ -115,26 +121,6 @@ class _LoginState extends State<Login> {
                 ),
                 ),
                 SizedBox(height: 50,),
-                /*Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        child:
-                          Image.asset(
-                              'assets/images/appLogo_login.jpg',
-                          fit: BoxFit.contain),
-                        width: 150,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("EatHall",
-                      style: mainTitleTextStyle,)
-                    ],
-                  ),*/
                 Row( //MAIL FIELD
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -155,14 +141,14 @@ class _LoginState extends State<Login> {
                         keyboardType: TextInputType.emailAddress,
 
                         validator: (value) {
-                          if(value == null) {
+                          if (value == null) {
                             return 'E-mail field cannot be empty';
                           } else {
                             String trimmedValue = value.trim();
-                            if(trimmedValue.isEmpty) {
+                            if (trimmedValue.isEmpty) {
                               return 'E-mail field cannot be empty';
                             }
-                            if(!EmailValidator.validate(trimmedValue)) {
+                            if (!EmailValidator.validate(trimmedValue)) {
                               return 'Please enter a valid email';
                             }
                           }
@@ -170,7 +156,7 @@ class _LoginState extends State<Login> {
                         },
 
                         onSaved: (value) {
-                          if(value != null) {
+                          if (value != null) {
                             mail = value;
                           }
                         },
@@ -203,14 +189,14 @@ class _LoginState extends State<Login> {
                         autocorrect: false,
 
                         validator: (value) {
-                          if(value == null) {
+                          if (value == null) {
                             return 'Password field cannot be empty';
                           } else {
                             String trimmedValue = value.trim();
-                            if(trimmedValue.isEmpty) {
+                            if (trimmedValue.isEmpty) {
                               return 'Password field cannot be empty';
                             }
-                            if(trimmedValue.length < 8) {
+                            if (trimmedValue.length < 8) {
                               return 'Password must be at least 8 characters long';
                             }
                           }
@@ -218,7 +204,7 @@ class _LoginState extends State<Login> {
                         },
 
                         onSaved: (value) {
-                          if(value != null) {
+                          if (value != null) {
                             pass = value;
                           }
                         },
@@ -233,16 +219,33 @@ class _LoginState extends State<Login> {
                     Expanded(
                       flex: 1,
                       child: OutlinedButton(
-                        onPressed: () {
-                          if(_formKey.currentState!.validate()) {
-                            print('Mail: '+mail+"\nPass: "+pass);
-                            _formKey.currentState!.save();
-                            print('Mail: '+mail+"\nPass: "+pass);
+                        onPressed: () async {
+                          if (widget.formKey.currentState!.validate()) {
+                            print('Mail: ' + mail + "\nPass: " + pass);
+                            widget.formKey.currentState!.save();
+                            print('Mail: ' + mail + "\nPass: " + pass);
                             //getUser();
+
+                            try {
+                              User? u = await auth.loginWithMailAndPass(mail, pass);
+                              if(u == null){
+                                setState(() {
+                                  showAlertDialog("Invalid Login Info",
+                                      "Please sign up first!");
+                                });
+                              }
+
+                            } catch(e) {
+                              setState(() {
+                                showAlertDialog("Invalid Login Info",
+                                    "Please sign up first!");
+                              });
+                            }
                           }
-                          else{
+                          else {
                             setState(() {
-                              showAlertDialog("Invalid Login Info", "Please check mail and password fields and try again.");
+                              showAlertDialog("Invalid Login Info",
+                                  "Please check mail and password fields and try again.");
                             });
                           }
                         },
@@ -287,13 +290,12 @@ class _LoginState extends State<Login> {
                     SizedBox(height: 16,),
                     SignInButton(
                       Buttons.Google,
-                      onPressed: () {},
+                      onPressed: () {
+                        //////////////////////////////////
+                        auth.signInWithGoogle();
+                      },
                     ),
                     SizedBox(height: 16,),
-                    SignInButton(
-                      Buttons.FacebookNew,
-                      onPressed: () {},
-                    )
                   ],
 
                 )
@@ -304,4 +306,214 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+  else{
+    return FeedView();
+  }
+  }
+
 }
+
+/*
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+
+  String _message = '';
+  int attemptCount = 0;
+  String mail = '';
+  String pass = '';
+  final _formKey = GlobalKey<FormState>();
+
+  AuthService auth = AuthService();
+
+
+  void setmessage(String msg) {
+    setState(() {
+      _message = msg;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
+    if(user == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'LOGIN',
+            style: loginButtonTextStyle,
+          ),
+          backgroundColor: AppColors.primary,
+          centerTitle: true,
+          elevation: 0.0,
+        ),
+        body: Padding(
+          padding: Dimensions.regularPadding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              fillColor: AppColors.secondary,
+                              filled: true,
+                              hintText: 'E-mail',
+                              //labelText: 'Username',
+                              labelStyle: loginSignupOrContinueSmallTextStyleBlack,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.primary),
+                                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                              ),
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+
+                            validator: (value) {
+                              if(value != null) {
+                                if(value.isEmpty) {
+                                  return 'Please enter your e-mail';
+                                }
+                                if(!EmailValidator.validate(value)) {
+                                  return 'The e-mail address is not valid';
+                                }
+                              }
+                              else {
+                                return 'Please enter your e-mail';
+                              }
+                              return null;
+                            },
+                            onSaved: (String? value) {
+                              if(value != null) {
+                                mail = value;
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 16.0,),
+
+
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              fillColor: AppColors.secondary,
+                              filled: true,
+                              hintText: 'Password',
+                              //labelText: 'Username',
+                              labelStyle: loginSignupOrContinueSmallTextStyleBlack,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: AppColors.primary),
+                                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                              ),
+                            ),
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
+
+                            validator: (value) {
+                              if(value != null) {
+                                if(value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                if(value.length < 8) {
+                                  return 'Password must be at least 8 characters';
+                                }
+                              }
+                              else {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                            onSaved: (String? value) {
+                              pass = value ?? '';
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 16,),
+
+
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: OutlinedButton(
+                            onPressed: () {
+
+                              if(_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+
+                                //showAlertDialog("Action", 'Button clicked');
+
+
+                                auth.loginWithMailAndPass(mail, pass);
+
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(content: Text('Logging in')));
+                              }
+
+                            },
+
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 12.0),
+                              child: Text(
+                                'Login',
+                                style: loginSignupOrContinueSmallTextStyleBlack,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Text(
+                      _message,
+                      style: TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+
+            ],
+          ),
+        ),
+      );
+    } else {
+      return FeedView();
+    }
+
+
+  }
+}
+*/

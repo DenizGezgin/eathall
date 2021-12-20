@@ -1,6 +1,11 @@
 
+import 'package:cs310_step3/routes/feedView.dart';
+import 'package:cs310_step3/services/authentication_file.dart';
 import 'package:cs310_step3/utils/color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import '/routes/login_page.dart';
 import '/routes/welcome_page.dart';
 import '/routes/signup_page.dart';
@@ -20,12 +25,13 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 
-void main() {
-  runApp(_FirebaseAppState());
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  BlocOverrides.runZoned(
+        () => runApp(_FirebaseAppState()),
+  );
 }
-
-
-
 
 class MyApp extends StatefulWidget {
   @override
@@ -52,12 +58,23 @@ class MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorObservers: <NavigatorObserver>[observer],
-      home: isLoggedIn ? Welcome(analytics: analytics, observer: observer) : WalkThrough(analytics: analytics, observer: observer),
-      //initialRoute:
+    return StreamProvider<User?>.value(
+      value: AuthService().user,
+      initialData: null,
+      child: MaterialApp(
+        routes: {
+          "/feedView": (context) => FeedView(),
+          "/logPage": (context) => Login(observer: observer, analytics: analytics),
+          "/signupPage": (context) => Signup(observer: observer, analytics: analytics),
+          "/Welcome": (context) => Welcome(observer: observer, analytics: analytics),
 
+        },
+          debugShowCheckedModeBanner: false,
+          navigatorObservers: <NavigatorObserver>[observer],
+        home: isLoggedIn ? Welcome(analytics: analytics, observer: observer) : WalkThrough(analytics: analytics, observer: observer),
+        //initialRoute:
+
+      ),
     );
   }
 }
@@ -97,22 +114,22 @@ class _FirebaseAppStateState extends State<_FirebaseAppState> {
         {
           if(snapshot.hasError)
             {
-              return MaterialApp(
-                home: Scaffold(
-                  backgroundColor: AppColors.primary,
-                  body: Center(
-                    child: Wrap(
-                      children: [Text("No connection to Firebase: ${snapshot.error.toString()}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: -0.7,
-                        ),),]
-                    ),
+                return MaterialApp(
+                  home: Scaffold(
+                    backgroundColor: AppColors.primary,
+                    body: Center(
+                      child: Wrap(
+                        children: [Text("No connection to Firebase: ${snapshot.error.toString()}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.7,
+                          ),),]
+                      ),
 
+                    ),
                   ),
-                ),
               );
             }
           if(snapshot.connectionState == ConnectionState.done)
