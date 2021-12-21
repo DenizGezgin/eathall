@@ -3,6 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class DBService {
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
+  final CollectionReference productCollection = FirebaseFirestore.instance.collection('products');
+
+
+
+
   Future addUserAutoID(String name, String surname, String mail, String token) async {
     userCollection.add({
       'name': name,

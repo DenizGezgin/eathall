@@ -28,52 +28,63 @@ class _FeedViewState extends State<FeedView> {
           onPressed: () {
             auth.signOut();
             Navigator.pushNamed(context, "/Welcome");
-            
+
           },
           icon: Icon(Icons.logout),
         ),
       ),
       body: Scaffold(
-        bottomNavigationBar:
-          BottomNavigationBar(
-            backgroundColor: AppColors.primary,
-            type: BottomNavigationBarType.fixed,
-            iconSize: 35,
-            fixedColor: Colors.black,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.view_headline, color: Colors.white),
 
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search, color: Colors.white,),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add_box, color: Colors.white, ),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite, color: Colors.white,),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person, color: Colors.white,),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-            ],
+        body:Center(
+          child: OutlinedButton(
+            child: Text("Go to Search"),
+            onPressed: (){
+              Navigator.pushNamed(context, "/SearchView");
+            },
           ),
+        ),
+
+        bottomNavigationBar:
+        BottomNavigationBar(
+          backgroundColor: AppColors.primary,
+          type: BottomNavigationBarType.fixed,
+          iconSize: 35,
+          fixedColor: Colors.black,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.view_headline, color: Colors.white),
+
+              title: SizedBox(
+                height: 0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search, color: Colors.white,),
+
+              title: SizedBox(
+                height: 0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_box, color: Colors.white, ),
+              title: SizedBox(
+                height: 0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite, color: Colors.white,),
+              title: SizedBox(
+                height: 0,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.white,),
+              title: SizedBox(
+                height: 0,
+              ),
+            ),
+          ],
+        ),
 
 
 

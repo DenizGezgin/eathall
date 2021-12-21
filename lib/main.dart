@@ -1,5 +1,6 @@
 
 import 'package:cs310_step3/routes/feedView.dart';
+import 'package:cs310_step3/routes/search_explore.dart';
 import 'package:cs310_step3/services/authentication_file.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,6 +65,7 @@ class MyAppState extends State<MyApp> {
       child: MaterialApp(
         routes: {
           "/feedView": (context) => FeedView(),
+          "/SearchView": (context) => SearchFeed(),
           "/logPage": (context) => Login(observer: observer, analytics: analytics),
           "/signupPage": (context) => Signup(observer: observer, analytics: analytics),
           "/Welcome": (context) => Welcome(observer: observer, analytics: analytics),
