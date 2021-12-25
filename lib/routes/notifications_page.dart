@@ -4,6 +4,8 @@ import '/utils/color.dart';
 import '/utils/styles.dart';
 import 'package:cs310_step3/main.dart';
 
+import 'login_page.dart';
+
 class NotificationsPage extends StatefulWidget {
   @override
   State<NotificationsPage> createState() => _NotificaitonsPageState();
@@ -16,21 +18,32 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        leading: IconButton(
-          onPressed:(){
-            Navigator.pushNamed(context, "/notificationsPage");
-          },
-          icon: Icon(Icons.add_alert),
-        ),
-        title: Text("Eathall", style: TextStyle(
-          fontFamily: 'Sansita_Swashed',
-          color: Colors.white,
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          letterSpacing: -0.7,
-        ),
-        ),
+          backgroundColor: AppColors.primary,
+          leading: IconButton(
+            onPressed: () {
+              auth.signOut();
+              Navigator.pushNamed(context, "/Welcome");
+
+            },
+            icon: Icon(Icons.logout),
+          ),
+          centerTitle: true,
+          title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
+            fontFamily: 'Sansita_Swashed',
+            color: Colors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -0.7,
+          ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              onPressed:(){
+                Navigator.pushNamed(context, "/notificationsPage");
+              },
+              icon: Icon(Icons.add_alert),
+            ),
+          ]
       ),
       body: Scaffold(
 
