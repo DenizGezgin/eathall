@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/welcome_page.dart';
 import 'package:cs310_step3/utils/color.dart';
+import 'package:cs310_step3/utils/productClass.dart';
+import 'package:cs310_step3/utils/productDetails.dart';
 import 'package:cs310_step3/utils/styles.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
@@ -18,8 +21,12 @@ class _FeedViewState extends State<FeedView> {
   @override
   Widget build(BuildContext context) {
 
-    //db.addUser('name', 'surname', 'mail', 'token');
-    //db.addUserAutoID('nameAuto', 'surnameAuto', 'mail@auto', 'token');
+
+    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
+
+    Product sa;
+    Future<List<Product>> allProducts = getAllData();
+
 
     return Scaffold(
       backgroundColor: AppColors.loginToContinueBackGround,

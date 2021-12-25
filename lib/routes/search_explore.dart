@@ -113,7 +113,6 @@ class _SearchFeedState extends State<SearchFeed> {
                    if(categoryList.contains(item.category))
                    {
                      allCategories[item.category]!.add(item);
-                     print(item.category);
                    }
                    else
                    {

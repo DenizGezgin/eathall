@@ -11,8 +11,6 @@ class DataModel {
 
   DataModel({this.name, this.category, this.seller, this.price, this.isOnSale});
 
-  //Create a method to convert QuerySnapshot from Cloud Firestore to a list of objects of this DataModel
-  //This function in essential to the working of FirestoreSearchScaffold
   List<DataModel> dataListFromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.docs.map((snapshot) {
       final Map<String, dynamic> dataMap =
