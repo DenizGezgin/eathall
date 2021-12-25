@@ -17,7 +17,7 @@ class Product
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
 
-Future<List<Product>> getAllData(QuerySnapshot querySnapshot) async {
+Future<List<Product>> getAllData() async {
 
   QuerySnapshot querySnapshot = await _collectionRef.get();
   //final allData = querySnapshot.docs.map((doc) => doc.data()).toList();

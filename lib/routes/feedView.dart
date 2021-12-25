@@ -25,7 +25,8 @@ class _FeedViewState extends State<FeedView> {
     CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
 
     Product sa;
-   // Future<List<Product>> allProducts = getAllData();
+   //List<Product> allProducts = await getAllData();
+  // print(allProducts[1].seller);
 
 
     return Scaffold(
@@ -40,6 +41,7 @@ class _FeedViewState extends State<FeedView> {
           },
           icon: Icon(Icons.logout),
         ),
+
       ),
       body: Scaffold(
 
