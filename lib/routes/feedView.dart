@@ -284,7 +284,7 @@ class _FeedViewState extends State<FeedView> {
             ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite, color: Colors.white,),
+            icon: Icon(Icons.shopping_cart, color: Colors.white,),
             title: SizedBox(
               height: 0,
             ),
