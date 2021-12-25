@@ -122,9 +122,9 @@ class _FeedViewState extends State<FeedView> {
                 color: AppColors.primary,
                 child: IconButton(
                   icon: Image.asset('assets/images/cigkofte.jpg', fit: BoxFit.fill, height: 149, width: 149,),
-                  onPressed: () {print("CigKofte");},
+                    onPressed: () {print("CigKofte");},
+                  ),
                 ),
-              ),
                   Container(
                     height: 150,
                     width: 150,
