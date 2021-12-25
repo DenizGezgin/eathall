@@ -17,11 +17,17 @@ class FeedView extends StatefulWidget {
 
 class _FeedViewState extends State<FeedView> {
   AuthService auth = AuthService();
-
+  //int selectedPage = 0;
   @override
   Widget build(BuildContext context) {
 
-
+    /*final _pageOptions = [
+      Navigator.pushNamed(context, "/feedView"),
+      Navigator.pushNamed(context, "/SearchView"),
+      Navigator.pushNamed(context, "/feedView"),
+      Navigator.pushNamed(context, "/feedView"),
+      Navigator.pushNamed(context, "/profilePage"),
+    ];*/
     CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
 
     Product sa;
@@ -53,7 +59,7 @@ class _FeedViewState extends State<FeedView> {
           actions: <Widget>[
             IconButton(
               onPressed:(){
-                Navigator.pushNamed(context, "/notificationsPage");
+                Navigator.pushNamed(context, "/profilePage");
               },
               icon: Icon(Icons.add_alert),
             ),
@@ -291,6 +297,12 @@ class _FeedViewState extends State<FeedView> {
               ),
             ),
           ],
+            /*currentIndex: selectedPage,
+            onTap: (index){
+              setState(() {
+                selectedPage = index;
+              });
+            }*/
         ),
 
 

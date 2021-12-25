@@ -9,13 +9,12 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class  _ProfilePageState extends State<ProfilePage>{
 
+class  _ProfilePageState extends State<ProfilePage>{
 
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -48,19 +47,81 @@ class  _ProfilePageState extends State<ProfilePage>{
       ),
       body: Scaffold(
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextButton(onPressed: (){
-              Navigator.pushNamed(context, "/sellerProfile");
-            },
-                child: Text("Seller Profile", style: loginSignupOrContinueSmallTextStyleBlack)),
-            //profile image will be here
+            Padding(
+              padding: const EdgeInsets.all(3),
+              child: OutlinedButton(
+                child: Text("Seller Profile"),
+                onPressed: (){
+                  Navigator.pushNamed(context, "/sellerProfile");
+                  },
+              ),
+            ),
+            Divider(
+              color: AppColors.primary,
+              thickness: 1,
+            ),
+            Padding(
+              padding:const EdgeInsets.all(14),
+              child:CircleAvatar(
+                radius: 50,
+                child: ClipOval(
+                  child: Image.asset("assets/images/default_profile_picture.png",
+                    fit: BoxFit.fill, height: 110, width: 330,),
+                ),
+              ),
+            ),
+            Text("username usersurname",
+                textAlign: TextAlign.center,
+                style: smallTitleBlackTextStyle
+            ),
+            Divider(
+              color: AppColors.primary,
+              thickness: 1,
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: OutlinedButton(
+                    child: Text("Edit\nProfile"),
+                    onPressed: (){
+                      Navigator.pushNamed(context, "/editProfilePage");
+                    },
+                  ),
 
-            Text("userName userSurname", style: loginSignupOrContinueSmallTextStyleBlack),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: OutlinedButton(
+                    child: Text("Deactivate\nAccount"),
+                    onPressed: (){
+                      //pop up something
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: OutlinedButton(
+                    child: Text("Delete\nAccount"),
+                    onPressed: (){
+                      //pop up something
+                    },
+                  ),
+                ),
+                Expanded(child: Container(),),
+              ]
+            ),
+            Expanded(child: Container(),),
           ],
         ),
-
       ),
       bottomNavigationBar: BottomNavigationBar(
+
         backgroundColor: AppColors.primary,
         type: BottomNavigationBarType.fixed,
         iconSize: 35,
@@ -99,6 +160,7 @@ class  _ProfilePageState extends State<ProfilePage>{
             ),
           ),
         ],
+
       ),
     );
   }
