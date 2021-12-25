@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:firestore_search/firestore_search.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +12,40 @@ class SearchFeed extends StatefulWidget {
 }
 
 class _SearchFeedState extends State<SearchFeed> {
+  List<String> searchTypes = ["seller", "name"];
+  late int currentSearchType;
+
+  @override
+  void initState(){
+    super.initState();
+    currentSearchType = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(
      body: FirestoreSearchScaffold(
        appBarBackgroundColor: AppColors.primary,
        firestoreCollectionName: 'products',
-       searchBy: 'seller',
-       scaffoldBody: const Center(child: Text('Product search')),
+       searchBy: searchTypes[currentSearchType],
+       scaffoldBody: Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+         child: Row(
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
+             children: [
+               Text("Search by: "),
+               OutlinedButton(onPressed: (){
+                 setState(() {
+                   currentSearchType = 0;
+                 });
+               }, child: Text("Seller")),
+               OutlinedButton(onPressed: (){
+                 setState(() {
+                   currentSearchType = 1;
+                 });
+               }, child: Text("Name"))
+
+             ]
+         ),),
        dataListFromSnapshot: DataModel().dataListFromSnapshot,
        builder: (context, snapshot) {
 
@@ -45,80 +72,97 @@ class _SearchFeedState extends State<SearchFeed> {
                  }
              }
 
-           return ListView.builder(
-               itemCount: categoryList.length,
-               shrinkWrap: true,
-               scrollDirection: Axis.vertical,
-
-               itemBuilder: (context, index) {
-
-
-                 final String? cur = categoryList[index];
-
-                 return Column(
+           return Column(
+           children: [
+             Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+               child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                    children: [
-                     Text(cur!,
-                       style: Theme.of(context).textTheme.headline6,
-                     ),
-                     SizedBox(),
-                     ListView.builder(
-                         shrinkWrap: true,
-                         //scrollDirection: Axis.horizontal,
-                         itemCount: allCategories[cur]?.length ?? 0,
-                         itemBuilder: (context, i)
-                         {
-                           final DataModel data = allCategories[cur]![i];
-                           return Row(
-                             children: [
-                               Flexible(
-                                 child: ConstrainedBox(
-                                   constraints: BoxConstraints(maxWidth: 360),
-                                   child: Card(
-                                     child: ListTile(
-                                       title: Text('${data.name}', style: Theme.of(context).textTheme.headline6,),
-                                       subtitle: Text('${data.seller}' + "\n" + "${data.price}" + "TL"),
+                     Text("Search by: "),
+                     OutlinedButton(onPressed: (){
+                       setState(() {
+                         currentSearchType = 0;
+                       });
+                     }, child: Text("Seller")),
+                     OutlinedButton(onPressed: (){
+                       setState(() {
+                         currentSearchType = 1;
+                       });
+                     }, child: Text("Name"))
+
+                   ]
+               ),),
+           SingleChildScrollView(
+             scrollDirection: Axis.vertical,
+             physics: AlwaysScrollableScrollPhysics(),
+             child: Container(
+               height: 479,
+               //margin: EdgeInsets.only(top: 20),
+               child: ListView.builder(
+               itemCount: categoryList.length,
+                   shrinkWrap: true,
+         physics: AlwaysScrollableScrollPhysics(),
+
+         scrollDirection: Axis.vertical,
+
+                   itemBuilder: (context, index) {
+
+
+                     final String? cur = categoryList[index];
+
+                     return Column(
+                       children: [
+                         Text(cur!,
+                           style: Theme.of(context).textTheme.headline6,
+                         ),
+                         SizedBox(),
+                         ListView.builder(
+                             shrinkWrap: true,
+                             physics: NeverScrollableScrollPhysics(),
+
+                             //scrollDirection: Axis.horizontal,
+                             itemCount: allCategories[cur]?.length ?? 0,
+                             itemBuilder: (context, i)
+                             {
+                               final DataModel data = allCategories[cur]![i];
+                               return Row(
+                                 children: [
+                                   Flexible(
+                                     child: ConstrainedBox(
+                                         constraints: BoxConstraints(maxWidth: 380),
+                                         child: Padding(
+                                           padding: EdgeInsets.only(left: 30.0),
+                                           child: Container(
+                                             height: 100,
+                                             child: Card(
+                                               semanticContainer: true,
+                                               elevation: 2,
+                                               clipBehavior: Clip.antiAliasWithSaveLayer,
+                                               child: ListTile(
+                                                 title: Text('${data.name}', style: Theme.of(context).textTheme.headline6,),
+                                                 subtitle: Text('${data.seller}' + "\n" + "${data.price}" + "TL"),
+                                                 leading: Image.network("https://firebasestorage.googleapis.com/v0/b/eathall-ea871.appspot.com/o/product_images%2Findir.jpg?alt=media&token=ddbe3da4-f157-475e-b1fa-297dcbbeb684",
+                                                     fit: BoxFit.fill,
+                                                 ),
+                                               ),
+                                             ),
+                                           ),
+                                         )
                                      ),
                                    ),
-                                 ),
-                               ),
-                             ],
-                           );
-                         }
-                     ),
-                     Divider(),
-                   ],
-                 );
-               });
+                                 ],
+                               );
+                             }
+                         ),
+                         Divider(thickness: 0,),
+                       ],
+                     );
+                   }),
+             ),
+           ),
+           ],
+           );
          }
-           /*
-           return ListView.builder(
-               itemCount: dataList?.length ?? 0,
-               itemBuilder: (context, index) {
-                 final DataModel data = dataList![index];
-
-                 return Column(
-                   mainAxisSize: MainAxisSize.min,
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     Padding(
-                       padding: const EdgeInsets.all(8.0),
-                       child: Text(
-                         '${data.name}',
-                         style: Theme.of(context).textTheme.headline6,
-                       ),
-                     ),
-                     Padding(
-                       padding: const EdgeInsets.only(
-                           bottom: 8.0, left: 8.0, right: 8.0),
-                       child: Text('${data.seller}',
-                           style: Theme.of(context).textTheme.bodyText1),
-                     )
-                   ],
-                 );
-               });
-         }
-            */
 
 
          if (snapshot.connectionState == ConnectionState.done) {
@@ -176,3 +220,5 @@ class _SearchFeedState extends State<SearchFeed> {
    );
   }
 }
+
+
