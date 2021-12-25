@@ -23,6 +23,7 @@ class _SearchFeedState extends State<SearchFeed> {
 
   @override
   Widget build(BuildContext context) {
+
    return Scaffold(
      body: FirestoreSearchScaffold(
        appBarBackgroundColor: AppColors.primary,
@@ -42,7 +43,57 @@ class _SearchFeedState extends State<SearchFeed> {
                  setState(() {
                    currentSearchType = 1;
                  });
-               }, child: Text("Name"))
+               }, child: Text("Name")),
+
+               PopupMenuButton<String>(
+                 icon: Icon(Icons.filter_alt),
+                 onSelected: (String result) {
+                   switch (result) {
+                     case 'filter1':
+                       print('filter 1 clicked');
+                       break;
+                     case 'filter2':
+                       print('filter 2 clicked');
+                       break;
+                     case 'alphabetical':
+                       print('Clear filters');
+                       break;
+                     default:
+                   }
+                 },
+                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                   const PopupMenuItem<String>(
+                     value: 'alphabetical',
+                     child: Text('Sort names alphabetical.'),
+                   ),
+                   const PopupMenuItem<String>(
+                     value: 'filter2',
+                     child: Text('Sort by price lower to higher.'),
+                   ),
+                   const PopupMenuItem<String>(
+                     value: 'alphabetical',
+                     child: Text('Sort by price lower to higher.'),
+                   ),
+                   const PopupMenuItem<String>(
+                     value: 'alphabetical',
+                     child: Text('Sort by ratings lower to higher.'),
+                   ),
+                   const PopupMenuItem<String>(
+                     value: 'alphabetical',
+                     child: Text('Filter items with rating.'),
+                   ),
+                   const PopupMenuItem<String>(
+                     value: 'alphabetical',
+                     child: Text('Sort by ratings lower to higher.'),
+                   ),
+                   const PopupMenuItem<String>(
+                     value: 'alphabetical',
+                     child: Text('Sort by ratings lower to higher.'),
+                   ),
+                 ],
+               ),
+
+
 
              ]
          ),),
@@ -70,6 +121,12 @@ class _SearchFeedState extends State<SearchFeed> {
                      categoryList.add(item.category);
                    }
                  }
+             }
+           //Apply fiters
+           categoryList.sort();
+           for(String? currentCategory in categoryList)
+             {
+               allCategories[currentCategory]!.sort((a, b) => a.name!.compareTo(b.name!));
              }
 
            return Column(

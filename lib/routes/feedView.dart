@@ -14,17 +14,6 @@ class FeedView extends StatefulWidget {
 
 class _FeedViewState extends State<FeedView> {
   AuthService auth = AuthService();
-  List<Image> foods = [
-    Image.asset("assets/images/cigkofte.jpg"),
-    Image.asset("assets/images/kofte.jpg"),
-    Image.asset("assets/images/manti.jpg"),
-    Image.asset("assets/images/menemen.jpg"),
-    Image.asset("assets/images/pizza.jpg"),
-    Image.asset("assets/images/sushi.jpg"),
-    Image.asset("assets/images/tavukdoner.jpg"),
-    Image.asset("assets/images/tavukkanat.jpg"),
-    Image.asset("assets/images/tavukpilav.jpg")
-  ];
 
   @override
   Widget build(BuildContext context) {

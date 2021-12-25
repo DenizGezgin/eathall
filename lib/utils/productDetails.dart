@@ -24,8 +24,8 @@ class DataModel {
           name: dataMap['name'],
           category: dataMap['category'],
           seller: dataMap['seller'],
-          price: dataMap['price'],
-          isOnSale: dataMap['isOnSale']);
+          price: dataMap['price'] ?? 0,
+          isOnSale: dataMap['isOnSale'] ?? true) ;
 
     }).toList();
   }
