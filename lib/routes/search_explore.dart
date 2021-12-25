@@ -233,46 +233,6 @@ class _SearchFeedState extends State<SearchFeed> {
          );
        },
      ),
-     bottomNavigationBar: BottomNavigationBar(
-       backgroundColor: AppColors.primary,
-       type: BottomNavigationBarType.fixed,
-       iconSize: 35,
-       fixedColor: Colors.black,
-       items: <BottomNavigationBarItem>[
-         BottomNavigationBarItem(
-           icon: Icon(Icons.view_headline, color: Colors.white),
-
-           title: SizedBox(
-             height: 0,
-           ),
-         ),
-         BottomNavigationBarItem(
-           icon: Icon(Icons.search, color: Colors.white,),
-
-           title: SizedBox(
-             height: 0,
-           ),
-         ),
-         BottomNavigationBarItem(
-           icon: Icon(Icons.add_box, color: Colors.white, ),
-           title: SizedBox(
-             height: 0,
-           ),
-         ),
-         BottomNavigationBarItem(
-           icon: Icon(Icons.favorite, color: Colors.white,),
-           title: SizedBox(
-             height: 0,
-           ),
-         ),
-         BottomNavigationBarItem(
-           icon: Icon(Icons.person, color: Colors.white,),
-           title: SizedBox(
-             height: 0,
-           ),
-         ),
-       ],
-     ),
    );
   }
 }
