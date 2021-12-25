@@ -1,6 +1,10 @@
 
+import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/routes/feedView.dart';
+import 'package:cs310_step3/routes/notifications_page.dart';
+import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/search_explore.dart';
+import 'package:cs310_step3/routes/seller_profile.dart';
 import 'package:cs310_step3/services/authentication_file.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,6 +73,10 @@ class MyAppState extends State<MyApp> {
           "/logPage": (context) => Login(observer: observer, analytics: analytics),
           "/signupPage": (context) => Signup(observer: observer, analytics: analytics),
           "/Welcome": (context) => Welcome(observer: observer, analytics: analytics),
+          "/profilePage": (context) => ProfilePage(),
+          "/editProfilePage": (context) => EditProfilePage(),
+          "/notificationsPage": (context) => NotificationsPage(),
+          "/sellerProfile": (context) => SellerProfilePage(),
 
         },
           debugShowCheckedModeBanner: false,
