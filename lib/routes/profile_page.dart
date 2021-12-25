@@ -17,7 +17,7 @@ class  _ProfilePageState extends State<ProfilePage>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: AppColors.primary,
         leading: IconButton(
           onPressed: () {
@@ -44,7 +44,7 @@ class  _ProfilePageState extends State<ProfilePage>{
           icon: Icon(Icons.add_alert),
           ),
         ]
-      ),
+      ),*/
       body: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -281,7 +281,7 @@ class  _ProfilePageState extends State<ProfilePage>{
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      /*bottomNavigationBar: BottomNavigationBar(
 
         backgroundColor: AppColors.primary,
         type: BottomNavigationBarType.fixed,
@@ -322,7 +322,7 @@ class  _ProfilePageState extends State<ProfilePage>{
           ),
         ],
 
-      ),
+      ),*/
     );
   }
 }

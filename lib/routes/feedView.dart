@@ -246,7 +246,7 @@ class _FeedViewState extends State<FeedView> {
           actions: <Widget>[
             IconButton(
               onPressed:(){
-                Navigator.pushNamed(context, "/profilePage");
+                Navigator.pushNamed(context, "/notificationsPage");
               },
               icon: Icon(Icons.add_alert),
             ),
