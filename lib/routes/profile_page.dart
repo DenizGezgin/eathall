@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
 import 'login_page.dart';
@@ -12,9 +14,10 @@ class ProfilePage extends StatefulWidget {
 
 class  _ProfilePageState extends State<ProfilePage>{
 
-
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Scaffold(
@@ -31,16 +34,19 @@ class  _ProfilePageState extends State<ProfilePage>{
                   },
                 ),
               ),
-            Padding(
-              padding:const EdgeInsets.all(10),
-              child:CircleAvatar(
-                radius: 25,
-                child: ClipOval(
-                  child: Image.asset("assets/images/default_profile_picture.png",
-                    fit: BoxFit.fill, height: 200, width: 100,),
+
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: CircleAvatar(
+                  radius: 25,
+                  child: ClipOval(
+
+                    child: Image.asset(
+                      "assets/images/default_profile_picture.png",
+                      fit: BoxFit.fill, height: 200, width: 100,),
+                  ),
                 ),
               ),
-            ),
             Text("username usersurname",
                 textAlign: TextAlign.center,
                 style: smallTitleBlackTextStyle

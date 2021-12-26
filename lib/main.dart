@@ -1,4 +1,5 @@
 
+import 'package:cs310_step3/routes/addProduct.dart';
 import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/routes/feedView.dart';
 import 'package:cs310_step3/routes/notifications_page.dart';
@@ -77,6 +78,7 @@ class MyAppState extends State<MyApp> {
           "/editProfilePage": (context) => EditProfilePage(),
           "/notificationsPage": (context) => NotificationsPage(),
           "/sellerProfile": (context) => SellerProfilePage(),
+          "/addProductPage": (context) => addProductPage(),
 
         },
           debugShowCheckedModeBanner: false,

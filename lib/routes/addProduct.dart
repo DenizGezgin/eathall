@@ -295,15 +295,17 @@ class _addProductPageState extends State<addProductPage> {
               SizedBox(height: 16,),
               Container(
                 height: 150,
-                margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                margin: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: _image != null
                         ? Image.file(File(_image!.path)) : TextButton(
                       child: Icon(
                         Icons.add_a_photo,
-                        size: 150,
+                        size: 100,
+                        color: Colors.white,
                       ),
+
                       onPressed: pickImage,
                     )
                 ),
