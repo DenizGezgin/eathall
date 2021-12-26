@@ -371,7 +371,7 @@ class _MainFeedViewState extends State<MainFeedView> {
                     //scrollDirection: Axis.horizontal,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 1 / 1,
-                      crossAxisCount: ((allProducts.length)/2).toInt(),
+                      crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) {
                       return Container(
