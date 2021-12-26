@@ -293,24 +293,40 @@ class _addProductPageState extends State<addProductPage> {
                 ],
               ),
               SizedBox(height: 16,),
-              Container(
-                height: 150,
-                margin: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: _image != null
-                        ? Image.file(File(_image!.path)) : TextButton(
-                      child: Icon(
-                        Icons.add_a_photo,
-                        size: 100,
-                        color: Colors.white,
-                      ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white)
 
-                      onPressed: pickImage,
-                    )
+                  ),
+                  child: Column(
+                  children: [
+                     Container(
+                        height: 100,
+                        margin: EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 0),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: _image != null ? Image.file(File(_image!.path)) : TextButton(
+                            child: Icon(
+                            Icons.add_a_photo,
+                            size: 60,
+                            color: Colors.white,
+                            ),
+
+                            onPressed: pickImage,
+                            )
+                  ),
                 ),
-              ),
-
+                Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  child: Text(
+                    "Add an image",
+                      textAlign: TextAlign.center,
+                      style: loginButtonTextStyle,
+                  ),
+                ),
+                  ],
+                  ),
+                ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
@@ -335,7 +351,7 @@ class _addProductPageState extends State<addProductPage> {
                           ),
                         ),
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: AppColors.secondary,
+                          backgroundColor: AppColors.purchaseAndAdd,
                         ),
                       ),
                     ),
