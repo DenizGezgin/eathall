@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_step3/routes/addProduct.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/search_explore.dart';
 import 'package:cs310_step3/routes/welcome_page.dart';
@@ -22,7 +23,7 @@ class _FeedViewState extends State<FeedView> {
   late int selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>
   [
-    Scaffold(
+    /*Scaffold(
 
       body: SingleChildScrollView(
         child: Column(
@@ -54,6 +55,9 @@ class _FeedViewState extends State<FeedView> {
               width: 5,
               height: 7,
             ),
+            
+            
+            
             Row(
 
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -189,17 +193,14 @@ class _FeedViewState extends State<FeedView> {
                 ),
               ],
             ),
-
-
-
-
           ],
         ),
       ),
 
-    ),
+    ),*/
+    MainFeedView(),
     SearchFeed(),
-    Container(child:Text("Bos")),
+    addProductPage(),
     Container(child:Text("Bos")),
     ProfilePage(),
   ];
@@ -207,14 +208,6 @@ class _FeedViewState extends State<FeedView> {
   //int selectedPage = 0;
   @override
   Widget build(BuildContext context) {
-
-    /*final _pageOptions = [
-      Navigator.pushNamed(context, "/feedView"),
-      Navigator.pushNamed(context, "/SearchView"),
-      Navigator.pushNamed(context, "/feedView"),
-      Navigator.pushNamed(context, "/feedView"),
-      Navigator.pushNamed(context, "/profilePage"),
-    ];*/
     CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
 
     Product sa;
@@ -306,3 +299,99 @@ class _FeedViewState extends State<FeedView> {
     );
   }
 }
+
+class MainFeedView extends StatefulWidget {
+  const MainFeedView({Key? key}) : super(key: key);
+
+  @override
+  _MainFeedViewState createState() => _MainFeedViewState();
+}
+
+class _MainFeedViewState extends State<MainFeedView> {
+
+  List<Product> allProducts = [];
+
+  void asyncMethod() async {
+    allProducts = await getAllData();
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    asyncMethod();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(allProducts.length == 0)
+      {return  Center(
+        child: CircularProgressIndicator(),
+      );}
+    else {return Scaffold(
+
+        body: SingleChildScrollView(
+          child: Column(
+
+            children: [
+              Divider(
+                color: AppColors.primary,
+                thickness: 1,
+              ),
+              Row(
+
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: ClipRect(
+                      child: Image.asset("assets/images/add_banner.png", fit: BoxFit.fill, height: 110, width: 330,),
+                    ),
+                  ),
+                ],
+              ),
+
+              Text("Products", style: loginSignupOrContinueSmallTextStyleBlack,),
+              Divider(
+                color: AppColors.primary,
+                thickness: 1,
+              ),
+              SizedBox(
+                width: 5,
+                height: 7,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 0),
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: allProducts.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    //scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 1 / 1,
+                      crossAxisCount: ((allProducts.length)/2).toInt(),
+                    ),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        //color: AppColors.primary,
+                        decoration: BoxDecoration(border: Border.all(color: AppColors.primary)),
+                        child: IconButton(
+                          icon: Image.network(allProducts[index].photoUrl!, fit: BoxFit.fill, height: 200, width: 200,),
+                          onPressed: () {print("menemen");},
+                        ),
+                      );
+                    }
+                ),
+              ),
+            ],
+          ),
+        ),
+      );}
+
+  }
+}
+
+
+

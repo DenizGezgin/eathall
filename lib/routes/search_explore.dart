@@ -14,11 +14,13 @@ class SearchFeed extends StatefulWidget {
 class _SearchFeedState extends State<SearchFeed> {
   List<String> searchTypes = ["seller", "name"];
   late int currentSearchType;
+  late String currentFilter;
 
   @override
   void initState(){
     super.initState();
     currentSearchType = 0;
+    currentFilter = "alphabetical";
   }
 
   @override
@@ -30,72 +32,72 @@ class _SearchFeedState extends State<SearchFeed> {
        firestoreCollectionName: 'products',
        searchBy: searchTypes[currentSearchType],
        scaffoldBody: Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-         child: Row(
-           mainAxisAlignment: MainAxisAlignment.spaceAround,
-             children: [
-               Text("Search by: "),
-               OutlinedButton(onPressed: (){
-                 setState(() {
-                   currentSearchType = 0;
-                 });
-               }, child: Text("Seller")),
-               OutlinedButton(onPressed: (){
-                 setState(() {
-                   currentSearchType = 1;
-                 });
-               }, child: Text("Name")),
+         child: Column(
+           children: [Row(
+             mainAxisAlignment: MainAxisAlignment.spaceAround,
+               children: [
+                 Text("Search by: "),
+                 OutlinedButton(onPressed: (){
+                   setState(() {
+                     currentSearchType = 0;
+                   });
+                 }, child: Text("Seller")),
+                 OutlinedButton(onPressed: (){
+                   setState(() {
+                     currentSearchType = 1;
+                   });
+                 }, child: Text("Name")),
 
-               PopupMenuButton<String>(
-                 icon: Icon(Icons.filter_alt),
-                 onSelected: (String result) {
-                   switch (result) {
-                     case 'filter1':
-                       print('filter 1 clicked');
-                       break;
-                     case 'filter2':
-                       print('filter 2 clicked');
-                       break;
-                     case 'alphabetical':
-                       print('Clear filters');
-                       break;
-                     default:
-                   }
-                 },
-                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                   const PopupMenuItem<String>(
-                     value: 'alphabetical',
-                     child: Text('Sort names alphabetical.'),
-                   ),
-                   const PopupMenuItem<String>(
-                     value: 'filter2',
-                     child: Text('Sort by price lower to higher.'),
-                   ),
-                   const PopupMenuItem<String>(
-                     value: 'alphabetical',
-                     child: Text('Sort by price lower to higher.'),
-                   ),
-                   const PopupMenuItem<String>(
-                     value: 'alphabetical',
-                     child: Text('Sort by ratings lower to higher.'),
-                   ),
-                   const PopupMenuItem<String>(
-                     value: 'alphabetical',
-                     child: Text('Filter items with rating.'),
-                   ),
-                   const PopupMenuItem<String>(
-                     value: 'alphabetical',
-                     child: Text('Sort by ratings lower to higher.'),
-                   ),
-                   const PopupMenuItem<String>(
-                     value: 'alphabetical',
-                     child: Text('Sort by ratings lower to higher.'),
-                   ),
-                 ],
-               ),
+                 PopupMenuButton<String>(
+                   icon: Icon(Icons.filter_alt),
+                   onSelected: (String result) {
+                     switch (result) {
+                       case 'alphabetical':
+                         print('filter 1 clicked');
+                         setState(() {
+                           currentFilter = "alphabetical";
+                         });
+                         break;
+                       case 'lowToHigh':
+                         print('filter 2 clicked');
+                         setState(() {
+                           currentFilter = "lowToHigh";
+                         });
+                         break;
+                       case 'highToLow':
+                         print('filter 3 clicked');
+                         setState(() {
+                           currentFilter = "highToLow";
+                         });
+                         break;
+                       default:
+                     }
+                   },
+                   itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                     const PopupMenuItem<String>(
+                       value: 'alphabetical',
+                       child: Text('Sort names alphabetical.'),
+                     ),
+                     const PopupMenuItem<String>(
+                       value: 'lowToHigh',
+                       child: Text('Sort by price lower to higher.'),
+                     ),
+                     const PopupMenuItem<String>(
+                       value: 'highToLow',
+                       child: Text('Sort by price higher to lower.'),
+                     ),
+                   ],
+                 ),
 
 
 
-             ]
+               ]
+           ),
+           Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children: [
+             Text("Search items to see results")])]
          ),),
        dataListFromSnapshot: DataModel().dataListFromSnapshot,
        builder: (context, snapshot) {
@@ -125,7 +127,19 @@ class _SearchFeedState extends State<SearchFeed> {
            categoryList.sort();
            for(String? currentCategory in categoryList)
              {
-               allCategories[currentCategory]!.sort((a, b) => a.name!.compareTo(b.name!));
+               if(currentFilter == "alphabetical")
+                 {
+                   allCategories[currentCategory]!.sort((a, b) => a.name!.compareTo(b.name!));
+                 }
+               if(currentFilter == "lowToHigh")
+               {
+                 allCategories[currentCategory]!.sort((a, b) => a.price!.compareTo(b.price!));
+               }
+               if(currentFilter == "highToLow")
+               {
+                 allCategories[currentCategory]!.sort((a, b) => b.price!.compareTo(a.price!));
+               }
+
              }
 
            return Column(
@@ -144,7 +158,47 @@ class _SearchFeedState extends State<SearchFeed> {
                        setState(() {
                          currentSearchType = 1;
                        });
-                     }, child: Text("Name"))
+                     }, child: Text("Name")),
+                     PopupMenuButton<String>(
+                       icon: Icon(Icons.filter_alt),
+                       onSelected: (String result) {
+                         switch (result) {
+                           case 'alphabetical':
+                             print('filter 1 clicked');
+                             setState(() {
+                               currentFilter = "alphabetical";
+                             });
+                             break;
+                           case 'lowToHigh':
+                             print('filter 2 clicked');
+                             setState(() {
+                               currentFilter = "lowToHigh";
+                             });
+                             break;
+                           case 'highToLow':
+                             print('filter 3 clicked');
+                             setState(() {
+                               currentFilter = "highToLow";
+                             });
+                             break;
+                           default:
+                         }
+                       },
+                       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                         const PopupMenuItem<String>(
+                           value: 'alphabetical',
+                           child: Text('Sort names alphabetical.'),
+                         ),
+                         const PopupMenuItem<String>(
+                           value: 'lowToHigh',
+                           child: Text('Sort by price lower to higher.'),
+                         ),
+                         const PopupMenuItem<String>(
+                           value: 'highToLow',
+                           child: Text('Sort by price higher to lower.'),
+                         ),
+                       ],
+                     ),
 
                    ]
                ),),
@@ -197,7 +251,7 @@ class _SearchFeedState extends State<SearchFeed> {
                                                child: ListTile(
                                                  title: Text('${data.name}', style: Theme.of(context).textTheme.headline6,),
                                                  subtitle: Text('${data.seller}' + "\n" + "${data.price}" + "TL"),
-                                                 leading: Image.network("https://firebasestorage.googleapis.com/v0/b/eathall-ea871.appspot.com/o/product_images%2Findir.jpg?alt=media&token=ddbe3da4-f157-475e-b1fa-297dcbbeb684",
+                                                 leading: Image.network(data.photoUrl!,
                                                      fit: BoxFit.fill,
                                                  ),
                                                ),
@@ -233,6 +287,7 @@ class _SearchFeedState extends State<SearchFeed> {
          );
        },
      ),
+
    );
   }
 }

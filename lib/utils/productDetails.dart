@@ -8,8 +8,9 @@ class DataModel {
   final String? seller;
   final int? price;
   final bool? isOnSale;
+  final String? photoUrl;
 
-  DataModel({this.name, this.category, this.seller, this.price, this.isOnSale});
+  DataModel({this.name, this.category, this.seller, this.price, this.isOnSale, this.photoUrl});
 
   List<DataModel> dataListFromSnapshot(QuerySnapshot querySnapshot) {
     return querySnapshot.docs.map((snapshot) {
@@ -23,7 +24,8 @@ class DataModel {
           category: dataMap['category'],
           seller: dataMap['seller'],
           price: dataMap['price'] ?? 0,
-          isOnSale: dataMap['isOnSale'] ?? true) ;
+          isOnSale: dataMap['isOnSale'] ?? true,
+          photoUrl: dataMap["photoUrl"] ?? "https://i.nefisyemektarifleri.com/2009/02/menemen.jpg") ;
 
     }).toList();
   }

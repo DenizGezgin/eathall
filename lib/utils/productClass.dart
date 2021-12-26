@@ -11,8 +11,9 @@ class Product
   final bool? isOnSale;
   final String? photoUrl;
   final String? description;
+  final List<String>? comments;
 
-  Product({this.name, this.category, this.seller, this.price, this.isOnSale, this.description, this.photoUrl});
+  Product({this.name, this.category, this.seller, this.price, this.isOnSale, this.description, this.photoUrl, this.comments});
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
@@ -40,4 +41,20 @@ Future<List<Product>> getAllData() async {
     );
 
   }).toList();
+}
+
+Future<void> addProduct(String namec, String categoryc,String sellerc,int pricec,String descriptionc, String photoUrlc) {
+  return _collectionRef
+      .add({
+    'name': namec,
+    'category': categoryc,
+    'seller': sellerc,
+    'price': pricec,
+    'description': descriptionc,
+    'isOnSale': true,
+    'photoUrl': photoUrlc,
+    'comments': [],
+  })
+      .then((value) => print("Product Added"))
+      .catchError((error) => print("Failed to add product: $error"));
 }
