@@ -32,6 +32,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
   String nameUser = "";
   String surnameUser = "";
   String addressUser = "";
+  String passUser = "";
   int emptyCount = 0;
 
   late int selectedIndex = 0;
@@ -267,7 +268,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                   onSaved: (value) {
                     if (value != null) {
-                      pass = value;
+                      passUser = value;
                     }
                   },
                 ),
@@ -305,7 +306,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                 onSaved: (value) {
                   if (value != null) {
-                    nameUser = value;
+                    addressUser = value;
                   }
                 },
               ),
@@ -323,7 +324,17 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                       showAlertDialog("Invalid Input", "At least one of the fields should not be empty.");
                     }
                     else{
-
+                      if(user != null) {
+                        if(nameUser != "" && surnameUser != "") {
+                          user.updateDisplayName(nameUser+" "+surnameUser);
+                        }
+                        if(addressUser != ""){
+                         //
+                        }
+                        if(passUser != ""){
+                          user.updatePassword(passUser);
+                        }
+                      }
                     }
                   });
                 },
