@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,82 +13,98 @@ class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
-
+String theUser = "";
 
 class  _ProfilePageState extends State<ProfilePage>{
+
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
+    Future<String?> getUsername(User user) async {
+      if(user == null) {
+        return "no user";
+      }
+      else{
+        user.displayName;
+      }
+    }
+    
+  if(user != null){
 
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //crossAxisAlignment: CrossAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-              Padding(
-                padding: const EdgeInsets.all(2),
-                child: OutlinedButton(
-                  child: Text("Seller Profile"),
-                  onPressed: (){
-                    Navigator.pushNamed(context, "/sellerProfile");
-                  },
+            Padding(
+              padding: const EdgeInsets.all(2),
+              child: OutlinedButton(
+                child: Text("Seller Profile"),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/sellerProfile");
+                },
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CircleAvatar(
+                radius: 25,
+                child: ClipOval(
+
+                  child: Image.asset(
+                    "assets/images/default_profile_picture.png",
+                    fit: BoxFit.fill, height: 200, width: 100,),
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: CircleAvatar(
-                  radius: 25,
-                  child: ClipOval(
-
-                    child: Image.asset(
-                      "assets/images/default_profile_picture.png",
-                      fit: BoxFit.fill, height: 200, width: 100,),
-                  ),
-                ),
-              ),
-            Text("username usersurname",
+            ),
+            Text("username",
                 textAlign: TextAlign.center,
                 style: smallTitleBlackTextStyle
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
 
-              children: [
+                children: [
 
-                Padding(
+                  Padding(
 
-                  padding: const EdgeInsets.all(2),
-                  child: OutlinedButton(
-                    child: Text("Edit\nProfile", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                    onPressed: (){
-                      Navigator.pushNamed(context, "/editProfilePage");
-                    },
-                  ),
+                    padding: const EdgeInsets.all(2),
+                    child: OutlinedButton(
+                      child: Text("Edit\nProfile", textAlign: TextAlign.center,
+                          style: loginSignupOrContinueSmallTextStyleBlack),
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/editProfilePage");
+                      },
+                    ),
 
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: OutlinedButton(
-                    child: Text("Deactivate\nAccount", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                    onPressed: (){
-                      //pop up something
-                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: OutlinedButton(
-                    child: Text("Delete\nAccount", textAlign: TextAlign.center,style: loginSignupOrContinueSmallTextStyleBlack),
-                    onPressed: (){
-                      //pop up something
-                    },
+                  Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: OutlinedButton(
+                      child: Text(
+                          "Deactivate\nAccount", textAlign: TextAlign.center,
+                          style: loginSignupOrContinueSmallTextStyleBlack),
+                      onPressed: () {
+                        //pop up something
+                      },
+                    ),
                   ),
-                ),
-              ]
+                  Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: OutlinedButton(
+                      child: Text(
+                          "Delete\nAccount", textAlign: TextAlign.center,
+                          style: loginSignupOrContinueSmallTextStyleBlack),
+                      onPressed: () {
+                        //pop up something
+                      },
+                    ),
+                  ),
+                ]
             ),
             Expanded(child: Container(),),
             Divider(
@@ -103,7 +122,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   children: [
                     Icon(Icons.account_circle_sharp, color: Colors.black),
-                    Text("Account", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Text("Account",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -126,8 +146,10 @@ class  _ProfilePageState extends State<ProfilePage>{
                 onPressed: () {},
                 child: Row(
                   children: [
-                    Icon(Icons.account_balance_wallet_rounded, color: Colors.black),
-                    Text("Purchases", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Icon(Icons.account_balance_wallet_rounded,
+                        color: Colors.black),
+                    Text("Purchases",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -151,7 +173,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   children: [
                     Icon(Icons.bookmark, color: Colors.black),
-                    Text("Bookmarks", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Text("Bookmarks",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -175,7 +198,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   children: [
                     Icon(Icons.thumb_up_alt_rounded, color: Colors.black),
-                    Text("Likes", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Text("Likes",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -199,7 +223,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   children: [
                     Icon(Icons.mode_comment, color: Colors.black),
-                    Text("Comments", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Text("Comments",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -223,7 +248,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   children: [
                     Icon(Icons.credit_card, color: Colors.black),
-                    Text("Credit Cards", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Text("Credit Cards",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -247,7 +273,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                 child: Row(
                   children: [
                     Icon(Icons.settings, color: Colors.black),
-                    Text("Settings", style: loginSignupOrContinueSmallTextStyleBlack),
+                    Text("Settings",
+                        style: loginSignupOrContinueSmallTextStyleBlack),
                   ],
                 ),
               ),
@@ -260,5 +287,11 @@ class  _ProfilePageState extends State<ProfilePage>{
         ),
       ),
     );
+  }
+  else{
+    return Scaffold(
+
+    );
+  }
   }
 }

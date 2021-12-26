@@ -22,6 +22,8 @@ extension StringExtension on String {
     return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }
+List<String> userInfo = [];
+
 
 class Signup extends StatefulWidget {
   Signup({Key? key,required this.analytics, required this.observer}) : super(key: key);

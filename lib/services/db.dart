@@ -7,7 +7,6 @@ class DBService {
 
 
 
-
   Future addUserAutoID(String name, String surname, String mail, String token) async {
     userCollection.add({
       'name': name,

@@ -1,9 +1,15 @@
+import 'package:cs310_step3/routes/profile_page.dart';
+import 'package:cs310_step3/routes/search_explore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
+import 'addProduct.dart';
+import 'feedView.dart';
 import 'login_page.dart';
 import 'package:path/path.dart';
 import 'package:cs310_step3/utils/color.dart';
@@ -18,8 +24,6 @@ extension StringExtension on String {
 }
 
 class EditProfilePage extends StatefulWidget {
-  EditProfilePage({Key? key}) : super(key: key);
-  final formKey = GlobalKey<FormState>();
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
@@ -29,27 +33,23 @@ class  _EditProfilePageState extends State<EditProfilePage>{
   String surnameUser = "";
   String addressUser = "";
   int emptyCount = 0;
-  late String photoUrl;
 
-  final ImagePicker _picker = ImagePicker();
-  XFile? _image;
+  late int selectedIndex = 0;
+  static List<Widget> _widgetOptions = <Widget>
+  [
 
-  Future uploadImageToFirebase(BuildContext context) async {
-    String fileName = basename(_image!.path);
-    Reference firebaseStorageRef = FirebaseStorage.instance.ref().child('product_images/$fileName');
-    try {
-      await firebaseStorageRef.putFile(File(_image!.path));
-      photoUrl = (await firebaseStorageRef.getDownloadURL()).toString();
-      print("URI::::   "+ photoUrl);
-      print("Upload complete");
-    } on FirebaseException catch(e) {
-      print('ERROR: ${e.code} - ${e.message}');
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+    MainFeedView(),
+    SearchFeed(),
+    addProductPage(),
+    Container(child:Text("Bos")),
+    ProfilePage(),
+  ];
+  PageController pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<User?>(context);
 
     Future<void> showAlertDialog(String title, String message) async {
       return showDialog(context: context,
@@ -142,7 +142,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                     onPressed: (){
                       //save changes
                       setState(() {
-                        uploadImageToFirebase(context);
+
                       });
 
                     },
@@ -333,46 +333,54 @@ class  _EditProfilePageState extends State<EditProfilePage>{
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.primary,
-        type: BottomNavigationBarType.fixed,
-        iconSize: 35,
-        fixedColor: Colors.black,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.view_headline, color: Colors.white),
+        bottomNavigationBar:
+        BottomNavigationBar(
+            backgroundColor: AppColors.primary,
+            type: BottomNavigationBarType.fixed,
+            iconSize: 35,
+            fixedColor: Colors.black,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.view_headline, color: Colors.white),
+                //label: "Home",
 
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.white,),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search, color: Colors.white,),
 
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box, color: Colors.white, ),
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart, color: Colors.white,),
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.white,),
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-        ],
-      ),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_box, color: Colors.white, ),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart, color: Colors.white,),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person, color: Colors.white,),
+                title: SizedBox(
+                  height: 0,
+                ),
+              ),
+            ],
+            currentIndex: selectedIndex,
+            onTap: (int index){
+              setState(() {
+                selectedIndex = index;
+              });
+            }
+        ),
     );
   }
 }
