@@ -7,29 +7,75 @@ import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:cs310_step3/utils/productDetails.dart';
 import 'package:cs310_step3/utils/styles.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import '/services/authentication_file.dart';
 import '/services/db.dart';
 
+List<Widget> createNavBar(UserFirebase? user)
+{
+  if(user == null)
+  {
+    return <Widget>
+    [
+
+      MainFeedView(),
+      SearchFeed(),
+      Container(child:Text("CANT ACCSESS")),
+      Container(child:Text("Bos")),
+      Container(child:Text("CANT ACCSESS")),
+    ];
+  }
+  else if(user!.email == "NULL_NAME")
+    {
+      return <Widget>
+      [
+
+        MainFeedView(),
+        SearchFeed(),
+        Container(child:Text("CANT ACCSESS")),
+        Container(child:Text("Bos")),
+        Container(child:Text("CANT ACCSESS")),
+      ];
+    }
+    return <Widget>
+    [
+
+      MainFeedView(),
+      SearchFeed(),
+      addProductPage(),
+      Container(child:Text("Bos")),
+      ProfilePage(),
+    ];
+}
+
 class FeedView extends StatefulWidget {
+  FeedView({Key? key, this.myUser}) : super(key: key);
+  UserFirebase? myUser;
+
   @override
   State<FeedView> createState() => _FeedViewState();
 }
 
 class _FeedViewState extends State<FeedView> {
   AuthService auth = AuthService();
-  late int selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>
-  [
 
-    MainFeedView(),
-    SearchFeed(),
-    addProductPage(),
-    Container(child:Text("Bos")),
-    ProfilePage(),
-  ];
+  late int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = createNavBar(widget.myUser);
+    if(widget.myUser != null)
+      {
+        print(widget.myUser!.surname);
+      }
+  }
+
+
+  late List<Widget> _widgetOptions;
   PageController pageController = PageController();
   //int selectedPage = 0;
   @override

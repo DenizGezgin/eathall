@@ -3,6 +3,7 @@ import 'dart:io' show Platform;
 import 'package:cs310_step3/services/analytics.dart';
 import 'package:cs310_step3/services/authentication_file.dart';
 import 'package:cs310_step3/utils/dimension.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -228,12 +229,21 @@ class _LoginState extends State<Login> {
 
                             try {
                               User? u = await auth.loginWithMailAndPass(mail, pass);
-                              if(u == null){
+                              UserFirebase myUserc = await getUserWithMail(mail);
+                              if(myUserc.email == "NULL_NAME"){
                                 setState(() {
                                   showAlertDialog("Invalid Login Info",
                                       "Please sign up first!");
                                 });
                               }
+                              else
+                                {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FeedView(myUser: myUserc)
+                                      ));
+                                }
 
                             } catch(e) {
                               setState(() {

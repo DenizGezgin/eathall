@@ -11,7 +11,7 @@ class Product
   final bool? isOnSale;
   final String? photoUrl;
   final String? description;
-  final List<String>? comments;
+  final List<dynamic>? comments;
 
   Product({this.name, this.category, this.seller, this.price, this.isOnSale, this.description, this.photoUrl, this.comments});
 

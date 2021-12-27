@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:cs310_step3/services/analytics.dart';
 import 'package:cs310_step3/services/authentication_file.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -385,7 +386,7 @@ class _SignupState extends State<Signup> {
                           Expanded(
                             flex: 1,
                             child: OutlinedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (widget.formKey.currentState!.validate()) {
                                   print
                                     ('Mail: ' + mail + "\nPass: " + pass +
@@ -397,10 +398,13 @@ class _SignupState extends State<Signup> {
                                       surname + "\nAddress: " + address);
                                   //createUser();
                                   auth.signupWithMailAndPass(mail, pass);
+                                  await addUser(mail,name,surname,address);
+                                  UserFirebase myUserc = await getUserWithMail(mail);
+                                  print(myUserc.name);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => FeedView()
+                                        builder: (context) => FeedView(myUser: myUserc)
                                     ),
                                   );
                                 }
