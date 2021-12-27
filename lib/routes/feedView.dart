@@ -28,7 +28,7 @@ List<Widget> createNavBar(UserFirebase? user)
       Container(child:Text("CANT ACCSESS")),
     ];
   }
-  else if(user!.email == "NULL_NAME")
+  else if(user.email == "NULL_NAME")
     {
       return <Widget>
       [
@@ -47,7 +47,7 @@ List<Widget> createNavBar(UserFirebase? user)
       SearchFeed(),
       addProductPage(),
       Container(child:Text("Bos")),
-      ProfilePage(),
+      ProfilePage(myUser: user!,),
     ];
 }
 

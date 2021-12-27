@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:cs310_step3/routes/edit_profile.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,8 +14,12 @@ import 'login_page.dart';
 class ProfilePage extends StatefulWidget {
   @override
   State<ProfilePage> createState() => _ProfilePageState();
+  ProfilePage({Key? key, this.myUser}) : super(key: key);
+  UserFirebase? myUser;
 }
 String theUser = "";
+
+
 
 class  _ProfilePageState extends State<ProfilePage>{
 
@@ -55,13 +61,12 @@ class  _ProfilePageState extends State<ProfilePage>{
                 radius: 25,
                 child: ClipOval(
 
-                  child: Image.asset(
-                    "assets/images/default_profile_picture.png",
+                  child: Image.network(widget.myUser!.photoUrl!,
                     fit: BoxFit.fill, height: 200, width: 100,),
                 ),
               ),
             ),
-            Text("username",
+            Text(widget.myUser!.name! + " " + widget.myUser!.surname!,
                 textAlign: TextAlign.center,
                 style: smallTitleBlackTextStyle
             ),
@@ -77,7 +82,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                       child: Text("Edit\nProfile", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
                       onPressed: () {
-                        Navigator.pushNamed(context, "/editProfilePage");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditProfilePage(myUser: widget.myUser)
+                            ));
                       },
                     ),
 

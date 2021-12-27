@@ -1,5 +1,6 @@
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/search_explore.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,9 +24,13 @@ extension StringExtension on String {
   }
 }
 
+
+
 class EditProfilePage extends StatefulWidget {
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
+  EditProfilePage({Key? key, this.myUser}) : super(key: key);
+  UserFirebase? myUser;
 }
 
 class  _EditProfilePageState extends State<EditProfilePage>{
@@ -35,20 +40,43 @@ class  _EditProfilePageState extends State<EditProfilePage>{
   String passUser = "";
   int emptyCount = 0;
 
-  late int selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>
-  [
-
-    MainFeedView(),
-    SearchFeed(),
-    addProductPage(),
-    Container(child:Text("Bos")),
-    ProfilePage(),
-  ];
   PageController pageController = PageController();
+  late String photoUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    photoUrl = "";
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    final ImagePicker _picker = ImagePicker();
+    XFile? _image;
+
+    Future uploadImageToFirebase(BuildContext context) async {
+      String fileName = basename(_image!.path);
+      Reference firebaseStorageRef = FirebaseStorage.instance.ref().child('userData/$fileName');
+      try {
+        await firebaseStorageRef.putFile(File(_image!.path));
+        photoUrl = (await firebaseStorageRef.getDownloadURL()).toString();
+        print("URI::::   "+ photoUrl!);
+        print("Upload complete");
+      } on FirebaseException catch(e) {
+        print('ERROR: ${e.code} - ${e.message}');
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+
+    Future pickImage() async {
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _image = pickedFile;
+      });
+      uploadImageToFirebase(context);
+    }
 
     final user = Provider.of<User?>(context);
 
@@ -90,32 +118,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-          backgroundColor: AppColors.primary,
-          leading: IconButton(
-            onPressed: () {
-              auth.signOut();
-              Navigator.pushNamed(context, "/Welcome");
-
-            },
-            icon: Icon(Icons.logout),
-          ),
-          centerTitle: true,
-          title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
-            fontFamily: 'Sansita_Swashed',
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.7,
-          ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              onPressed:(){
-                Navigator.pushNamed(context, "/notificationsPage");
-              },
-              icon: Icon(Icons.add_alert),
-            ),
-          ]
+        backgroundColor: AppColors.primary,
       ),
       body: Scaffold(
         body: Column(
@@ -130,7 +133,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                   child:CircleAvatar(
                     radius: 25,
                     child: ClipOval(
-                      child: Image.asset("assets/images/default_profile_picture.png",
+                      child: Image.network(widget.myUser!.photoUrl!,
                         fit: BoxFit.fill, height: 200, width: 100,),
                     ),
                   ),
@@ -140,8 +143,8 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                   padding: const EdgeInsets.all(10),
                   child: OutlinedButton(
                     child: Text("Change Profile Picture", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                    onPressed: (){
-                      //save changes
+                    onPressed: () async {
+                      await pickImage();
                       setState(() {
 
                       });
@@ -317,26 +320,15 @@ class  _EditProfilePageState extends State<EditProfilePage>{
               padding: const EdgeInsets.all(2),
               child: OutlinedButton(
                 child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                onPressed: () {
+                onPressed: () async {
+                  print(photoUrl);
+                  if(photoUrl != "" )
+                    {
+                      await updateUserPic(widget.myUser!.email!,photoUrl);
+                      widget.myUser!.photoUrl = photoUrl;
+                    }
                   //save changes
-                  setState(() {
-                    if(emptyCount == 4){
-                      showAlertDialog("Invalid Input", "At least one of the fields should not be empty.");
-                    }
-                    else{
-                      if(user != null) {
-                        if(nameUser != "" && surnameUser != "") {
-                          user.updateDisplayName(nameUser+" "+surnameUser);
-                        }
-                        if(addressUser != ""){
-                         //
-                        }
-                        if(passUser != ""){
-                          user.updatePassword(passUser);
-                        }
-                      }
-                    }
-                  });
+                  setState(() {});
                 },
               ),
 
@@ -344,54 +336,6 @@ class  _EditProfilePageState extends State<EditProfilePage>{
           ],
         ),
       ),
-        bottomNavigationBar:
-        BottomNavigationBar(
-            backgroundColor: AppColors.primary,
-            type: BottomNavigationBarType.fixed,
-            iconSize: 35,
-            fixedColor: Colors.black,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.view_headline, color: Colors.white),
-                //label: "Home",
-
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search, color: Colors.white,),
-
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add_box, color: Colors.white, ),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart, color: Colors.white,),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person, color: Colors.white,),
-                title: SizedBox(
-                  height: 0,
-                ),
-              ),
-            ],
-            currentIndex: selectedIndex,
-            onTap: (int index){
-              setState(() {
-                selectedIndex = index;
-              });
-            }
-        ),
     );
   }
 }

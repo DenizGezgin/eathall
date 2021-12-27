@@ -74,7 +74,7 @@ class MyAppState extends State<MyApp> {
           "/logPage": (context) => Login(observer: observer, analytics: analytics),
           "/signupPage": (context) => Signup(observer: observer, analytics: analytics),
           "/Welcome": (context) => Welcome(observer: observer, analytics: analytics),
-          "/profilePage": (context) => ProfilePage(),
+          //"/profilePage": (context) => ProfilePage(),
           "/editProfilePage": (context) => EditProfilePage(),
           "/notificationsPage": (context) => NotificationsPage(),
           "/sellerProfile": (context) => SellerProfilePage(),
