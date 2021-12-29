@@ -12,6 +12,7 @@ final appBarTitleTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 20,
   fontWeight: FontWeight.bold,
+  fontFamily: 'Sansita_Swashed',
   letterSpacing: -0.7,
 );
 
@@ -32,6 +33,14 @@ final loginButtonTextStyle = TextStyle(
 final loginSignupOrContinueSmallTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 12,
+  fontWeight: FontWeight.normal,
+  letterSpacing: -0.7,
+);
+
+final loginSignupOrContinueSmallTextStyleSansitaSwashed = TextStyle(
+  color: Colors.white,
+  fontSize: 12,
+  fontFamily: 'Sansita-Swashed',
   fontWeight: FontWeight.normal,
   letterSpacing: -0.7,
 );

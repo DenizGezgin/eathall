@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/addProduct.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
+import 'package:cs310_step3/routes/redirection_page.dart';
 import 'package:cs310_step3/routes/search_explore.dart';
+import 'package:cs310_step3/routes/shopping_cart_page.dart';
 import 'package:cs310_step3/routes/welcome_page.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
@@ -23,9 +25,9 @@ List<Widget> createNavBar(UserFirebase? user)
 
       MainFeedView(),
       SearchFeed(),
-      Container(child:Text("CANT ACCSESS")),
-      Container(child:Text("Bos")),
-      Container(child:Text("CANT ACCSESS")),
+      RedirectionPage(),
+      ShoppingCartPage(),
+      RedirectionPage(),
     ];
   }
   else if(user.email == "NULL_NAME")
@@ -35,9 +37,9 @@ List<Widget> createNavBar(UserFirebase? user)
 
         MainFeedView(),
         SearchFeed(),
-        Container(child:Text("CANT ACCSESS")),
-        Container(child:Text("Bos")),
-        Container(child:Text("CANT ACCSESS")),
+        RedirectionPage(),
+        ShoppingCartPage(),
+        RedirectionPage(),
       ];
     }
     return <Widget>
@@ -46,7 +48,7 @@ List<Widget> createNavBar(UserFirebase? user)
       MainFeedView(),
       SearchFeed(),
       addProductPage(),
-      Container(child:Text("Bos")),
+      ShoppingCartPage(),
       ProfilePage(myUser: user!,),
     ];
 }
