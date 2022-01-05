@@ -6,6 +6,7 @@ import 'package:cs310_step3/routes/search_explore.dart';
 import 'package:cs310_step3/routes/shopping_cart_page.dart';
 import 'package:cs310_step3/routes/welcome_page.dart';
 import 'package:cs310_step3/utils/color.dart';
+import 'package:cs310_step3/utils/prodcutPage.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:cs310_step3/utils/productDetails.dart';
 import 'package:cs310_step3/utils/styles.dart';
@@ -253,7 +254,14 @@ class _MainFeedViewState extends State<MainFeedView> {
                         decoration: BoxDecoration(border: Border.all(color: AppColors.primary)),
                         child: IconButton(
                           icon: Image.network(allProducts[index].photoUrl!, fit: BoxFit.fill, height: 200, width: 200,),
-                          onPressed: () {print("menemen");},
+                          onPressed: () async{
+                            Product serachFind = await getProdcutWithUrl(allProducts[index].name! + allProducts[index].seller!);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => productPage(myProduct: serachFind),
+                                ));
+                          },
                         ),
                       );
                     }

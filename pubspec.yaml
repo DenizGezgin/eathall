@@ -51,7 +51,9 @@ dependencies:
   email_validator: ^2.0.1
   image_picker: ^0.8.4+4
   firebase_storage: any
-
+  photo_view: ^0.13.0
+  flutter_svg: ^1.0.0
+  flutter_rating_bar: ^4.0.0
 
   provider: ^6.0.1
 
@@ -68,6 +70,7 @@ dev_dependencies:
   email_validator: ^2.0.1
   flutter_signin_button: ^2.0.0
   font_awesome_flutter: ^9.2.0
+
 
 
 # For information on the generic Dart part of this file, see the

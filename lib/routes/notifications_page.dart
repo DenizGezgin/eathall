@@ -68,14 +68,6 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
       backgroundColor: AppColors.background,
       appBar: AppBar(
           backgroundColor: AppColors.primary,
-          leading: IconButton(
-            onPressed: () {
-              auth.signOut();
-              Navigator.pushNamed(context, "/Welcome");
-
-            },
-            icon: Icon(Icons.logout),
-          ),
           centerTitle: true,
           title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
             fontFamily: 'Sansita_Swashed',
@@ -211,46 +203,6 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
               ),
             ],
           )
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppColors.primary,
-        type: BottomNavigationBarType.fixed,
-        iconSize: 35,
-        fixedColor: Colors.black,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.view_headline, color: Colors.white),
-
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.white,),
-
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_box, color: Colors.white, ),
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart, color: Colors.white,),
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.white,),
-            title: SizedBox(
-              height: 0,
-            ),
-          ),
-        ],
       ),
     );
   }
