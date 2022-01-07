@@ -1,3 +1,4 @@
+import 'package:cs310_step3/services/authentication_file.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ class RedirectionPage extends StatefulWidget {
 }
 
 class _RedirectionPageState extends State<RedirectionPage>{
+  AuthService auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +32,7 @@ class _RedirectionPageState extends State<RedirectionPage>{
               padding: EdgeInsets.only(top: 10, left: 45),
               child: IconButton(
                 onPressed: () {
+                  auth.signOut();
                   Navigator.pushNamed(context, "/Welcome");
                 },
                 icon: Icon(Icons.login_outlined),
