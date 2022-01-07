@@ -215,6 +215,7 @@ class _MainFeedViewState extends State<MainFeedView> {
                 color: AppColors.primary,
                 thickness: 1,
               ),
+
               Row(
 
                 mainAxisAlignment: MainAxisAlignment.center,
