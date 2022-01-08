@@ -83,3 +83,10 @@ final loginToContinueTitleWhiteTextStyle = TextStyle(
   letterSpacing: -0.7,
 );
 
+final sellerPageHeaderTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20,
+  fontFamily: 'Sansita-Swashed',
+  fontWeight: FontWeight.normal,
+  letterSpacing: -0.7,
+);
