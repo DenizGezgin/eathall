@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,33 +69,130 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                   ),
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 82),
+                      padding: const EdgeInsets.only(left: 10, top: 82),
                       child:Text("Seller Profile",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                         fontFamily: 'Sansita_Swashed',
                         color: Colors.black,
-                        fontSize: 16,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         letterSpacing: -0.7,
                         ),
 
                       ),
                     ),
-
-                    Container(
-                      color: Colors.black,
-                      width: 180,
-                      height: 1,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Container(
+                        color: Colors.black,
+                        width: 267.5,
+                        height: 1,
+                      ),
                     ),
-                    Text("userName userSurname",
-                        style: smallTitleBlackTextStyle
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text("userName userSurname",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            letterSpacing: -0.7,
+                          ),
+                      ),
                     ),
                   ],
                 ),
               ],
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 125),
+                  child: Text("rating of the seller if possible"),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: TextButton(
+                onPressed: () {},
+                child: Container(
+                  height: 30,
+                  color: AppColors.purchaseAndAdd,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.add_box, color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 103),
+                        child: Text("ADD NEW PRODUCT", style: loginSignupOrContinueSmallTextStyleBlack),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+
+                ),
+                Container(
+
+                ),
+                Container(
+
+                ),
+              ],
+            ),//for the products on sale
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Container(
+                height: 30,
+                width: 368,
+                color: AppColors.loginToContinueBackGround,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:6),
+                  child: Text("SOLD PRODUCTS", textAlign: TextAlign.center,),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+
+                ),
+                Container(
+
+                ),
+                Container(
+
+                ),
+              ],
+            ), //for the sold products
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: TextButton(
+                onPressed: () {},
+                child: Container(
+                  height: 30,
+                  color: AppColors.purchaseAndAdd,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.mode_comment, color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 95),
+                        child: Text("COMMENT REQUESTS", style: loginSignupOrContinueSmallTextStyleBlack),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
