@@ -119,7 +119,8 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
             Padding(
               padding: const EdgeInsets.all(5),
               child: TextButton(
-                onPressed: () {},
+                onPressed: (){
+                  Navigator.pushNamed(context, "/addProductPage"); }, //sorun var
                 child: Container(
                   height: 30,
                   color: AppColors.purchaseAndAdd,
