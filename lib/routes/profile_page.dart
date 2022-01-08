@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cs310_step3/routes/edit_profile.dart';
+import 'package:cs310_step3/routes/seller_profile.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -50,7 +51,11 @@ class  _ProfilePageState extends State<ProfilePage>{
               child: OutlinedButton(
                 child: Text("Seller Profile"),
                 onPressed: () {
-                  Navigator.pushNamed(context, "/sellerProfile");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SellerProfilePage(myUser: widget.myUser)
+                      ));
                 },
               ),
             ),
@@ -193,31 +198,7 @@ class  _ProfilePageState extends State<ProfilePage>{
               color: AppColors.primary,
               thickness: 1,
             ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-            Container(
-              height: 25,
-              width: 400,
-              color: Colors.white,
 
-              child: FlatButton(
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Icon(Icons.thumb_up_alt_rounded, color: Colors.black),
-                    Text("Likes",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
             Divider(
               color: AppColors.primary,
               thickness: 1,
