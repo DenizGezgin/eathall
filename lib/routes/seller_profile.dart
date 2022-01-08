@@ -48,7 +48,16 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 10, top: 90, bottom: 10, left: 10),
+                  padding: const EdgeInsets.only(top: 80),
+                  child: Container(
+                    color: Colors.black,
+                    width: 30,
+                    height: 1,
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 5, top: 90, bottom: 10, left: 5),
                   child: CircleAvatar(
                     radius: 40,
                     child: ClipOval(
@@ -62,7 +71,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 75, left: 5),
+                      padding: const EdgeInsets.only(top: 82),
                       child:Text("Seller Profile",
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -75,12 +84,12 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
 
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child:Divider(
-    thickness: 0.5,
-    color: Colors.black,
-    ),),
+
+                    Container(
+                      color: Colors.black,
+                      width: 180,
+                      height: 1,
+                    ),
                     Text("userName userSurname",
                         style: smallTitleBlackTextStyle
                     ),
