@@ -6,6 +6,8 @@ class DBService {
   final CollectionReference productCollection = FirebaseFirestore.instance.collection('products');
 
 
+  /*late final String uid;
+  DBService({required this.uid});*/
 
   Future addUserAutoID(String name, String surname, String mail, String token) async {
     userCollection.add({
@@ -26,4 +28,10 @@ class DBService {
       'email': mail
     });
   }
+
+ /* Future deleteuser() {
+    return userCollection.document(uid).delete();
+
+  }*/
+
 }
