@@ -4,6 +4,8 @@ import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/routes/seller_profile.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
 import 'login_page.dart';
+import '/services/authentication_file.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -50,8 +53,9 @@ class  _ProfilePageState extends State<ProfilePage>{
                     child: Text(message),
                   ),
                   actions: [
-                    TextButton(onPressed: () {
-                      user!.delete();
+                    TextButton(onPressed: () async{
+                      await user!.delete();
+
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(
@@ -96,8 +100,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                     child: Text(message),
                   ),
                   actions: [
-                    TextButton(onPressed: () {
-                      user!.delete();
+                    TextButton(onPressed: () async{
+                      await user!.delete();
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(
