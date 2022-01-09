@@ -55,6 +55,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                   actions: [
                     TextButton(onPressed: () async{
                       await user!.delete();
+                      await deleteUser(widget.myUser!.email!);
 
                       Navigator.of(context).pop();
                       auth.signOut();
@@ -102,6 +103,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                   actions: [
                     TextButton(onPressed: () async{
                       await user!.delete();
+                      await deleteUser(widget.myUser!.email!);
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(
@@ -157,7 +159,7 @@ class  _ProfilePageState extends State<ProfilePage>{
             Padding(
               padding: const EdgeInsets.all(2),
               child: OutlinedButton(
-                child: Text("Seller Profile"),
+                child: Text("Seller Profile", style: TextStyle(color: Colors.black)),
                 onPressed: () {
                   Navigator.push(
                       context,

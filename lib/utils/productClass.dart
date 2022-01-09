@@ -13,8 +13,11 @@ class Product
   final String? description;
   final List<dynamic>? comments;
   final double? rating;
+  final String? sellerMail;
+  final int? numberOfRatings;
+  final int? sumOfRatings;
 
-  Product({this.name, this.category, this.seller, this.price, this.isOnSale, this.description, this.photoUrl, this.comments, this.rating});
+  Product({this.category, this.name, this.seller, this.price, this.isOnSale, this.photoUrl, this.description, this.comments, this.rating, this.sellerMail, this.numberOfRatings, this.sumOfRatings, });
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
@@ -41,6 +44,9 @@ Future<List<Product>> getAllData() async {
       description: dataMap["description"] ?? "NULL_NAME",
       rating: dataMap["rating"] ?? 0.0,
       comments: dataMap["comments"] ?? [],
+      sellerMail: dataMap["sellerMail"] ?? "NULL_NAME@gmail.com",
+      numberOfRatings: dataMap["numberOfRatings"] ?? 0,
+      sumOfRatings: dataMap["sumOfRatings"] ?? 0,
     );
 
   }).toList();
@@ -58,6 +64,9 @@ Future<void> addProduct(String namec, String categoryc,String sellerc,int pricec
     'photoUrl': photoUrlc,
     'comments': [],
     "rating" : 0.0,
+    "sellerMail": "", //o ikisini bağlayınca parametre passlenecek
+    "numberOfRatings": 0,
+    "sumOfRatings": 0,
   })
       .then((value) => print("Product Added"))
       .catchError((error) => print("Failed to add product: $error"));
@@ -83,6 +92,9 @@ Future<Product> getProdcutWithUrl(String url) async{
       description: dataMap["description"] ?? "NULL_NAME",
       rating: dataMap["rating"] ?? 0,
       comments: dataMap["comments"] ?? [],
+      sellerMail: dataMap["sellerMail"] ?? "NULL_NAME@gmail.com",
+      numberOfRatings: dataMap["numberOfRatings"] ?? 0,
+      sumOfRatings: dataMap["sumOfRatings"] ?? 0,
     );
     print(finalProduct.name);
     return finalProduct;
@@ -97,5 +109,14 @@ Future<Product> getProdcutWithUrl(String url) async{
     description:  "NULL_NAME",
     rating:  0,
     comments: [],
+    sellerMail: "NULL_NAME@gmail.com",
+    numberOfRatings: 0,
+    sumOfRatings: 0,
   );
+}
+
+Future<void> deleteProduct(String productKey) async{
+  return _collectionRef.doc(productKey).delete()
+      .then((value) => print("User Deleted"))
+      .catchError((error) => print("Failed to delete user product: $error"));
 }

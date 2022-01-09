@@ -80,7 +80,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 80),
+                  padding: const EdgeInsets.only(top: 30),
                   child: Container(
                     color: Colors.black,
                     width: 30,
@@ -89,7 +89,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(right: 5, top: 90, bottom: 10, left: 5),
+                  padding: const EdgeInsets.only(right: 5, top: 40, bottom: 10, left: 5),
                   child: CircleAvatar(
                     radius: 40,
                     child: ClipOval(
@@ -104,7 +104,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 82),
+                      padding: const EdgeInsets.only(left: 10, top: 32),
                       child:Text("Seller Profile",
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -137,6 +137,22 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                       ),
                     ),
                   ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 25,),
+                RatingBarIndicator(
+                  rating: 5,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star_rate_outlined,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 20.0,
+                  direction: Axis.horizontal,
                 ),
               ],
             ),

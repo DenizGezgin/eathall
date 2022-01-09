@@ -60,12 +60,7 @@ class _productPageState extends State<productPage> {
                     side: BorderSide(color: Colors.black, width: 0.5),
                   ),
                   onPressed: () {
-                    /*userNameOfSeller = widget.myProduct.seller;
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SellerProfileBuyerPage(myUser: getUserWithName(userNameOfSeller))
-                        ));*/
+
                   },
                   child: Text(
                     widget.myProduct.seller!,
