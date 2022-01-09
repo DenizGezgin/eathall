@@ -22,7 +22,7 @@ class DataModel {
       return DataModel(
           name: dataMap['name'],
           category: dataMap['category'],
-          seller: dataMap['seller'],
+          seller: dataMap['seller'], //sellerı user id ile tutmaliyiz ki buyerlarin gordugu seller profilea passlayabilelim
           price: dataMap['price'] ?? 0,
           isOnSale: dataMap['isOnSale'] ?? true,
           photoUrl: dataMap["photoUrl"] ?? "https://i.nefisyemektarifleri.com/2009/02/menemen.jpg") ;

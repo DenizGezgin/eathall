@@ -43,40 +43,99 @@ class  _ProfilePageState extends State<ProfilePage>{
           barrierDismissible: false, //must take action
           builder: (BuildContext context) {
             if(isIOS) {
-              return CupertinoAlertDialog( //styling is not always auto adjusted
-                title: Text(title),
-                content: SingleChildScrollView(
-                  child: Text(message),
-                ),
-                actions: [
-                  TextButton(onPressed: () {
-                    Navigator.of(context).pop(); //pop the current alert view
-                  },
-                      child: Text("YES")),
-                  TextButton(onPressed: () {
-                    Navigator.of(context).pop(); //pop the current alert view
-                  },
-                      child: Text("NO"))
-                ],
-              );
+              if(isDelete) {
+                return CupertinoAlertDialog( //styling is not always auto adjusted
+                  title: Text(title),
+                  content: SingleChildScrollView(
+                    child: Text(message),
+                  ),
+                  actions: [
+                    TextButton(onPressed: () {
+                      user!.delete();
+                      Navigator.of(context).pop();
+                      auth.signOut();
+                      Navigator.pushNamed(
+                          context, "/Welcome"); //pop the current alert view
+                    },
+                        child: Text("YES")),
+                    TextButton(onPressed: () {
+                      Navigator.of(context).pop(); //pop the current alert view
+                    },
+                        child: Text("NO"))
+                  ],
+                );
+              }
+              else {
+                return CupertinoAlertDialog( //styling is not always auto adjusted
+                  title: Text(title),
+                  content: SingleChildScrollView(
+                    child: Text(message),
+                  ),
+                  actions: [
+                    TextButton(onPressed: () {
+                      deactivate();
+                      Navigator.of(context).pop();
+                      auth.signOut();
+                      Navigator.pushNamed(
+                          context, "/Welcome"); //pop the current alert view
+                    },
+                        child: Text("YES")),
+                    TextButton(onPressed: () {
+                      Navigator.of(context).pop(); //pop the current alert view
+                    },
+                        child: Text("NO"))
+                  ],
+                );
+              }
             }
             else{
-              return AlertDialog(
-                title: Text(title),
-                content: SingleChildScrollView(
-                  child: Text(message),
-                ),
-                actions: [
-                  TextButton(onPressed: () {
-                    Navigator.of(context).pop(); //pop the current alert view
-                  },
-                      child: Text("YES")),
-                  TextButton(onPressed: () {
-                    Navigator.of(context).pop(); //pop the current alert view
-                  },
-                      child: Text("NO"))
-                ],
-              );
+              if(isDelete) {
+                return AlertDialog(
+                  title: Text(title),
+                  content: SingleChildScrollView(
+                    child: Text(message),
+                  ),
+                  actions: [
+                    TextButton(onPressed: () {
+                      user!.delete();
+                      Navigator.of(context).pop();
+                      auth.signOut();
+                      Navigator.pushNamed(
+                          context, "/Welcome");//pop the current alert view
+                    },
+                        child: Text("YES")),
+                    TextButton(onPressed: () {
+
+                      Navigator.of(context).pop();
+                    },
+                        child: Text("NO"))
+                  ],
+                );
+              }
+              else {
+                return AlertDialog(
+                  title: Text(title),
+                  content: SingleChildScrollView(
+                    child: Text(message),
+                  ),
+                  actions: [
+                    TextButton(onPressed: () {
+
+                      Navigator.of(context).pop();
+                      auth.signOut();
+                      Navigator.pushNamed(
+                          context, "/Welcome");
+                      //pop the current alert view
+                    },
+                        child: Text("YES")),
+                    TextButton(onPressed: () {
+                      Navigator.of(context).pop();
+                      //pop the current alert view
+                    },
+                        child: Text("NO"))
+                  ],
+                );
+              }
             }
           }
       );
@@ -148,10 +207,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                           "Deactivate\nAccount", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
                       onPressed: () {
-                        showAlertDialog("Warning", "Are you sure you want to delete your account? This action cannot be undone.", false);
-                        Navigator.of(context).pop();
-                        //auth.signOut();
-                        //Navigator.pushNamed(context, "/Welcome");
+                        showAlertDialog("Warning", "Are you sure you want to deactivate your account?", false);
+
                         //pop up something
                       },
                     ),
@@ -163,10 +220,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                           "Delete\nAccount", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
                       onPressed: () {
-                        showAlertDialog("Warning", "Are you sure you want to deactivate your account?", true);
-                        Navigator.of(context).pop();
-                        //auth.signOut();
-                        //Navigator.pushNamed(context, "/Welcome");
+                        showAlertDialog("Warning", "Are you sure you want to delete your account? This action cannot be undone.", true);
+
                         //pop up something
                       },
                     ),

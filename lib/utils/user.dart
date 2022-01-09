@@ -11,8 +11,9 @@ class UserFirebase
   final List<dynamic>? bookmarks;
   final List<dynamic>? likes;
   final List<dynamic>? credit_cards;
+  //final bool? disabled;
 
-  UserFirebase({this.email, this.name, this.surname, this.adress, this.photoUrl, this.comments, this.bookmarks, this.likes, this.credit_cards});
+  UserFirebase({this.email, this.name, this.surname, this.adress, this.photoUrl, this.comments, this.bookmarks, this.likes, this.credit_cards, /*this.disabled*/});
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
@@ -46,6 +47,7 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
       bookmarks: dataMap["bookmarks"] ?? [],
       likes: dataMap["likes"] ?? [],
       credit_cards: dataMap["credit_cards"] ?? [],
+      //disabled: dataMap["disabled"] ?? true,
     );
     print(finalUser.name);
     return finalUser;
@@ -61,6 +63,7 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
     bookmarks: [],
     likes:  [],
     credit_cards: [],
+    //disabled: true,
   );
 }
 
@@ -76,6 +79,7 @@ Future<void> addUser(String namec, String emailc,String surnamec,String adressc)
     "bookmarks": [],
     "likes":  [],
     "credit_cards": [],
+    //"disabled": false,
   })
       .then((value) => print("User Added"))
       .catchError((error) => print("Failed to add user product: $error"));
