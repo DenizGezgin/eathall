@@ -39,11 +39,6 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
       }
     }
 
-    /*var f = widget.myUser;
-    if (f != null) {
-      var widgetMyUser = f; // Safe
-    }*/
-
     if (user != null) {
       return Scaffold(
         appBar: AppBar(

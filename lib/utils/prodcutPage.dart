@@ -1,5 +1,7 @@
+import 'package:cs310_step3/routes/sellert_profile_buyers_see.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,6 +14,8 @@ class productPage extends StatefulWidget {
   @override
   _productPageState createState() => _productPageState();
 }
+String? userNameOfSeller = "";
+
 
 class _productPageState extends State<productPage> {
   @override
@@ -49,17 +53,31 @@ class _productPageState extends State<productPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton(
-                  onPressed: (){},
-                  child: Text(widget.myProduct.seller!,
-                    style: TextStyle(fontWeight: FontWeight.normal, color: Colors.grey,
-                        fontSize: 18),),
-                )
+                RaisedButton(
+                  color: Colors.white,
+                  textColor: Colors.black,
+                  shape: StadiumBorder(
+                    side: BorderSide(color: Colors.black, width: 0.5),
+                  ),
+                  onPressed: () {
+                    /*userNameOfSeller = widget.myProduct.seller;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SellerProfileBuyerPage(myUser: getUserWithName(userNameOfSeller))
+                        ));*/
+                  },
+                  child: Text(
+                    widget.myProduct.seller!,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, color: Colors.grey,
+                        fontSize: 18),
+                  ),
+                ),
               ],),
             RatingBarIndicator(
               rating: widget.myProduct.rating!,
               itemBuilder: (context, index) => Icon(
-                Icons.local_pizza_outlined,
+                Icons.star_rate_outlined,
                 color: Colors.amber,
               ),
               itemCount: 5,
@@ -69,6 +87,7 @@ class _productPageState extends State<productPage> {
             SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   width: 370.0,
@@ -81,6 +100,7 @@ class _productPageState extends State<productPage> {
                     padding: EdgeInsets.all(10.0),
                     child: Text(
                         widget.myProduct.description!,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Arial',
                           color: Colors.grey,
@@ -92,32 +112,59 @@ class _productPageState extends State<productPage> {
                   ),
               ],),
             SizedBox(height: 2,),
-             Divider(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("${widget.myProduct.price} TL",
-                    style: TextStyle(
-                      fontFamily: 'Arial',
-                      color: AppColors.primary,
-                      fontSize: 18,
-                      height: 1,
-                    ),),
-                  Row(
-                      children: [
-                        Text("Add to Cart",
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  child: Column(
+                    children: [
+                      Text("Price", style: TextStyle(
+                        color: AppColors.primary,
+                        fontFamily: 'Arial',
+                        fontSize: 18,
+                        height: 1,),
+                      ),
+                      SizedBox(height: 35),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.horizontal(),
+                            border: Border.all(color: AppColors.primary,
+                            width: 0.5)
+                        ),
+                        child: Text("${widget.myProduct.price} TL",
                           style: TextStyle(
                             fontFamily: 'Arial',
-                            color: Colors.green,
+                            color: AppColors.primary,
                             fontSize: 18,
                             height: 1,
                           ),),
-                        IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart, color: Colors.green,))], ),
-
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Add to Cart",
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          color: AppColors.purchaseAndAdd,
+                          fontSize: 18,
+                          height: 1,
+                        ),),
+                      SizedBox(height:10),
+                      IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.shopping_cart,
+                              color: AppColors.purchaseAndAdd,),
+                        highlightColor: Colors.greenAccent,
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
             Divider(),
             ListView.builder(
