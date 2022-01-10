@@ -1,4 +1,4 @@
-import 'package:cs310_step3/routes/sellert_profile_buyers_see.dart';
+import 'package:cs310_step3/routes/seller_profile_buyers_see.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:cs310_step3/utils/user.dart';
@@ -258,7 +258,7 @@ class _productPageState extends State<productPage> {
                     trailing: RatingBarIndicator( //-0000.1
                       rating: widget.myProduct.comments![index]["rating"],
                       itemBuilder: (context, index) => Icon(
-                        Icons.local_pizza_outlined,
+                        Icons.star_rate_outlined,
                         color: Colors.amber,
                       ),
                       itemCount: 5,

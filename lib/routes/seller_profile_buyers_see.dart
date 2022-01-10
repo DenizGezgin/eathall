@@ -74,7 +74,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 80),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Container(
                     color: Colors.black,
                     width: 30,
@@ -83,7 +83,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(right: 5, top: 90, bottom: 10, left: 5),
+                  padding: const EdgeInsets.only(right: 5, top: 20, bottom: 10, left: 5),
                   child: CircleAvatar(
                     radius: 40,
                     child: ClipOval(
@@ -98,7 +98,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 82),
+                      padding: const EdgeInsets.only(left: 10, top: 12),
                       child:Text("Seller Profile",
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -134,7 +134,23 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                 ),
               ],
             ),
-
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 25,),
+                RatingBarIndicator(
+                  rating: widget.myUser!.averageRating!,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star_rate_outlined,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 20.0,
+                  direction: Axis.horizontal,
+                ),
+              ],
+            ),
+            //scrollable column of products, connected to product page
             Row(
               children: [
                 Container(
@@ -160,7 +176,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                     children: [
                       Icon(Icons.mode_comment, color: Colors.black),
                       Padding(
-                        padding: const EdgeInsets.only(left: 95),
+                        padding: const EdgeInsets.only(left: 125),
                         child: Text("COMMENTS", style: loginSignupOrContinueSmallTextStyleBlack),
                       ),
                     ],
@@ -168,6 +184,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                 ),
               ),
             ),
+            //scrollable column of comments
           ],
         ),
       );
