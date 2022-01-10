@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserFirebase
 {
@@ -19,9 +20,10 @@ class UserFirebase
   final List<dynamic>? notifications;
   final bool? disabled;
   final double? averageRating;
+  final int? numberOfRatings;
 
 
-  UserFirebase({this.prev_sales, this.notifications, this.photoUrl, this.email, this.name, this.surname, this.adress, this.comments, this.bookmarks, this.credit_cards, this.shopping_card, this.bought_products, this.products_onsale, this.comment_approves, this.disabled, this.averageRating});
+  UserFirebase({this.numberOfRatings, this.prev_sales, this.notifications, this.photoUrl, this.email, this.name, this.surname, this.adress, this.comments, this.bookmarks, this.credit_cards, this.shopping_card, this.bought_products, this.products_onsale, this.comment_approves, this.disabled, this.averageRating});
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
@@ -66,6 +68,59 @@ Future<void> updateBookmark(String userMail, String productKey) async{
       .catchError((error) => print("Failed to update user: $error"));
 }
 
+Future<void> addPendingComment(String userMail, String commentData, double finalRate, int index, String productKey, String commenterMail) async{
+  //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL
+  Map<String, dynamic> myComment = {};
+  UserFirebase curerntCommenter = await getUserWithMail(commenterMail);
+  var listUpdate = curerntCommenter.bought_products!;
+  listUpdate[index]["isAlreadyRated"] = true;
+  myComment["user"] = curerntCommenter.name! + " " +  curerntCommenter.surname!;
+  myComment["data"] = commentData;
+  myComment["productKey"] = productKey;
+  myComment["rating"] = finalRate;
+  myComment["userMail"] = curerntCommenter.email!;
+  myComment["isApproved"] = false;
+  List<dynamic> newItem = [myComment];
+  _collectionRef.doc(commenterMail)
+      .update({
+    "bought_products": listUpdate,
+  });
+  return _collectionRef.doc(userMail)
+      .update({
+    "comment_approves": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("Comment Added to approve list Updated"))
+      .catchError((error) => print("Failed toComment Added to approve list user: $error"));
+}
+
+Future<void> addAprrovedComment(String userMail, Map<String, dynamic> myComment) async{
+  //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL + PRODUCTKEY
+  List<dynamic> newItem = [myComment];
+  _collectionRef.doc(userMail)
+      .update({
+    "comment_approves": FieldValue.arrayRemove(newItem),
+  });
+
+  return _collectionRef.doc(userMail)
+      .update({
+    "comments": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("Comment Added to approve list Updated"))
+      .catchError((error) => print("Failed toComment Added to approve list user: $error"));
+}
+
+Future<void> updateUserRating(String userMail, double raiting) async{
+  UserFirebase current = await getUserWithMail(userMail);
+  double finalRate = (current.averageRating!*current.numberOfRatings! + raiting)/(current.numberOfRatings! + 1);
+  return _collectionRef.doc(userMail)
+      .update({
+  "averageRating": finalRate,
+  "numberOfRatings" : current.numberOfRatings! + 1,
+  })
+      .then((value) => print("Rating USER Updated"))
+      .catchError((error) => print("Failed to update Rating USER: $error"));
+}
+
 Future<void> removeFromCard(String userMail, String productKey) async{
   List<dynamic> newItem = [productKey];
   return _collectionRef.doc(userMail)
@@ -104,6 +159,7 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
       notifications: dataMap["notifications"] ?? [],
       prev_sales: dataMap["prev_sales"] ?? [],
       averageRating: dataMap["averageRating"] ?? 0.00001,
+      numberOfRatings: dataMap["numberOfRatings"] ?? 0,
       disabled: dataMap["disabled"] ?? false,
     );
     print(finalUser.name);
@@ -126,6 +182,7 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
     comment_approves: [],
     notifications: [],
     prev_sales: [],
+    numberOfRatings: 0,
     averageRating: 0.00001,
   );
 }
@@ -148,6 +205,7 @@ Future<void> addUser(String emailc, String namec,String surnamec,String adressc)
     "comment_approves": [],
     "notifications": [],
     "prev_sales": [],
+    "numberOfRatings" : 0,
     "averageRating": 0.00001,
   })
       .then((value) => print("User Added"))
@@ -182,6 +240,7 @@ Future<void> disableUser(String userMail) async{
     "averageRating": myUser.averageRating,
     "prev_sales": myUser.prev_sales,
     "notifications": myUser.notifications,
+    "numberOfRatings": myUser.numberOfRatings,
   })
       .then((value) => print("User Saved to Disabled"))
       .catchError((error) => print("Failed to add disable: $error"));
@@ -219,6 +278,7 @@ Future<UserFirebase> getDisabledUserWithMail(String userMail) async{
       comment_approves: dataMap["comment_approves"] ?? [],
       notifications: dataMap["notifications"] ?? [],
       averageRating: dataMap["averageRating"] ?? 0.00001,
+      numberOfRatings: dataMap["numberOfRatings"] ?? 0,
       disabled: dataMap["disabled"] ?? false,
     );
     print(finalUser.name);
@@ -241,6 +301,7 @@ Future<UserFirebase> getDisabledUserWithMail(String userMail) async{
     comment_approves: [],
     prev_sales: [],
     notifications: [],
+    numberOfRatings: 0,
     averageRating: 0.00001,
   );
 }
@@ -267,6 +328,7 @@ Future<void> enableUser(String userMail) async{
     "prev_sales": myUser.prev_sales,
     "averageRating": myUser.averageRating,
     "notifications": myUser.notifications,
+    "numberOfRatings": myUser.numberOfRatings,
   })
       .then((value) => print("User Saved to Disabled"))
       .catchError((error) => print("Failed to add disable: $error"));

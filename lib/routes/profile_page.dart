@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/edit_profile.dart';
+import 'package:cs310_step3/routes/pastPurchase.dart';
 import 'package:cs310_step3/routes/seller_profile.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
+import 'commentReqs.dart';
 import 'login_page.dart';
 import '/services/authentication_file.dart';
 
@@ -271,7 +273,15 @@ class  _ProfilePageState extends State<ProfilePage>{
               color: Colors.white,
 
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => pastPurchese(userMail: widget.myUser!.email!),
+                      ));
+
+
+                },
                 child: Row(
                   children: [
                     Icon(Icons.account_balance_wallet_rounded,
@@ -348,7 +358,15 @@ class  _ProfilePageState extends State<ProfilePage>{
               color: Colors.white,
 
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ApproveComments(userMail: widget.myUser!.email!),
+                      ));
+
+
+                },
                 child: Row(
                   children: [
                     Icon(Icons.credit_card, color: Colors.black),

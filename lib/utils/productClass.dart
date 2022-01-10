@@ -120,3 +120,24 @@ Future<void> deleteProduct(String productKey) async{
       .then((value) => print("User Deleted"))
       .catchError((error) => print("Failed to delete user product: $error"));
 }
+
+Future<void> updateProductRating(String productKey, double raiting) async{
+  Product current = await getProdcutWithUrl(productKey);
+  double finalRate = (current.rating!*current.numberOfRatings! + raiting)/(current.numberOfRatings! + 1);
+  return _collectionRef.doc(productKey)
+      .update({
+    "rating": finalRate,
+    "numberOfRatings" : current.numberOfRatings! + 1,
+  })
+      .then((value) => print("Rating product Updated"))
+      .catchError((error) => print("Failed to update Rating product: $error"));
+}
+
+Future<void> addCommentProduct(String productKey, Map<String, dynamic> myComment) async {
+  //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL + PRODUCTKEY
+  List<dynamic> newItem = [myComment];
+  _collectionRef.doc(productKey)
+      .update({
+    "comments": FieldValue.arrayUnion(newItem),
+  });
+}
