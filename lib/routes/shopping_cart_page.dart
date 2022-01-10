@@ -27,26 +27,39 @@ import 'package:flutter/material.dart';
 class ShoppingCartPage extends StatefulWidget {
   @override
   State<ShoppingCartPage> createState() => _ShoppingCartPageState();
+  ShoppingCartPage({Key? key, this.myUser}) : super(key: key);
+  UserFirebase? myUser;
 }
+
+
 
 class  _ShoppingCartPageState extends State<ShoppingCartPage>{
 
-  List<Product> myPosts = [
-    Product(name: 'Lehmacun', price: 6),
-    Product(name: 'Adana Kebap', price: 18),
-    Product(name: 'Kaz Eti', price: 90),
-    Product(name: 'Lehmacun', price: 6),
-    Product(name: 'Kaz Eti', price: 90),
-  ];
+  List<Product> myPosts = [];
 
+  void asyncMethod() async {
+    myPosts = await getPosts();
+    setState(() {
 
+    });
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    asyncMethod();
+  }
 
-    print('initState');
+  getPosts() async {
+    List<Product> myPostsPrev = [];
+    List<dynamic> myKeys = widget.myUser!.shopping_card!;
+    Product current;
+    for(String key in myKeys)
+    {
+      current = await getProdcutWithUrl(key);
+      myPostsPrev.add(current);
+    }
+    return myPostsPrev;
   }
 
 
@@ -74,7 +87,8 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
                           post: product,
                           delete: () {
                             setState(() {
-                              myPosts.remove(product);
+                              removeFromCard(widget.myUser!.email!, product.name! + product.seller!);
+                              myPosts.remove(value)
                             });
                           },)
                 ).toList(),

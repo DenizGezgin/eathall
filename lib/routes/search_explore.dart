@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/prodcutPage.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firestore_search/firestore_search.dart';
 import 'package:flutter/material.dart';
 import  '/utils/productDetails.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 
 class SearchFeed extends StatefulWidget {
-  const SearchFeed({Key? key}) : super(key: key);
+  SearchFeed({Key? key, this.myUser}) : super(key: key);
+  UserFirebase? myUser;
 
   @override
   _SearchFeedState createState() => _SearchFeedState();
@@ -263,7 +265,7 @@ class _SearchFeedState extends State<SearchFeed> {
                                                      Navigator.push(
                                                          context,
                                                          MaterialPageRoute(
-                                                             builder: (context) => productPage(myProduct: serachFind),
+                                                             builder: (context) => productPage(myUser: widget.myUser,myProduct: serachFind),
                                                          ));
                                                    },
                                                  ),

@@ -8,8 +8,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:photo_view/photo_view.dart';
 
 class productPage extends StatefulWidget {
-  const productPage({Key? key, required this.myProduct}) : super(key: key);
+  productPage({Key? key, required this.myProduct, this.myUser}) : super(key: key);
   final Product myProduct;
+  UserFirebase? myUser;
 
   @override
   _productPageState createState() => _productPageState();
@@ -20,6 +21,25 @@ String? userNameOfSeller = "";
 class _productPageState extends State<productPage> {
   @override
   Widget build(BuildContext context) {
+    Future<void> showAlertDialog(String title, String message) async {
+      return showDialog(context: context,
+          barrierDismissible: false, //must take action
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: SingleChildScrollView(
+                child: Text(message),
+              ),
+              actions: [
+                TextButton(onPressed: () {
+                  Navigator.of(context).pop(); //pop the current alert view
+                },
+                    child: Text("Okey"))
+              ],
+            );
+          }
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF973333),
@@ -151,7 +171,18 @@ class _productPageState extends State<productPage> {
                         ),),
                       SizedBox(height:10),
                       IconButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            if(widget.myUser != null)
+                              {
+                                updateCard(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
+                                showAlertDialog("Sucsess", "Product is added to the card.");
+                              }
+                            else
+                              {
+                                print("NullUser");
+                              }
+
+                          },
                           icon: Icon(Icons.shopping_cart,
                               color: AppColors.purchaseAndAdd,),
                         highlightColor: Colors.greenAccent,

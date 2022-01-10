@@ -14,13 +14,14 @@ class UserFirebase
   final List<dynamic>? shopping_card;
   final List<dynamic>? bought_products;
   final List<dynamic>? products_onsale;
+  final List<dynamic>? prev_sales;
   final List<dynamic>? comment_approves;
   final List<dynamic>? notifications;
   final bool? disabled;
   final double? averageRating;
 
 
-  UserFirebase({this.notifications, this.photoUrl, this.email, this.name, this.surname, this.adress, this.comments, this.bookmarks, this.credit_cards, this.shopping_card, this.bought_products, this.products_onsale, this.comment_approves, this.disabled, this.averageRating});
+  UserFirebase({this.prev_sales, this.notifications, this.photoUrl, this.email, this.name, this.surname, this.adress, this.comments, this.bookmarks, this.credit_cards, this.shopping_card, this.bought_products, this.products_onsale, this.comment_approves, this.disabled, this.averageRating});
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
@@ -40,6 +41,26 @@ Future<void> updateSoldProducts(String userMail, String productKey) async{
   return _collectionRef.doc(userMail)
       .update({
     "products_onsale": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("User Updated"))
+      .catchError((error) => print("Failed to update user: $error"));
+}
+
+Future<void> updateCard(String userMail, String productKey) async{
+  List<dynamic> newItem = [productKey];
+  return _collectionRef.doc(userMail)
+      .update({
+    "shopping_card": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("User Updated"))
+      .catchError((error) => print("Failed to update user: $error"));
+}
+
+Future<void> removeFromCard(String userMail, String productKey) async{
+  List<dynamic> newItem = [productKey];
+  return _collectionRef.doc(userMail)
+      .update({
+    "shopping_card": FieldValue.arrayRemove(newItem),
   })
       .then((value) => print("User Updated"))
       .catchError((error) => print("Failed to update user: $error"));
@@ -71,6 +92,7 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
       products_onsale: dataMap["products_onsale"] ?? [],
       comment_approves: dataMap["comment_approves"] ?? [],
       notifications: dataMap["notifications"] ?? [],
+      prev_sales: dataMap["prev_sales"] ?? [],
       averageRating: dataMap["averageRating"] ?? 0.00001,
       disabled: dataMap["disabled"] ?? false,
     );
@@ -93,6 +115,7 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
     products_onsale: [],
     comment_approves: [],
     notifications: [],
+    prev_sales: [],
     averageRating: 0.00001,
   );
 }
@@ -114,6 +137,7 @@ Future<void> addUser(String emailc, String namec,String surnamec,String adressc)
     "products_onsale": [],
     "comment_approves": [],
     "notifications": [],
+    "prev_sales": [],
     "averageRating": 0.00001,
   })
       .then((value) => print("User Added"))
@@ -146,6 +170,7 @@ Future<void> disableUser(String userMail) async{
     "products_onsale": myUser.products_onsale,
     "comment_approves": myUser.comment_approves,
     "averageRating": myUser.averageRating,
+    "prev_sales": myUser.prev_sales,
     "notifications": myUser.notifications,
   })
       .then((value) => print("User Saved to Disabled"))
@@ -180,6 +205,7 @@ Future<UserFirebase> getDisabledUserWithMail(String userMail) async{
       shopping_card: dataMap["shopping_card"] ?? [],
       bought_products: dataMap["bought_products"] ?? [],
       products_onsale: dataMap["products_onsale"] ?? [],
+      prev_sales: dataMap["prev_sales"] ?? [],
       comment_approves: dataMap["comment_approves"] ?? [],
       notifications: dataMap["notifications"] ?? [],
       averageRating: dataMap["averageRating"] ?? 0.00001,
@@ -203,6 +229,7 @@ Future<UserFirebase> getDisabledUserWithMail(String userMail) async{
     bought_products: [],
     products_onsale: [],
     comment_approves: [],
+    prev_sales: [],
     notifications: [],
     averageRating: 0.00001,
   );
@@ -227,6 +254,7 @@ Future<void> enableUser(String userMail) async{
     "bought_products": myUser.bought_products,
     "products_onsale": myUser.products_onsale,
     "comment_approves": myUser.comment_approves,
+    "prev_sales": myUser.prev_sales,
     "averageRating": myUser.averageRating,
     "notifications": myUser.notifications,
   })

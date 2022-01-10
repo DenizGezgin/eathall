@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import '/services/authentication_file.dart';
 import '/services/db.dart';
 
+UserFirebase? myUserGlobal;
+
 List<Widget> createNavBar(UserFirebase? user)
 {
   if(user == null)
@@ -43,14 +45,18 @@ List<Widget> createNavBar(UserFirebase? user)
         RedirectionPage(),
       ];
     }
+  else
+    {
+      myUserGlobal = user;
+    }
     return <Widget>
     [
 
       MainFeedView(),
-      SearchFeed(),
-      addProductPage(myUser: user!,),
-      ShoppingCartPage(),
-      ProfilePage(myUser: user!,),
+      SearchFeed(myUser: user),
+      addProductPage(myUser: user,),
+      ShoppingCartPage(myUser: user),
+      ProfilePage(myUser: user,),
     ];
 }
 
@@ -176,7 +182,8 @@ class _FeedViewState extends State<FeedView> {
 }
 
 class MainFeedView extends StatefulWidget {
-  const MainFeedView({Key? key}) : super(key: key);
+  MainFeedView({Key? key}) : super(key: key);
+  //UserFirebase? myUser;
 
   @override
   _MainFeedViewState createState() => _MainFeedViewState();
@@ -260,7 +267,7 @@ class _MainFeedViewState extends State<MainFeedView> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => productPage(myProduct: serachFind),
+                                  builder: (context) => productPage(myUser: myUserGlobal,myProduct: serachFind),
                                 ));
                           },
                         ),
