@@ -305,6 +305,8 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                 OutlinedButton(
                   onPressed: (){
                     //removing product
+                    removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
+                    deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
                   },
                   child: Text("Remove Product"),
                 ),

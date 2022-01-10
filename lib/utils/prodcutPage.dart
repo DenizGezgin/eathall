@@ -58,11 +58,17 @@ class _productPageState extends State<productPage> {
         ),
         height: 200.0,
         child: ClipRect(
-          child: PhotoView(
-            imageProvider: NetworkImage(widget.myProduct.photoUrl!),
-            maxScale: PhotoViewComputedScale.covered * 2.0,
-            minScale: PhotoViewComputedScale.contained * 0.8,
-            initialScale: PhotoViewComputedScale.covered,
+          child: InteractiveViewer(
+            panEnabled: false, // Set it to false
+            boundaryMargin: EdgeInsets.all(100),
+            minScale: 0.5,
+            maxScale: 2,
+            child: PhotoView(
+              imageProvider: NetworkImage(widget.myProduct.photoUrl!),
+              maxScale: PhotoViewComputedScale.covered * 2.0,
+              minScale: PhotoViewComputedScale.contained * 0.8,
+              initialScale: PhotoViewComputedScale.covered,
+            ),
           ),
         ),
     ),

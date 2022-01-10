@@ -189,6 +189,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                   onSaved: (value) {
                     if (value != null) {
                       nameUser = value;
+
                     }
                   },
                 ),
@@ -228,6 +229,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                   onSaved: (value) {
                     if (value != null) {
                       surnameUser = value;
+
                     }
                   },
                 ),
@@ -270,7 +272,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                   onSaved: (value) {
                     if (value != null) {
-                      passUser = value;
+                      passUser = value; //burası eksik
                     }
                   },
                 ),
@@ -309,6 +311,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                 onSaved: (value) {
                   if (value != null) {
                     addressUser = value;
+
                   }
                 },
               ),
@@ -322,15 +325,29 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                 onPressed: () async {
                   print(photoUrl);
                   if(photoUrl != "" )
-                    {
-                      await updateUserPic(widget.myUser!.email!,photoUrl);
-                      widget.myUser!.photoUrl = photoUrl;
-                    }
+                  {
+                    await updateUserPic(widget.myUser!.email!,photoUrl);
+                    widget.myUser!.photoUrl = photoUrl;
+                  }
+                  if(nameUser != ""){
+                    await updateUserName(widget.myUser!.email!, nameUser);
+                  }
+                  if(surnameUser != ""){
+                    await updateUserSurname(widget.myUser!.email!, surnameUser);
+                  }
+                  if(addressUser != ""){
+                    await updateUserAddress(widget.myUser!.email!, addressUser);
+                  }
+                  if(passUser != ""){
+                    await changePassword(passUser);
+                    auth.signOut();
+                    Navigator.pushNamed(context, "/Welcome");
+                  }
                   //save changes
-                  setState(() {});
+                  setState((){
+                  });
                 },
               ),
-
             ),
           ],
         ),

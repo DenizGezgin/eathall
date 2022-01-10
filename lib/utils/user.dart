@@ -131,6 +131,16 @@ Future<void> removeFromCard(String userMail, String productKey) async{
       .catchError((error) => print("Failed to update user: $error"));
 }
 
+Future<void> removeFromProductList(String userMail, String productKey) async{
+  List<dynamic> newItem = [productKey];
+  return _collectionRef.doc(userMail)
+      .update({
+    "products_onsale": FieldValue.arrayRemove(newItem),
+  })
+      .then((value) => print("product removed from product list"))
+      .catchError((error) => print("Failed to remove product from product list: $error"));
+}
+
 
 Future<UserFirebase> getUserWithMail(String userMail) async{
   var documentSnapshot = await _collectionRef.doc(userMail).get();
@@ -216,6 +226,46 @@ Future<void> deleteUser(String userMail) async{
   return _collectionRef.doc(userMail).delete()
       .then((value) => print("User Deleted"))
       .catchError((error) => print("Failed to delete user product: $error"));
+}
+
+Future<void> updateUserName(String userMail, String newName) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "name": newName,
+  })
+      .then((value) => print("name of the product has been updated"))
+      .catchError((error) => print("Failed to update the name of the product: $error"));
+}
+
+Future<void> updateUserSurname(String userMail, String newSurame) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "surname": newSurame,
+  })
+      .then((value) => print("surname of the product has been updated"))
+      .catchError((error) => print("Failed to update the surname of the product: $error"));
+}
+
+Future<void> updateUserAddress(String userMail, String newAddress) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "adress": newAddress,
+  })
+      .then((value) => print("address of the product has been updated"))
+      .catchError((error) => print("Failed to update the address of the product: $error"));
+}
+
+Future<void> changePassword(String password) async{
+  //Create an instance of the current user.
+  User user = await FirebaseAuth.instance.currentUser!;
+
+  //Pass in the password to updatePassword.
+  user.updatePassword(password).then((_){
+    print("Successfully changed password");
+  }).catchError((error){
+    print("Password can't be changed" + error.toString());
+    //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+  });
 }
 
 Future<void> disableUser(String userMail) async{

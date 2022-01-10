@@ -236,33 +236,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                   ),
                 ]
             ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
 
-            Container(
-              height: 20,
-              width: 400,
-              color: Colors.white,
-
-              child: FlatButton(
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Icon(Icons.account_circle_sharp, color: Colors.black),
-                    Text("Account",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
             Divider(
               color: AppColors.primary,
               thickness: 1,
@@ -292,41 +266,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                 ),
               ),
             ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-            Container(
-              height: 20,
-              width: 400,
-              color: Colors.white,
 
-              child: FlatButton(
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Icon(Icons.bookmark, color: Colors.black),
-                    Text("Bookmarks",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
             Container(
               height: 20,
               width: 400,
@@ -343,48 +283,6 @@ class  _ProfilePageState extends State<ProfilePage>{
                 ),
               ),
             ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-            Container(
-              height: 20,
-              width: 400,
-              color: Colors.white,
-
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ApproveComments(userMail: widget.myUser!.email!),
-                      ));
-
-
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.credit_card, color: Colors.black),
-                    Text("Credit Cards",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(child: Container(),),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
             Container(
               height: 20,
               width: 400,
@@ -400,10 +298,6 @@ class  _ProfilePageState extends State<ProfilePage>{
                   ],
                 ),
               ),
-            ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
             ),
           ],
         ),

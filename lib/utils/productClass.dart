@@ -117,8 +117,8 @@ Future<Product> getProdcutWithUrl(String url) async{  //productname + seller
 
 Future<void> deleteProduct(String productKey) async{
   return _collectionRef.doc(productKey).delete()
-      .then((value) => print("User Deleted"))
-      .catchError((error) => print("Failed to delete user product: $error"));
+      .then((value) => print("Product Deleted"))
+      .catchError((error) => print("Failed to delete product: $error"));
 }
 
 Future<void> updateProductRating(String productKey, double raiting) async{
@@ -191,3 +191,4 @@ Future<void> updateProductPhotoUrl(String productKey, String urlNew) async{
       .then((value) => print("url of the product has been updated"))
       .catchError((error) => print("Failed to update the url of the product: $error"));
 }
+
