@@ -241,9 +241,9 @@ class _SearchFeedState extends State<SearchFeed> {
                                  children: [
                                    Flexible(
                                      child: ConstrainedBox(
-                                         constraints: BoxConstraints(maxWidth: 380),
+                                         constraints: BoxConstraints(maxWidth: 400),
                                          child: Padding(
-                                           padding: EdgeInsets.only(left: 30.0),
+                                           padding: EdgeInsets.only(left: 10.0),
                                            child: Container(
                                              height: 100,
                                              child: Card(

@@ -9,17 +9,22 @@ class UserFirebase
   String? photoUrl;
   final List<dynamic>? comments;
   final List<dynamic>? bookmarks;
-  final List<dynamic>? likes;
   final List<dynamic>? credit_cards;
-  //final bool? disabled;
-  //final List<dynamic>? productsOnSale;
-  //final List<dynamic>? soldProducts;
-  //final double? averageRating;
 
-  UserFirebase({this.email, this.name, this.surname, this.adress, this.photoUrl, this.comments, this.bookmarks, this.likes, this.credit_cards, /*this.disabled*/});
+  final List<dynamic>? shopping_card;
+  final List<dynamic>? bought_products;
+  final List<dynamic>? products_onsale;
+  final List<dynamic>? comment_approves;
+  final List<dynamic>? notifications;
+  final bool? disabled;
+  final double? averageRating;
+
+
+  UserFirebase({this.notifications, this.photoUrl, this.email, this.name, this.surname, this.adress, this.comments, this.bookmarks, this.credit_cards, this.shopping_card, this.bought_products, this.products_onsale, this.comment_approves, this.disabled, this.averageRating});
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
+CollectionReference _collectionRefDisabled = FirebaseFirestore.instance.collection('disabled_users');
 
 Future<void> updateUserPic(String userMail, String url) async{
   return _collectionRef.doc(userMail)
@@ -27,8 +32,19 @@ Future<void> updateUserPic(String userMail, String url) async{
     "photoUrl": url,
   })
       .then((value) => print("User Updated"))
-      .catchError((error) => print("Failed to add user product: $error"));
+      .catchError((error) => print("Failed to update user: $error"));
 }
+
+Future<void> updateSoldProducts(String userMail, String productKey) async{
+  List<dynamic> newItem = [productKey];
+  return _collectionRef.doc(userMail)
+      .update({
+    "products_onsale": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("User Updated"))
+      .catchError((error) => print("Failed to update user: $error"));
+}
+
 
 Future<UserFirebase> getUserWithMail(String userMail) async{
   var documentSnapshot = await _collectionRef.doc(userMail).get();
@@ -45,12 +61,18 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
       name: dataMap['name'] ?? "NULL_NAME",
       surname: dataMap['surname'] ?? "NULL_NAME",
       adress: dataMap['adress'] ?? "NULL_NAME",
-      photoUrl: dataMap["photoUrl"] ?? "https://www.google.com/search?q=resim&sxsrf=AOaemvK7ZJcn_d10R5R_Ud4anuePvKfTLw:1640451347562&tbm=isch&source=iu&ictx=1&fir=__Sz5QrzgaLGQM%252CQqB-ANoE8WAWxM%252C_%253BsOq7MsHbHDLXMM%252CCby56JbflgexjM%252C_%253BS70l8sydBMSnFM%252CQfjjSjUDG3aNxM%252C_%253BEp-fpHBd4_4fmM%252ChHZhF9HOp-GSTM%252C_%253B1zdi0mQ1-m0qvM%252CFD4f9XfSM9BOyM%252C_%253BnMAwpdurIJpWVM%252ClopRlmOVgH8l9M%252C_%253BTLg1yYGXRaO8RM%252CHnjvaDa-2nsc1M%252C_%253BHz1Zp-C_m3U8UM%252CX3aYi0eT-lR7OM%252C_%253Bu9G6iqYTJ6mB4M%252CPjgHitmFUPexwM%252C_%253B3PB5EWdTJ__kTM%252CQfjjSjUDG3aNxM%252C_%253Bf38-IZ6LUM6OGM%252CjEKL356qqhkyLM%252C_%253Bt5FXRB4rwPQ_CM%252CHywpbdcUr65P-M%252C_%253BzTzg4T1EUp1DBM%252CTqgB9i1x2xK4PM%252C_%253Bi0z-sd7wiQsjBM%252CQM1dtXwplDn0aM%252C_&vet=1&usg=AI4_-kS1KRYCnxuCxGJRbQOZBnx-zWpM2Q&sa=X&ved=2ahUKEwj2od6-tf_0AhXnSfEDHRBUBl4Q9QF6BAgFEAE#imgrc=__Sz5QrzgaLGQM",
+      photoUrl: dataMap["photoUrl"] ?? "https://freepikpsd.com/file/2019/10/default-profile-picture-png-1-Transparent-Images.png",
       comments: dataMap["comments"] ?? [],
       bookmarks: dataMap["bookmarks"] ?? [],
-      likes: dataMap["likes"] ?? [],
       credit_cards: dataMap["credit_cards"] ?? [],
-      //disabled: dataMap["disabled"] ?? true,
+
+      shopping_card: dataMap["shopping_card"] ?? [],
+      bought_products: dataMap["bought_products"] ?? [],
+      products_onsale: dataMap["products_onsale"] ?? [],
+      comment_approves: dataMap["comment_approves"] ?? [],
+      notifications: dataMap["notifications"] ?? [],
+      averageRating: dataMap["averageRating"] ?? 0.00001,
+      disabled: dataMap["disabled"] ?? false,
     );
     print(finalUser.name);
     return finalUser;
@@ -61,28 +83,38 @@ Future<UserFirebase> getUserWithMail(String userMail) async{
     name: "NULL_NAME",
     surname:"NULL_NAME",
     adress: "NULL_NAME",
-    photoUrl: "https://www.google.com/search?q=resim&sxsrf=AOaemvK7ZJcn_d10R5R_Ud4anuePvKfTLw:1640451347562&tbm=isch&source=iu&ictx=1&fir=__Sz5QrzgaLGQM%252CQqB-ANoE8WAWxM%252C_%253BsOq7MsHbHDLXMM%252CCby56JbflgexjM%252C_%253BS70l8sydBMSnFM%252CQfjjSjUDG3aNxM%252C_%253BEp-fpHBd4_4fmM%252ChHZhF9HOp-GSTM%252C_%253B1zdi0mQ1-m0qvM%252CFD4f9XfSM9BOyM%252C_%253BnMAwpdurIJpWVM%252ClopRlmOVgH8l9M%252C_%253BTLg1yYGXRaO8RM%252CHnjvaDa-2nsc1M%252C_%253BHz1Zp-C_m3U8UM%252CX3aYi0eT-lR7OM%252C_%253Bu9G6iqYTJ6mB4M%252CPjgHitmFUPexwM%252C_%253B3PB5EWdTJ__kTM%252CQfjjSjUDG3aNxM%252C_%253Bf38-IZ6LUM6OGM%252CjEKL356qqhkyLM%252C_%253Bt5FXRB4rwPQ_CM%252CHywpbdcUr65P-M%252C_%253BzTzg4T1EUp1DBM%252CTqgB9i1x2xK4PM%252C_%253Bi0z-sd7wiQsjBM%252CQM1dtXwplDn0aM%252C_&vet=1&usg=AI4_-kS1KRYCnxuCxGJRbQOZBnx-zWpM2Q&sa=X&ved=2ahUKEwj2od6-tf_0AhXnSfEDHRBUBl4Q9QF6BAgFEAE#imgrc=__Sz5QrzgaLGQM",
+    photoUrl: "https://freepikpsd.com/file/2019/10/default-profile-picture-png-1-Transparent-Images.png",
     comments: [],
     bookmarks: [],
-    likes:  [],
     credit_cards: [],
-    //disabled: true,
+    disabled: false,
+    shopping_card: [],
+    bought_products: [],
+    products_onsale: [],
+    comment_approves: [],
+    notifications: [],
+    averageRating: 0.00001,
   );
 }
 
-Future<void> addUser(String namec, String emailc,String surnamec,String adressc) async{
-  return _collectionRef.doc(namec)
+Future<void> addUser(String emailc, String namec,String surnamec,String adressc) async{
+  return _collectionRef.doc(emailc)
       .set({
-    "email": namec,
-    "name": emailc,
+    "email": emailc,
+    "name": namec,
     "surname": surnamec,
     "adress": adressc,
-    "photoUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.dreamstime.com%2Fdefault-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-image184330869&psig=AOvVaw3d6iMZWTwaLMaEdmnv4tYE&ust=1640691045646000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNCw3cnwg_UCFQAAAAAdAAAAABAD",
+    "photoUrl": "https://freepikpsd.com/file/2019/10/default-profile-picture-png-1-Transparent-Images.png",
     "comments": [],
     "bookmarks": [],
-    "likes":  [],
     "credit_cards": [],
-    //"disabled": false,
+    "disabled": false,
+    "shopping_card": [],
+    "bought_products": [],
+    "products_onsale": [],
+    "comment_approves": [],
+    "notifications": [],
+    "averageRating": 0.00001,
   })
       .then((value) => print("User Added"))
       .catchError((error) => print("Failed to add user product: $error"));
@@ -94,5 +126,117 @@ Future<void> deleteUser(String userMail) async{
       .catchError((error) => print("Failed to delete user product: $error"));
 }
 
+Future<void> disableUser(String userMail) async{
+
+  UserFirebase myUser = await getUserWithMail(userMail);
+
+  _collectionRefDisabled.doc(myUser.email)
+      .set({
+    "email": myUser.email,
+    "name": myUser.name,
+    "surname": myUser.surname,
+    "adress": myUser.adress,
+    "photoUrl": myUser.photoUrl,
+    "comments": myUser.comments,
+    "bookmarks": myUser.bookmarks,
+    "credit_cards": myUser.bought_products,
+    "disabled": false,
+    "shopping_card": myUser.shopping_card,
+    "bought_products": myUser.bought_products,
+    "products_onsale": myUser.products_onsale,
+    "comment_approves": myUser.comment_approves,
+    "averageRating": myUser.averageRating,
+    "notifications": myUser.notifications,
+  })
+      .then((value) => print("User Saved to Disabled"))
+      .catchError((error) => print("Failed to add disable: $error"));
+
+
+  return _collectionRef.doc(userMail).delete()
+      .then((value) => print("User Deleted"))
+      .catchError((error) => print("Failed to delete user product: $error"));
+}
+
+Future<UserFirebase> getDisabledUserWithMail(String userMail) async{
+  var documentSnapshot = await _collectionRefDisabled.doc(userMail).get();
+
+  print("Getting ${userMail}");
+  if (documentSnapshot.exists) {
+
+    final Map<String, dynamic> dataMap =
+    documentSnapshot.data() as Map<String, dynamic>;
+
+    print('Document exists on the database');
+    UserFirebase finalUser = UserFirebase(
+      email: dataMap['email'] ?? "NULL_NAME",
+      name: dataMap['name'] ?? "NULL_NAME",
+      surname: dataMap['surname'] ?? "NULL_NAME",
+      adress: dataMap['adress'] ?? "NULL_NAME",
+      photoUrl: dataMap["photoUrl"] ?? "https://freepikpsd.com/file/2019/10/default-profile-picture-png-1-Transparent-Images.png",
+      comments: dataMap["comments"] ?? [],
+      bookmarks: dataMap["bookmarks"] ?? [],
+      credit_cards: dataMap["credit_cards"] ?? [],
+
+      shopping_card: dataMap["shopping_card"] ?? [],
+      bought_products: dataMap["bought_products"] ?? [],
+      products_onsale: dataMap["products_onsale"] ?? [],
+      comment_approves: dataMap["comment_approves"] ?? [],
+      notifications: dataMap["notifications"] ?? [],
+      averageRating: dataMap["averageRating"] ?? 0.00001,
+      disabled: dataMap["disabled"] ?? false,
+    );
+    print(finalUser.name);
+    return finalUser;
+  }
+
+  return UserFirebase(
+    email: "NULL_NAME",
+    name: "NULL_NAME",
+    surname:"NULL_NAME",
+    adress: "NULL_NAME",
+    photoUrl: "https://freepikpsd.com/file/2019/10/default-profile-picture-png-1-Transparent-Images.png",
+    comments: [],
+    bookmarks: [],
+    credit_cards: [],
+    disabled: false,
+    shopping_card: [],
+    bought_products: [],
+    products_onsale: [],
+    comment_approves: [],
+    notifications: [],
+    averageRating: 0.00001,
+  );
+}
+
+Future<void> enableUser(String userMail) async{
+
+  UserFirebase myUser = await getDisabledUserWithMail(userMail);
+
+  _collectionRef.doc(myUser.email)
+      .set({
+    "email": myUser.email,
+    "name": myUser.name,
+    "surname": myUser.surname,
+    "adress": myUser.adress,
+    "photoUrl": myUser.photoUrl,
+    "comments": myUser.comments,
+    "bookmarks": myUser.bookmarks,
+    "credit_cards": myUser.bought_products,
+    "disabled": false,
+    "shopping_card": myUser.shopping_card,
+    "bought_products": myUser.bought_products,
+    "products_onsale": myUser.products_onsale,
+    "comment_approves": myUser.comment_approves,
+    "averageRating": myUser.averageRating,
+    "notifications": myUser.notifications,
+  })
+      .then((value) => print("User Saved to Disabled"))
+      .catchError((error) => print("Failed to add disable: $error"));
+
+
+  return _collectionRefDisabled.doc(userMail).delete()
+      .then((value) => print("User Deleted"))
+      .catchError((error) => print("Failed to delete user product: $error"));
+}
 
 //calculate average rating

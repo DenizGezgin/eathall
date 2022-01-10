@@ -48,7 +48,7 @@ List<Widget> createNavBar(UserFirebase? user)
 
       MainFeedView(),
       SearchFeed(),
-      addProductPage(),
+      addProductPage(myUser: user!,),
       ShoppingCartPage(),
       ProfilePage(myUser: user!,),
     ];

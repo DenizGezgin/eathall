@@ -400,7 +400,7 @@ class _SignupState extends State<Signup> {
                                   auth.signupWithMailAndPass(mail, pass);
                                   await addUser(mail,name,surname,address);
                                   UserFirebase myUserc = await getUserWithMail(mail);
-                                  print(myUserc.name);
+                                  print("HEREEEEEE:   " + myUserc!.name!);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

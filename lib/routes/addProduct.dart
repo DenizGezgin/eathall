@@ -1,6 +1,7 @@
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:cs310_step3/utils/styles.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,9 @@ extension StringExtension on String {
 
 
 class addProductPage extends StatefulWidget {
-  addProductPage({Key? key}) : super(key: key);
+  addProductPage({Key? key, this.myUser}) : super(key: key);
   final formKey = GlobalKey<FormState>();
+  UserFirebase? myUser;
 
   @override
   _addProductPageState createState() => _addProductPageState();
@@ -34,6 +36,7 @@ class _addProductPageState extends State<addProductPage> {
   late String category;
   late String namec;
   late String seller;
+  late String sellerMail;
   late int price;
   late String photoUrl;
   late String description;
@@ -190,46 +193,6 @@ class _addProductPageState extends State<addProductPage> {
                   ],
                 ),
                 SizedBox(height: 16,),
-                Row( //Seller
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          fillColor: AppColors.background,
-                          filled: true,
-                          hintText: 'Seller',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.text,
-
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Seller field cannot be empty';
-                          } else {
-                            String trimmedValue = value.trim();
-                            if (trimmedValue.isEmpty) {
-                              return 'Seller field cannot be empty';
-                            }
-                          }
-                          return null;
-                        },
-
-                        onSaved: (value) {
-                          if (value != null) {
-                            seller = value.capitalize();
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16,),
                 Row( //price
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -360,9 +323,11 @@ class _addProductPageState extends State<addProductPage> {
                             if (widget.formKey.currentState!.validate() && _image != null) {
                               widget.formKey.currentState!.save();
                               print(namec + " " + category + " " + seller + " " + price.toString() + " " + description + " " + photoUrl);
-                              addProduct(namec, category, seller, price, description, photoUrl);
+                              addProduct(namec, category, (widget.myUser!.name! + " " + widget.myUser!.surname!), price, description, photoUrl, widget.myUser!.email!);
                               widget.formKey.currentState!.reset();
                               _image = null;
+                              String productKey = namec + widget.myUser!.name! + " " + widget.myUser!.surname!;
+                              updateSoldProducts(widget.myUser!.email!, productKey);
                               showAlertDialog("Upload Sucsefull" , "Your prdoduct is added!");
                               setState(() {});
                             }
