@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
+import 'commentReqs.dart';
 import 'login_page.dart';
 import '/services/authentication_file.dart';
 
@@ -357,7 +358,15 @@ class  _ProfilePageState extends State<ProfilePage>{
               color: Colors.white,
 
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ApproveComments(userMail: widget.myUser!.email!),
+                      ));
+
+
+                },
                 child: Row(
                   children: [
                     Icon(Icons.credit_card, color: Colors.black),
