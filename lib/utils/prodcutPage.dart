@@ -162,6 +162,38 @@ class _productPageState extends State<productPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Text("Bookmark",
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          color: Colors.yellow,
+                          fontSize: 18,
+                          height: 1,
+                        ),),
+                      SizedBox(height:10),
+                      IconButton(
+                        onPressed: (){
+                          if(widget.myUser != null)
+                          {
+                            updateBookmark(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
+                            showAlertDialog("Sucsess", "Product is added to the bookmarks.");
+                          }
+                          else
+                          {
+                            showAlertDialog("Failed", "Anonymous users cant use bookmark feature.");
+                          }
+
+                        },
+                        icon: Icon(Icons.bookmark,
+                          color:  Colors.yellow),
+                        highlightColor:  Colors.yellowAccent,
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text("Add to Cart",
                         style: TextStyle(
                           fontFamily: 'Arial',

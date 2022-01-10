@@ -56,6 +56,16 @@ Future<void> updateCard(String userMail, String productKey) async{
       .catchError((error) => print("Failed to update user: $error"));
 }
 
+Future<void> updateBookmark(String userMail, String productKey) async{
+  List<dynamic> newItem = [productKey];
+  return _collectionRef.doc(userMail)
+      .update({
+    "bookmarks": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("User Updated"))
+      .catchError((error) => print("Failed to update user: $error"));
+}
+
 Future<void> removeFromCard(String userMail, String productKey) async{
   List<dynamic> newItem = [productKey];
   return _collectionRef.doc(userMail)

@@ -36,9 +36,11 @@ class ShoppingCartPage extends StatefulWidget {
 class  _ShoppingCartPageState extends State<ShoppingCartPage>{
 
   List<Product> myPosts = [];
+  List<Product> myBookmarks = [];
 
   void asyncMethod() async {
     myPosts = await getPosts();
+    myBookmarks = await getBookmarks();
     setState(() {
 
     });
@@ -50,8 +52,9 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
     asyncMethod();
   }
 
-  getPosts() async {
+  Future<List<Product>> getPosts() async {
     List<Product> myPostsPrev = [];
+    widget.myUser = await getUserWithMail(widget.myUser!.email!);
     List<dynamic> myKeys = widget.myUser!.shopping_card!;
     Product current;
     for(String key in myKeys)
@@ -62,6 +65,18 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
     return myPostsPrev;
   }
 
+  Future<List<Product>> getBookmarks() async {
+    List<Product> myPostsPrev = [];
+    widget.myUser = await getUserWithMail(widget.myUser!.email!);
+    List<dynamic> myKeys = widget.myUser!.bookmarks!;
+    Product current;
+    for(String key in myKeys)
+    {
+      current = await getProdcutWithUrl(key);
+      myPostsPrev.add(current);
+    }
+    return myPostsPrev;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +128,14 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
               height: 120,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: myPosts.map(
+                children: myBookmarks.map(
                   (product) =>
                     CartBookmarkTile(
                       product: product,
                       addToCart: () {
                         print("Added to the Cart");
+                        updateCard(widget.myUser!.email!, product.name! + product.seller!);
+                        asyncMethod();
                     },)
                 ).toList(),
               ),
@@ -131,3 +148,4 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
     );
   }
 }
+
