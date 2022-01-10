@@ -15,12 +15,16 @@ class productPage extends StatefulWidget {
   @override
   _productPageState createState() => _productPageState();
 }
-String? userNameOfSeller = "";
-
+late final userSeller;
 
 class _productPageState extends State<productPage> {
   @override
   Widget build(BuildContext context) {
+
+    void foo(sellersMail) async {
+      userSeller = await getUserWithMail(sellersMail);
+    }
+
     Future<void> showAlertDialog(String title, String message) async {
       return showDialog(context: context,
           barrierDismissible: false, //must take action
@@ -80,7 +84,12 @@ class _productPageState extends State<productPage> {
                     side: BorderSide(color: Colors.black, width: 0.5),
                   ),
                   onPressed: () {
-
+                    foo(widget.myProduct.sellerMail!);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SellerProfileBuyerPage(myUser: userSeller) //böyle bir şey denedim umarım çalışır
+                        ));
                   },
                   child: Text(
                     widget.myProduct.seller!,
