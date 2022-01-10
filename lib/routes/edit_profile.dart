@@ -25,7 +25,6 @@ extension StringExtension on String {
 }
 
 
-
 class EditProfilePage extends StatefulWidget {
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();

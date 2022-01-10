@@ -141,3 +141,53 @@ Future<void> addCommentProduct(String productKey, Map<String, dynamic> myComment
     "comments": FieldValue.arrayUnion(newItem),
   });
 }
+
+Future<void> updateProductName(String productKey, String nameNew) async{
+  Product current = await getProdcutWithUrl(productKey);
+  return _collectionRef.doc(productKey)
+      .update({
+    "name": nameNew,
+  })
+      .then((value) => print("name of the product Updated"))
+      .catchError((error) => print("Failed to update name of the product: $error"));
+}
+
+Future<void> updateProductCategory(String productKey, String categoryNew) async{
+  Product current = await getProdcutWithUrl(productKey);
+  return _collectionRef.doc(productKey)
+      .update({
+    "category": categoryNew,
+  })
+      .then((value) => print("category of the product Updated"))
+      .catchError((error) => print("Failed to update category of the product: $error"));
+}
+
+Future<void> updateProductPrice(String productKey, int priceNew) async{
+  Product current = await getProdcutWithUrl(productKey);
+  return _collectionRef.doc(productKey)
+      .update({
+    "price": priceNew,
+  })
+      .then((value) => print("price of the product Updated"))
+      .catchError((error) => print("Failed to update price of the product: $error"));
+}
+
+Future<void> updateProductDescription(String productKey, String descriptionNew) async{
+  Product current = await getProdcutWithUrl(productKey);
+  return _collectionRef.doc(productKey)
+      .update({
+    "description": descriptionNew,
+  })
+      .then((value) => print("description of the product has been updated"))
+      .catchError((error) => print("Failed to update the description of the product: $error"));
+}
+
+Future<void> updateProductPhotoUrl(String productKey, String urlNew) async{
+  Product current = await getProdcutWithUrl(productKey);
+  return _collectionRef.doc(productKey)
+      .update({
+    "photoUrl": urlNew,
+  })
+      .then((value) => print("url of the product has been updated"))
+      .catchError((error) => print("Failed to update the url of the product: $error"));
+}
