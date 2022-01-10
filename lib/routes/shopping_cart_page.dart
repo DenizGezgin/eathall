@@ -88,7 +88,7 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
                           delete: () {
                             setState(() {
                               removeFromCard(widget.myUser!.email!, product.name! + product.seller!);
-                              myPosts.remove(value)
+                              asyncMethod();
                             });
                           },)
                 ).toList(),
