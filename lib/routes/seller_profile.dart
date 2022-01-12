@@ -242,9 +242,9 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                             subtitle: Row(
                               children: [
                                 Text(
-                                  "${myProductsOnSale[index].price!}",
+                                  "${myProductsOnSale[index].price!}" + "TL    ",
                                 ),
-                                Text(myProductsOnSale[index].category!)
+                                Text(myProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary))
                               ],
                             ),
                             trailing: IconButton(

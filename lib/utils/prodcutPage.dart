@@ -15,7 +15,7 @@ class productPage extends StatefulWidget {
   @override
   _productPageState createState() => _productPageState();
 }
-late final userSeller;
+late dynamic userSeller;
 
 class _productPageState extends State<productPage> {
   @override
@@ -90,7 +90,10 @@ class _productPageState extends State<productPage> {
                     side: BorderSide(color: Colors.black, width: 0.5),
                   ),
                   onPressed: () {
+                    print(widget.myProduct.sellerMail! + " my product seller mail");
                     foo(widget.myProduct.sellerMail!);
+                    print(userSeller.name + " seller name");
+                    print(widget.myUser!.name! + " passed user name");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -149,16 +152,19 @@ class _productPageState extends State<productPage> {
                 Container(
                   child: Column(
                     children: [
-                      Text("Price", style: TextStyle(
-                        color: AppColors.primary,
-                        fontFamily: 'Arial',
-                        fontSize: 18,
-                        height: 1,),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 40),
+                        child: Text("Price", style: TextStyle(
+                          color: AppColors.primary,
+                          fontFamily: 'Arial',
+                          fontSize: 18,
+                          height: 1,),
+                        ),
                       ),
-                      SizedBox(height: 35),
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.horizontal(),
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.horizontal(),
                             border: Border.all(color: AppColors.primary,
                             width: 0.5)
                         ),
