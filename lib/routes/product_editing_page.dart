@@ -49,6 +49,45 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
   Widget build(BuildContext context) {
 
 
+
+    Future<void> showAlertDialog(String title, String message) async {
+      return showDialog(context: context,
+          barrierDismissible: false, //must take action
+          builder: (BuildContext context) {
+            if (isIOS) {
+              return CupertinoAlertDialog( //styling is not always auto adjusted
+                title: Text(title),
+                content: SingleChildScrollView(
+                  child: Text(message),
+                ),
+                actions: [
+                  TextButton(onPressed: () {
+                    Navigator.of(context).pop(); //pop the current alert view
+                  },
+                      child: Text("OK"))
+                ],
+              );
+            }
+            else{
+              return AlertDialog(
+                title: Text(title),
+                content: SingleChildScrollView(
+                  child: Text(message),
+                ),
+                actions: [
+                  TextButton(onPressed: () {
+
+                    Navigator.of(context).pop();
+                  },
+                      child: Text("OK"))
+                ],
+              );
+            }
+          }
+      );
+    }
+
+
     final ImagePicker _picker = ImagePicker();
     XFile? _image;
 
@@ -77,7 +116,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
 
 
     return Scaffold(
-      backgroundColor: AppColors.loginToContinueBackGround,
+      backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: AppColors.primary,
           leading: IconButton(
@@ -296,23 +335,6 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
               },
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text("This product is on sale.", style: TextStyle(color: Colors.black)),
-                OutlinedButton(
-                  onPressed: (){
-                    //removing product
-                    removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
-                    deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
-                  },
-                  child: Text("Remove Product"),
-                ),
-              ],
-            ),
-          ),
           Padding(
 
             padding: const EdgeInsets.all(2),
@@ -330,6 +352,25 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
             ),
 
           ),
+          Container(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: (){
+                    //removing product
+                    removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
+                    deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
+                    showAlertDialog("Success", "Your product has been deleted succesfully.");
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Remove Product", style: TextStyle(color: Colors.red)),
+                ),
+              ],
+            ),
+          ),
+
         ],
       ),
     );

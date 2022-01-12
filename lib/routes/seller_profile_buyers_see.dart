@@ -197,7 +197,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                     ],
                   ),
                   Container(
-                    height: 250,
+
                     child: SingleChildScrollView(
                       child:  OutlinedButton(
                         child: ListView.builder(
@@ -244,34 +244,6 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                   ),
                 ],
               ),//for the products on sale
-              /*Padding(
-                padding: const EdgeInsets.all(5),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Container(
-                    height: 30,
-                    color: AppColors.purchaseAndAdd,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(Icons.mode_comment, color: Colors.black),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 125),
-                          child: Text("COMMENTS", style: loginSignupOrContinueSmallTextStyleBlack),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),*/
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                      padding: const EdgeInsets.only(left: 24, top: 0, bottom: 10),
-                      child: Text("Comments"))
-                ],
-              ),
               //scrollable column of comments
             ],
           ),

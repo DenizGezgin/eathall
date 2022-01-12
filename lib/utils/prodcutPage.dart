@@ -151,31 +151,25 @@ class _productPageState extends State<productPage> {
               children: [
                 Container(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 40),
-                        child: Text("Price", style: TextStyle(
-                          color: AppColors.primary,
+                      SizedBox(height:0),
+                      Text("Price",
+                        style: TextStyle(
                           fontFamily: 'Arial',
+                          color: AppColors.primary,
                           fontSize: 18,
-                          height: 1,),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.horizontal(),
-                            border: Border.all(color: AppColors.primary,
-                            width: 0.5)
-                        ),
-                        child: Text("${widget.myProduct.price} TL",
-                          style: TextStyle(
-                            fontFamily: 'Arial',
-                            color: AppColors.primary,
-                            fontSize: 18,
-                            height: 1,
-                          ),),
-                      ),
+                          height: 1,
+                        ),),
+                      SizedBox(height:25),
+                      Text("${widget.myProduct.price} TL",
+                        style: TextStyle(
+                          fontFamily: 'Arial',
+                          color: AppColors.primary,
+                          fontSize: 18,
+                          height: 1,
+                        ),),
+                      SizedBox(height:15),
                     ],
                   ),
                 ),
