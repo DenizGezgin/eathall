@@ -4,6 +4,7 @@ import 'package:cs310_step3/utils/styles.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:photo_view/photo_view.dart';
 
 class pastPurchese extends StatefulWidget {
   pastPurchese({Key? key,  required this.userMail}) : super(key: key);
@@ -48,15 +49,16 @@ class _pastPurcheseState extends State<pastPurchese> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: AppColors.primary)
+      ,
       body: Column(
         children: [
           Row(
             children: [
-              OutlinedButton(onPressed: (){
+              IconButton(onPressed: (){
                 asyncMethod();
                 print(myPosts.length);
-              }, child: Text("Refresh"))
+              }, icon: Icon(Icons.refresh, color: AppColors.primary,))
             ],
           ),
           SingleChildScrollView(
@@ -73,8 +75,9 @@ class _pastPurcheseState extends State<pastPurchese> {
                           myPosts[index].name!,
                         ),
                         subtitle: Text(
-                          "${myPosts[index].price!}",
+                          "${myPosts[index].seller!}",
                         ),
+                        leading: Image.network(myPosts[index].photoUrl!,fit: BoxFit.fill,),
                         trailing: myUser!.bought_products![index]["isAlreadyRated"] ? RatingBarIndicator( //-0000.1
                           rating: myPosts[index].rating!,
                           itemBuilder: (context, index) => Icon(
@@ -84,14 +87,15 @@ class _pastPurcheseState extends State<pastPurchese> {
                           itemCount: 5,
                           itemSize: 20.0,
                           direction: Axis.horizontal,
-                        ) : OutlinedButton(onPressed: (){
+                        ) : FlatButton(onPressed: (){
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => RateOnItemPage(productKey:  myUser!.bought_products![index]["productKey"],
                                                                       buyerMail: widget.userMail,
-                                                                        sellerMail:myPosts[index].sellerMail! , index: index),
+                                                                        sellerMail:myPosts[index].sellerMail!, url:myPosts[index].photoUrl!, productName:myPosts[index].name!, seller:myPosts[index].seller! , index: index),
                               ));
+
                         }, child: Text("Rate and Comment")),
                       ),
                     );
@@ -105,11 +109,14 @@ class _pastPurcheseState extends State<pastPurchese> {
 
 
 class RateOnItemPage extends StatefulWidget {
-  RateOnItemPage({Key? key, required this.productKey, required this.buyerMail, required this.sellerMail, required this.index }) : super(key: key);
+  RateOnItemPage({Key? key, required this.productKey, required this.buyerMail, required this.sellerMail, required this.url, required this.productName,required this.seller, required this.index}) : super(key: key);
 
   String productKey;
   String buyerMail;
   String sellerMail;
+  String url;
+  String productName;
+  String seller;
   int index;
   final formKey = GlobalKey<FormState>();
 
@@ -125,14 +132,51 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
   String commentData = "";
   double final_rating = 2.9999;
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: AppColors.primary,),
       body: Form(
         key: widget.formKey,
         child: Column(
           children: [
+
+            //Image.network(widget.url),
+            Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 20.0,
+                horizontal: 20.0,
+              ),
+              height: 200.0,
+              child: ClipRect(
+                child: InteractiveViewer(
+                  panEnabled: false, // Set it to false
+                  boundaryMargin: EdgeInsets.all(100),
+                  minScale: 0.5,
+                  maxScale: 2,
+                  child: PhotoView(
+                    imageProvider: NetworkImage(widget.url),
+                    maxScale: PhotoViewComputedScale.covered * 2.0,
+                    minScale: PhotoViewComputedScale.contained * 0.8,
+                    initialScale: PhotoViewComputedScale.covered,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Text(widget.productName!,
+              style: TextStyle(fontWeight: FontWeight.bold,
+                  fontSize: 28),),
+            SizedBox(height: 10,),
+            Text(
+              widget.seller!,
+              style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, color: Colors.grey,
+                  fontSize: 18),
+            ),
+          SizedBox(height: 35,),
           RatingBar.builder(
             initialRating: 3,
             minRating: 1,
@@ -140,7 +184,7 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
             itemCount: 5,
             itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
             itemBuilder: (context, _) => Icon(
-              Icons.star,
+              Icons.star_rate_outlined,
               color: Colors.amber,
           ),
           onRatingUpdate: (rating) {
@@ -148,6 +192,7 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
             print(rating);
           },
         ),
+            SizedBox(height: 75,),
             Row( //Comment data.
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -179,7 +224,9 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
                 ),
               ],
             ),
+            SizedBox(height: 50,),
             OutlinedButton(onPressed: (){
+
               //commentFields: USER + DATA + RATING + ISAPPROVED
               widget.formKey.currentState!.save();
 
@@ -192,7 +239,8 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
 
               Navigator.pop(context);
 
-            }, child: Text("Done"))
+
+            }, child: Text("Send", style: TextStyle(color: Colors.green))),
           ],
         ),
       ),
