@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'package:cs310_step3/routes/commentReqs.dart';
+import 'package:cs310_step3/routes/product_editing_page.dart';
 import 'package:cs310_step3/services/authentication_file.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -224,39 +226,42 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                   ),
                 ),
               ),
-              /*Row(
-                children: [
-                  Container(
-                    height: 50,
-                    child: Column(
-                      children: [
-                        ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: myProductsOnSale.map(
-                                (product) =>
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(product.name!, style: TextStyle(color: Colors.black)),
-                                        Text("$product.price!", style: TextStyle(color: AppColors.primary)),
-                                      ],
-                                    ),
-                                    Text(product.category!, style: TextStyle(color: AppColors.primary)),
-                                  ],
+              SingleChildScrollView(
+                  child:  ListView.builder(
+                      itemCount: myProductsOnSale.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          semanticContainer: true,
+                          elevation: 2,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: ListTile(
+                            title: Text(
+                              myProductsOnSale[index].name!,
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(
+                                  "${myProductsOnSale[index].price!}",
                                 ),
-                          ).toList(),
-                        ),
-                        IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.edit,
-                              color: AppColors.purchaseAndAdd),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),*/
+                                Text(myProductsOnSale[index].category!)
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(Icons.edit, color: AppColors.purchaseAndAdd),
+                              onPressed: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductEditingPage(myProduct: myProductsOnSale[index], myUser: widget.myUser)
+                                    )
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      })
+              ),
               //for the products on sale
               Padding(
                 padding: const EdgeInsets.all(5),
@@ -270,35 +275,39 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                   ),
                 ),
               ),
-              /*Row(
-                children: [
-                  Container(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: myProductsOnSale.map(
-                            (product) =>
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(product.name!, style: TextStyle(color: Colors.black)),
-                                    Text("$product.price!", style: TextStyle(color: AppColors.primary)),
-                                  ],
-                                ),
-                                Text(product.category!, style: TextStyle(color: AppColors.primary)),
-                              ],
+
+              SingleChildScrollView(
+                  child:  ListView.builder(
+                      itemCount: mySoldProducts.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          semanticContainer: true,
+                          elevation: 2,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: ListTile(
+                            title: Text(
+                              mySoldProducts[index].name!,
                             ),
-                      ).toList(),
-                    ),
-                  ),
-                ],
-              ),*/
+                            subtitle: Text(
+                              "${mySoldProducts[index].price!}",
+                            ),
+                            trailing: Text(mySoldProducts[index].category!),
+                          ),
+                        );
+                      })
+              ),
               //for the sold products
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ApproveComments(userMail: widget.myUser!.email!)
+                        ));
+                  },
                   child: Container(
                     height: 30,
                     color: AppColors.purchaseAndAdd,

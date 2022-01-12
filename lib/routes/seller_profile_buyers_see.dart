@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 import 'package:cs310_step3/services/authentication_file.dart';
+import 'package:cs310_step3/utils/prodcutPage.dart';
+import 'package:cs310_step3/utils/productClass.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/utils/user.dart';
@@ -18,13 +20,45 @@ import 'login_page.dart';
 class SellerProfileBuyerPage extends StatefulWidget {
   @override
   State<SellerProfileBuyerPage> createState() => _SellerProfileBuyerPageState();
-  SellerProfileBuyerPage({Key? key, this.myUser}) : super(key: key);
+  SellerProfileBuyerPage({Key? key, this.myUser, this.mySeller}) : super(key: key);
   UserFirebase? myUser;
+  UserFirebase? mySeller;
 }
 String theUser = "";
+String theSeller = "";
 
 
 class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
+
+
+  List<Product> sellersProductsOnSale = [];
+
+  void asyncMethod() async {
+    sellersProductsOnSale = await getProductsOnSale();
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    asyncMethod();
+  }
+
+  Future<List<Product>> getProductsOnSale() async {
+    List<Product> myPostsPrev = [];
+    widget.mySeller = await getUserWithMail(widget.mySeller!.email!);
+    List<dynamic> myKeys = widget.mySeller!.products_onsale!;
+    Product current;
+    for(String key in myKeys)
+    {
+      current = await getProdcutWithUrl(key);
+      myPostsPrev.add(current);
+    }
+    return myPostsPrev;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -148,21 +182,54 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                   itemSize: 20.0,
                   direction: Axis.horizontal,
                 ),
+                Text(
+                    "(" + "${widget.myUser!.averageRating!}" + "/5)", style: TextStyle(color: Colors.black),
+                ),
               ],
             ),
             //scrollable column of products, connected to product page
-            Row(
-              children: [
-                Container(
+            SingleChildScrollView(
+                child:  OutlinedButton(
+                  child: ListView.builder(
+                      itemCount: sellersProductsOnSale.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          semanticContainer: true,
+                          elevation: 2,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: ListTile(
+                            title: Text(
+                              sellersProductsOnSale[index].name!,
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Text(
+                                  "${sellersProductsOnSale[index].price!}",
+                                ),
+                                Text(sellersProductsOnSale[index].category!),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(Icons.arrow_forward_outlined,
+                                  color: AppColors.primary),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          productPage(myUser: widget.myUser,
+                                              myProduct: sellersProductsOnSale[index]),
+                                    ));
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                  onPressed: (){
 
-                ),
-                Container(
-
-                ),
-                Container(
-
-                ),
-              ],
+                  },
+                )
             ),//for the products on sale
             Padding(
               padding: const EdgeInsets.all(5),

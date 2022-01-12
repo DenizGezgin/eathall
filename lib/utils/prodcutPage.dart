@@ -94,7 +94,7 @@ class _productPageState extends State<productPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SellerProfileBuyerPage(myUser: userSeller) //böyle bir şey denedim umarım çalışır
+                            builder: (context) => SellerProfileBuyerPage(mySeller: userSeller, myUser: widget.myUser) //böyle bir şey denedim umarım çalışır
                         ));
                   },
                   child: Text(
