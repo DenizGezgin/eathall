@@ -50,15 +50,15 @@ class _ApproveCommentsState extends State<ApproveComments> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: AppColors.primary,),
       body: Column(
           children: [
             Row(
               children: [
-                OutlinedButton(onPressed: (){
+                IconButton(onPressed: (){
                   asyncMethod();
                   print(myPosts.length);
-                }, child: Text("Refresh"))
+                }, icon: Icon(Icons.refresh, color: AppColors.primary,))
               ],
             ),
             SingleChildScrollView(
@@ -77,10 +77,21 @@ class _ApproveCommentsState extends State<ApproveComments> {
                           subtitle: Text(
                             myPosts[index]["data"],
                           ),
-                          trailing: OutlinedButton(onPressed: (){
+                          leading: IconButton(onPressed: (){
                             addAprrovedComment(myPosts[index]["userMail"],myPosts[index]);
                             addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
-                          }, child: Text("Approve Comment")),
+                          }, icon: Icon(Icons.check_box, color: Colors.green, )),
+                          trailing: RatingBarIndicator(
+                            rating: myPosts[index]["rating"],
+                            itemBuilder: (context, index) => Icon(
+                              Icons.star_rate_outlined,
+                              color: Colors.amber,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+
+                          ),
                         ),
                       );
                     })
