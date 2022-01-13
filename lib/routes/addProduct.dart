@@ -2,6 +2,7 @@ import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:cs310_step3/utils/styles.dart';
 import 'package:cs310_step3/utils/user.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 

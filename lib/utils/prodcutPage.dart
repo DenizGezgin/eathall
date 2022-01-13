@@ -2,6 +2,7 @@ import 'package:cs310_step3/routes/seller_profile_buyers_see.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:cs310_step3/utils/user.dart';
+import 'package:cs310_step3/utils/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';

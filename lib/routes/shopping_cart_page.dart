@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/addProduct.dart';
+import 'package:cs310_step3/routes/mockPaymentPage.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/redirection_page.dart';
 import 'package:cs310_step3/routes/search_explore.dart';
@@ -38,7 +39,7 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
   List<Product> myPosts = [];
   List<Product> myBookmarks = [];
 
-  void asyncMethod() async {
+  Future<void> asyncMethod() async {
     myPosts = await getPosts();
     myBookmarks = await getBookmarks();
     setState(() {
@@ -48,8 +49,9 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
 
   @override
   void initState() {
-    super.initState();
     asyncMethod();
+    super.initState();
+
   }
 
   Future<List<Product>> getPosts() async {
@@ -140,6 +142,30 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
                 ).toList(),
               ),
             ),
+
+            SizedBox(height: 16,),
+
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MockPaymentPage()
+                      ));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0),
+                  child: Text("Purchase Items",
+                    style: loginButtonTextStyle,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: AppColors.purchaseAndAdd,
+                ),
+              ),
+
+
           ]
         ),
       ),

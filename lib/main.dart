@@ -2,6 +2,7 @@
 import 'package:cs310_step3/routes/addProduct.dart';
 import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/routes/feedView.dart';
+import 'package:cs310_step3/routes/mockPaymentPage.dart';
 import 'package:cs310_step3/routes/notifications_page.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/redirection_page.dart';
@@ -83,7 +84,7 @@ class MyAppState extends State<MyApp> {
           "/addProductPage": (context) => addProductPage(),
           "/shoppingCart": (context) => ShoppingCartPage(),
           "/redirectionPage": (context) => RedirectionPage(),
-
+          "/mockPaymentPAge": (context) => MockPaymentPage(),
         },
           debugShowCheckedModeBanner: false,
           navigatorObservers: <NavigatorObserver>[observer],
