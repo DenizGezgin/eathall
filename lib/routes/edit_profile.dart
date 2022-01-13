@@ -33,6 +33,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class  _EditProfilePageState extends State<EditProfilePage>{
+  final formKey = GlobalKey<FormState>();
   String nameUser = "";
   String surnameUser = "";
   String addressUser = "";
@@ -120,47 +121,171 @@ class  _EditProfilePageState extends State<EditProfilePage>{
         backgroundColor: AppColors.primary,
       ),
       body: Scaffold(
-        body: Column(
-          children: [
-            //burada foto degistirme olmalı storage vb
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
+        body: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              //burada foto degistirme olmalı storage vb
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
 
-                  padding:const EdgeInsets.all(10),
-                  child:CircleAvatar(
-                    radius: 25,
-                    child: ClipOval(
-                      child: Image.network(widget.myUser!.photoUrl!,
-                        fit: BoxFit.fill, height: 200, width: 100,),
+                    padding:const EdgeInsets.all(10),
+                    child:CircleAvatar(
+                      radius: 25,
+                      child: ClipOval(
+                        child: Image.network(widget.myUser!.photoUrl!,
+                          fit: BoxFit.fill, height: 200, width: 100,),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
+                  Padding(
 
-                  padding: const EdgeInsets.all(10),
-                  child: OutlinedButton(
-                    child: Text("Change Profile Picture", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                    onPressed: () async {
-                      await pickImage();
-                      setState(() {
+                    padding: const EdgeInsets.all(10),
+                    child: OutlinedButton(
+                      child: Text("Change Profile Picture", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
+                      onPressed: () async {
+                        await pickImage();
+                        setState(() {
 
-                      });
+                        });
 
+                      },
+                    ),
+
+                  ),
+                ],
+              ),
+              Container(
+                  padding: EdgeInsets.all(5),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      fillColor: AppColors.background,
+                      filled: true,
+                      hintText: 'Name',
+                      errorStyle: loginErrorStyle,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                    keyboardType: TextInputType.text,
+                    //text from field passwords
+                    obscureText: false,
+                    enableSuggestions: false,
+                    autocorrect: false,
+
+                    validator: (value) {
+                      if (value == null) {
+                        emptyCount++;
+                      } else {
+                        String trimmedValue = value.trim();
+                        if (trimmedValue.isEmpty) {
+                          emptyCount++;
+                        }
+                      }
+                      return null;
+                    },
+
+                    onSaved: (value) {
+                      if (value != null) {
+                        nameUser = value;
+
+                      }
                     },
                   ),
+              ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      fillColor: AppColors.background,
+                      filled: true,
+                      hintText: 'Surname',
+                      errorStyle: loginErrorStyle,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                    keyboardType: TextInputType.text,
+                    //text from field passwords
+                    obscureText: false,
+                    enableSuggestions: false,
+                    autocorrect: false,
 
+                    validator: (value) {
+                      if (value == null) {
+                        emptyCount++;
+                      } else {
+                        String trimmedValue = value.trim();
+                        if (trimmedValue.isEmpty) {
+                          emptyCount++;
+                        }
+                      }
+                      return null;
+                    },
+
+                    onSaved: (value) {
+                      if (value != null) {
+                        surnameUser = value;
+
+                      }
+                    },
+                  ),
                 ),
-              ],
-            ),
-            Container(
+                 Container(
+                   padding: EdgeInsets.all(5),
+                   child: TextFormField(
+                     decoration: InputDecoration(
+                       fillColor: AppColors.background,
+                       filled: true,
+                       hintText: 'Password',
+                       errorStyle: loginErrorStyle,
+                       border: OutlineInputBorder(
+                         borderSide: BorderSide(
+                           color: AppColors.primary,
+                         ),
+                      ),
+                    ),
+                    keyboardType: TextInputType.text,
+                    //text from field passwords
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+
+                    validator: (value) {
+                      if (value == null) {
+                        emptyCount++;
+                      } else {
+                        String trimmedValue = value.trim();
+                        if (trimmedValue.isEmpty) {
+                          //return 'Password field cannot be empty';
+                          emptyCount++;
+                        }
+                        if (trimmedValue.length < 8) {
+                          return 'Password must be at least 8 characters long';
+                        }
+                      }
+                      return null;
+                    },
+
+                    onSaved: (value) {
+                      if (value != null) {
+                        passUser = value; //burası eksik
+                      }
+                    },
+                  ),
+                 ),Container(
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
                   decoration: InputDecoration(
                     fillColor: AppColors.background,
                     filled: true,
-                    hintText: 'Name',
+                    hintText: 'Address',
                     errorStyle: loginErrorStyle,
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -188,170 +313,51 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                   onSaved: (value) {
                     if (value != null) {
-                      nameUser = value;
-
-                    }
-                  },
-                ),
-            ),
-              Container(
-                padding: EdgeInsets.all(5),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    fillColor: AppColors.background,
-                    filled: true,
-                    hintText: 'Surname',
-                    errorStyle: loginErrorStyle,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.text,
-                  //text from field passwords
-                  obscureText: false,
-                  enableSuggestions: false,
-                  autocorrect: false,
-
-                  validator: (value) {
-                    if (value == null) {
-                      emptyCount++;
-                    } else {
-                      String trimmedValue = value.trim();
-                      if (trimmedValue.isEmpty) {
-                        emptyCount++;
-                      }
-                    }
-                    return null;
-                  },
-
-                  onSaved: (value) {
-                    if (value != null) {
-                      surnameUser = value;
+                      addressUser = value;
 
                     }
                   },
                 ),
               ),
-               Container(
-                 padding: EdgeInsets.all(5),
-                 child: TextFormField(
-                   decoration: InputDecoration(
-                     fillColor: AppColors.background,
-                     filled: true,
-                     hintText: 'Password',
-                     errorStyle: loginErrorStyle,
-                     border: OutlineInputBorder(
-                       borderSide: BorderSide(
-                         color: AppColors.primary,
-                       ),
-                    ),
-                  ),
-                  keyboardType: TextInputType.text,
-                  //text from field passwords
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
 
-                  validator: (value) {
-                    if (value == null) {
-                      emptyCount++;
-                    } else {
-                      String trimmedValue = value.trim();
-                      if (trimmedValue.isEmpty) {
-                        //return 'Password field cannot be empty';
-                        emptyCount++;
-                      }
-                      if (trimmedValue.length < 8) {
-                        return 'Password must be at least 8 characters long';
-                      }
-                    }
-                    return null;
-                  },
+              Padding(
 
-                  onSaved: (value) {
-                    if (value != null) {
-                      passUser = value; //burası eksik
+                padding: const EdgeInsets.all(2),
+                child: OutlinedButton(
+                  child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
+                  onPressed: () async {
+                    print(photoUrl + "  photo url");
+                    print("********************here*******************");
+                    formKey.currentState!.save();
+
+                    if(photoUrl != "" )
+                    {
+                      await updateUserPic(widget.myUser!.email!,photoUrl);
+                      widget.myUser!.photoUrl = photoUrl;
                     }
+                    if(nameUser != ""){
+                      print("ife girdi");
+                      await updateUserName(widget.myUser!.email!, nameUser);
+                    }
+                    if(surnameUser != ""){
+                      await updateUserSurname(widget.myUser!.email!, surnameUser);
+                    }
+                    if(addressUser != ""){
+                      await updateUserAddress(widget.myUser!.email!, addressUser);
+                    }
+                    if(passUser != ""){
+                      await changePassword(passUser);
+                      auth.signOut();
+                      Navigator.pushNamed(context, "/Welcome");
+                    }
+                    //save changes
+                    setState((){
+                    });
                   },
                 ),
-               ),Container(
-              padding: EdgeInsets.all(5),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  fillColor: AppColors.background,
-                  filled: true,
-                  hintText: 'Address',
-                  errorStyle: loginErrorStyle,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-                keyboardType: TextInputType.text,
-                //text from field passwords
-                obscureText: false,
-                enableSuggestions: false,
-                autocorrect: false,
-
-                validator: (value) {
-                  if (value == null) {
-                    emptyCount++;
-                  } else {
-                    String trimmedValue = value.trim();
-                    if (trimmedValue.isEmpty) {
-                      emptyCount++;
-                    }
-                  }
-                  return null;
-                },
-
-                onSaved: (value) {
-                  if (value != null) {
-                    addressUser = value;
-
-                  }
-                },
               ),
-            ),
-
-            Padding(
-
-              padding: const EdgeInsets.all(2),
-              child: OutlinedButton(
-                child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                onPressed: () async {
-                  print(photoUrl + "  photo url");
-                  print("********************here*******************");
-                  if(photoUrl != "" )
-                  {
-                    await updateUserPic(widget.myUser!.email!,photoUrl);
-                    widget.myUser!.photoUrl = photoUrl;
-                  }
-                  if(nameUser != ""){
-                    print("ife girdi");
-                    await updateUserName(widget.myUser!.email!, nameUser);
-                  }
-                  if(surnameUser != ""){
-                    await updateUserSurname(widget.myUser!.email!, surnameUser);
-                  }
-                  if(addressUser != ""){
-                    await updateUserAddress(widget.myUser!.email!, addressUser);
-                  }
-                  if(passUser != ""){
-                    await changePassword(passUser);
-                    auth.signOut();
-                    Navigator.pushNamed(context, "/Welcome");
-                  }
-                  //save changes
-                  setState((){
-                  });
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

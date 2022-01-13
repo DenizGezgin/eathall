@@ -30,6 +30,7 @@ class ProductEditingPage extends StatefulWidget {
 class _ProductEditingPageState extends State<ProductEditingPage> {
 
   PageController pageController = PageController();
+  final formKey = GlobalKey<FormState>();
   late String photoUrl;
   int emptyCount = 0;
   String newProductName = "";
@@ -37,6 +38,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
   int newPrice = 0;
   String newDescription = "";
   String newPhotoUrl = "";
+  String priceSeyi = "";
 
 
   @override
@@ -145,233 +147,240 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
             ),
           ]
       ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-
-                padding:const EdgeInsets.all(10),
-                child:CircleAvatar(
-                  radius: 25,
-                  child: ClipOval(
-                    child: Image.network(widget.myProduct!.photoUrl!,
-                      fit: BoxFit.fill, height: 200, width: 100,),
-                  ),
-                ),
-              ),
-              Padding(
-
-                padding: const EdgeInsets.all(10),
-                child: OutlinedButton(
-                  child: Text("Change Product Picture", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-                  onPressed: () async {
-                    await pickImage();
-                    setState(() {
-
-                    });
-                  },
-                ),
-
-              ),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: TextFormField(
-              decoration: InputDecoration(
-                fillColor: AppColors.background,
-                filled: true,
-                hintText: 'Name of Product',
-                errorStyle: loginErrorStyle,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              //text from field passwords
-              obscureText: false,
-              enableSuggestions: false,
-              autocorrect: false,
-
-              validator: (value) {
-                if (value == null) {
-                  emptyCount++;
-                } else {
-                  String trimmedValue = value.trim();
-                  if (trimmedValue.isEmpty) {
-                    emptyCount++;
-                  }
-                }
-                return null;
-              },
-
-              onSaved: (value) {
-                if (value != null) {
-                  newProductName = value;
-                  updateProductName(widget.myProduct.name! + widget.myProduct.seller!, newProductName);
-                }
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: TextFormField(
-              decoration: InputDecoration(
-                fillColor: AppColors.background,
-                filled: true,
-                hintText: 'Category of the Product',
-                errorStyle: loginErrorStyle,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              //text from field passwords
-              obscureText: false,
-              enableSuggestions: false,
-              autocorrect: false,
-
-              validator: (value) {
-                if (value == null) {
-                  emptyCount++;
-                } else {
-                  String trimmedValue = value.trim();
-                  if (trimmedValue.isEmpty) {
-                    emptyCount++;
-                  }
-                }
-                return null;
-              },
-
-              onSaved: (value) {
-                if (value != null) {
-                  newCategoryName = value;
-                  updateProductCategory(widget.myProduct.name! + widget.myProduct.seller!, newCategoryName);
-                }
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: TextFormField(
-              decoration: InputDecoration(
-                fillColor: AppColors.background,
-                filled: true,
-                hintText: 'Price of the Product',
-                errorStyle: loginErrorStyle,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-              //text from field passwords
-
-              validator: (value) {
-                if (value == null) {
-                  emptyCount++;
-                } else {
-                  String trimmedValue = value.trim();
-                  if (trimmedValue.isEmpty) {
-                    emptyCount++;
-                  }
-                }
-                return null;
-              },
-
-              onSaved: (value) {
-                if (value != null) {
-                  var one = int.parse(value);
-                  newPrice = one;
-                  updateProductPrice(widget.myProduct.name! + widget.myProduct.seller!, newPrice);
-                }
-              },
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: TextFormField(
-              decoration: InputDecoration(
-                fillColor: AppColors.background,
-                filled: true,
-                hintText: 'Description about the Product',
-                errorStyle: loginErrorStyle,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              //text from field passwords
-              obscureText: false,
-              enableSuggestions: false,
-              autocorrect: false,
-
-              validator: (value) {
-                if (value == null) {
-                  emptyCount++;
-                } else {
-                  String trimmedValue = value.trim();
-                  if (trimmedValue.isEmpty) {
-                    emptyCount++;
-                  }
-                }
-                return null;
-              },
-
-              onSaved: (value) {
-                if (value != null) {
-                  newDescription = value;
-                  updateProductDescription(widget.myProduct.name! + widget.myProduct.seller!, newDescription);
-                }
-              },
-            ),
-          ),
-          Padding(
-
-            padding: const EdgeInsets.all(2),
-            child: OutlinedButton(
-              child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
-              onPressed: () async {
-                print(photoUrl);
-                if(photoUrl != "" )
-                {
-                  await updateProductPhotoUrl(widget.myProduct.name! + widget.myProduct.seller!, photoUrl);
-                }
-                //save changes
-                setState(() {});
-              },
-            ),
-
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Row(
               children: [
-                OutlinedButton(
-                  onPressed: (){
-                    //removing product
-                    removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
-                    deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
-                    showAlertDialog("Success", "Your product has been deleted succesfully.");
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("Remove Product", style: TextStyle(color: Colors.red)),
+                Padding(
+
+                  padding:const EdgeInsets.all(10),
+                  child:CircleAvatar(
+                    radius: 25,
+                    child: ClipOval(
+                      child: Image.network(widget.myProduct!.photoUrl!,
+                        fit: BoxFit.fill, height: 200, width: 100,),
+                    ),
+                  ),
+                ),
+                Padding(
+
+                  padding: const EdgeInsets.all(10),
+                  child: OutlinedButton(
+                    child: Text("Change Product Picture", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
+                    onPressed: () async {
+                      await pickImage();
+                      setState(() {
+
+                      });
+                    },
+                  ),
+
                 ),
               ],
             ),
-          ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  fillColor: AppColors.background,
+                  filled: true,
+                  hintText: 'Name of Product',
+                  errorStyle: loginErrorStyle,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.text,
+                //text from field passwords
+                obscureText: false,
+                enableSuggestions: false,
+                autocorrect: false,
 
-        ],
+                validator: (value) {
+                  if (value == null) {
+                    emptyCount++;
+                  } else {
+                    String trimmedValue = value.trim();
+                    if (trimmedValue.isEmpty) {
+                      emptyCount++;
+                    }
+                  }
+                  return null;
+                },
+
+                onSaved: (value) {
+                  if (value != null) {
+                    newProductName = value;
+                    updateProductName(widget.myProduct.name! + widget.myProduct.seller!, newProductName);
+                  }
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  fillColor: AppColors.background,
+                  filled: true,
+                  hintText: 'Category of the Product',
+                  errorStyle: loginErrorStyle,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.text,
+                //text from field passwords
+                obscureText: false,
+                enableSuggestions: false,
+                autocorrect: false,
+
+                validator: (value) {
+                  if (value == null) {
+                    emptyCount++;
+                  } else {
+                    String trimmedValue = value.trim();
+                    if (trimmedValue.isEmpty) {
+                      emptyCount++;
+                    }
+                  }
+                  return null;
+                },
+
+                onSaved: (value) {
+                  if (value != null) {
+                    newCategoryName = value;
+                    updateProductCategory(widget.myProduct.name! + widget.myProduct.seller!, newCategoryName);
+                  }
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  fillColor: AppColors.background,
+                  filled: true,
+                  hintText: 'Price of the Product',
+                  errorStyle: loginErrorStyle,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                //text from field passwords
+
+                validator: (value) {
+                  if (value == null) {
+                    emptyCount++;
+                  } else {
+                    String trimmedValue = value.trim();
+                    if (trimmedValue.isEmpty) {
+                      emptyCount++;
+                    }
+                  }
+                  return null;
+                },
+
+                onSaved: (value) {
+                  if (value != null) {
+                    var one = int.parse(value);
+                    newPrice = one;
+                    updateProductPrice(widget.myProduct.name! + widget.myProduct.seller!, newPrice);
+                  }
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  fillColor: AppColors.background,
+                  filled: true,
+                  hintText: 'Description about the Product',
+                  errorStyle: loginErrorStyle,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.text,
+                //text from field passwords
+                obscureText: false,
+                enableSuggestions: false,
+                autocorrect: false,
+
+                validator: (value) {
+                  if (value == null) {
+                    emptyCount++;
+                  } else {
+                    String trimmedValue = value.trim();
+                    if (trimmedValue.isEmpty) {
+                      emptyCount++;
+                    }
+                  }
+                  return null;
+                },
+
+                onSaved: (value) {
+                  if (value != null) {
+                    newDescription = value;
+                    updateProductDescription(widget.myProduct.name! + widget.myProduct.seller!, newDescription);
+                  }
+                },
+              ),
+            ),
+            Padding(
+
+              padding: const EdgeInsets.all(2),
+              child: OutlinedButton(
+                child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
+                onPressed: () async {
+                  //
+
+                  formKey.currentState!.save();
+                  print("ASAGDA");
+                  print("URI" + photoUrl);
+                  if(photoUrl != "" )
+                  {
+                    await updateProductPhotoUrl(widget.myProduct.name! + widget.myProduct.seller!, photoUrl);
+                  }
+                  //save changes
+                  setState(() {});
+                },
+              ),
+
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    onPressed: (){
+                      //removing product
+                      removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
+                      deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
+                      showAlertDialog("Success", "Your product has been deleted succesfully.");
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Remove Product", style: TextStyle(color: Colors.red)),
+                  ),
+                ],
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }
