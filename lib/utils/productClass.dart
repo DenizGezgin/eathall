@@ -152,6 +152,16 @@ Future<void> updateProductName(String productKey, String nameNew) async{
       .catchError((error) => print("Failed to update name of the product: $error"));
 }
 
+Future<void> updateProductSellerName(String productKey, String sellerNameNew) async{
+  Product current = await getProdcutWithUrl(productKey);
+  return _collectionRef.doc(productKey)
+      .update({
+    "seller": sellerNameNew,
+  })
+      .then((value) => print("name of the product Updated"))
+      .catchError((error) => print("Failed to update name of the product: $error"));
+}
+
 Future<void> updateProductCategory(String productKey, String categoryNew) async{
   Product current = await getProdcutWithUrl(productKey);
   return _collectionRef.doc(productKey)

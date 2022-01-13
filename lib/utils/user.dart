@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_step3/utils/productClass.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserFirebase
@@ -229,6 +230,21 @@ Future<void> deleteUser(String userMail) async{
 }
 
 Future<void> updateUserName(String userMail, String newName) async{
+
+  /*UserFirebase currentUser = await getUserWithMail(userMail);
+  List<Product> productsList = [];
+
+  List<dynamic> myKeys = currentUser.products_onsale!;
+  Product current;
+  for(String key in myKeys)
+  {
+    updateProductSellerName(key, sellerNameNew);
+  }
+  if(productsList.length > 0){
+    updateProductSellerName(key, sellerNameNew)
+  }*/
+
+
   return _collectionRef.doc(userMail)
       .update({
     "name": newName,

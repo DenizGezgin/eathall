@@ -323,13 +323,15 @@ class  _EditProfilePageState extends State<EditProfilePage>{
               child: OutlinedButton(
                 child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
                 onPressed: () async {
-                  print(photoUrl);
+                  print(photoUrl + "  photo url");
+                  print("********************here*******************");
                   if(photoUrl != "" )
                   {
                     await updateUserPic(widget.myUser!.email!,photoUrl);
                     widget.myUser!.photoUrl = photoUrl;
                   }
                   if(nameUser != ""){
+                    print("ife girdi");
                     await updateUserName(widget.myUser!.email!, nameUser);
                   }
                   if(surnameUser != ""){
