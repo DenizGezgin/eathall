@@ -210,14 +210,14 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
                                 child: ListTile(
                                   title: Text(
-                                    sellersProductsOnSale[index].name!,
+                                    sellersProductsOnSale[index].displayName!,
                                   ),
                                   subtitle: Row(
                                     children: [
                                       Text(
                                         "${sellersProductsOnSale[index].price!}" + "TL    ",
                                       ),
-                                      Text(sellersProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary)),
+                                      Text(sellersProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic)),
                                     ],
                                   ),
                                   trailing: IconButton(

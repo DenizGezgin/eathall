@@ -76,7 +76,7 @@ class _productPageState extends State<productPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(widget.myProduct.name!,
+              Text(widget.myProduct.displayName!,
               style: TextStyle(fontWeight: FontWeight.bold,
               fontSize: 28),)
             ],),
@@ -101,7 +101,7 @@ class _productPageState extends State<productPage> {
                         ));
                   },
                   child: Text(
-                    widget.myProduct.seller!,
+                    widget.myProduct.sellerDisplayName!,
                     style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic, color: Colors.grey,
                         fontSize: 18),
                   ),

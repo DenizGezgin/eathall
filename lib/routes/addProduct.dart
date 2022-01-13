@@ -88,7 +88,7 @@ class _addProductPageState extends State<addProductPage> {
                 TextButton(onPressed: () {
                   Navigator.of(context).pop(); //pop the current alert view
                 },
-                    child: Text("Okey"))
+                    child: Text("OK"))
               ],
             );
           }

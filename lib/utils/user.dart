@@ -231,19 +231,17 @@ Future<void> deleteUser(String userMail) async{
 
 Future<void> updateUserName(String userMail, String newName) async{
 
-  /*UserFirebase currentUser = await getUserWithMail(userMail);
+  UserFirebase currentUser = await getUserWithMail(userMail);
   List<Product> productsList = [];
 
   List<dynamic> myKeys = currentUser.products_onsale!;
   Product current;
-  for(String key in myKeys)
-  {
-    updateProductSellerName(key, sellerNameNew);
+  if(myKeys.length > 0){
+    for(String myKey in myKeys)
+    {
+      updateProductSellerName(myKey, newName + " " + currentUser.surname!);
+    }
   }
-  if(productsList.length > 0){
-    updateProductSellerName(key, sellerNameNew)
-  }*/
-
 
   return _collectionRef.doc(userMail)
       .update({
@@ -253,10 +251,24 @@ Future<void> updateUserName(String userMail, String newName) async{
       .catchError((error) => print("Failed to update the name of the product: $error"));
 }
 
-Future<void> updateUserSurname(String userMail, String newSurame) async{
+Future<void> updateUserSurname(String userMail, String newSurname) async{
+
+  UserFirebase currentUser = await getUserWithMail(userMail);
+  List<Product> productsList = [];
+
+  List<dynamic> myKeys = currentUser.products_onsale!;
+  Product current;
+  if(myKeys.length > 0){
+    for(String myKey in myKeys)
+    {
+      updateProductSellerName(myKey, currentUser.name! + " " + newSurname);
+    }
+  }
+
+
   return _collectionRef.doc(userMail)
       .update({
-    "surname": newSurame,
+    "surname": newSurname,
   })
       .then((value) => print("surname of the product has been updated"))
       .catchError((error) => print("Failed to update the surname of the product: $error"));

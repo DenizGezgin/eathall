@@ -39,6 +39,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
   String addressUser = "";
   String passUser = "";
   int emptyCount = 0;
+  bool isChanged = false;
 
   PageController pageController = PageController();
   late String photoUrl;
@@ -332,20 +333,25 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                     if(photoUrl != "" )
                     {
+                      isChanged = true;
                       await updateUserPic(widget.myUser!.email!,photoUrl);
                       widget.myUser!.photoUrl = photoUrl;
                     }
                     if(nameUser != ""){
+                      isChanged = true;
                       print("ife girdi");
                       await updateUserName(widget.myUser!.email!, nameUser);
                     }
                     if(surnameUser != ""){
+                      isChanged = true;
                       await updateUserSurname(widget.myUser!.email!, surnameUser);
                     }
                     if(addressUser != ""){
+                      isChanged = true;
                       await updateUserAddress(widget.myUser!.email!, addressUser);
                     }
                     if(passUser != ""){
+                      isChanged = true;
                       await changePassword(passUser);
                       auth.signOut();
                       Navigator.pushNamed(context, "/Welcome");
@@ -353,6 +359,11 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                     //save changes
                     setState((){
                     });
+                    if(isChanged){
+                      showAlertDialog("Success", "Your changes have been saved successfully. PLease login again to see your changes.");
+                      auth.signOut();
+                      Navigator.pushNamed(context, "/Welcome");
+                    }
                   },
                 ),
               ),

@@ -6,7 +6,9 @@ class Product
 {
   final String? category;
   final String? name;
+  final String? displayName;
   final String? seller;
+  final String? sellerDisplayName;
   final int? price;
   final bool? isOnSale;
   final String? photoUrl;
@@ -17,7 +19,7 @@ class Product
   final int? numberOfRatings;
   final int? sumOfRatings;
 
-  Product({this.category, this.name, this.seller, this.price, this.isOnSale, this.photoUrl, this.description, this.comments, this.rating, this.sellerMail, this.numberOfRatings, this.sumOfRatings, });
+  Product({this.category, this.name, this.displayName, this.seller, this.sellerDisplayName, this.price, this.isOnSale, this.photoUrl, this.description, this.comments, this.rating, this.sellerMail, this.numberOfRatings, this.sumOfRatings, });
 
 }
 CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
@@ -37,7 +39,9 @@ Future<List<Product>> getAllData() async {
     return Product(
       name: dataMap['name'] ?? "NULL_NAME",
       category: dataMap['category'] ?? "NULL_NAME",
+      displayName: dataMap['category'] ?? "NULL_NAME",
       seller: dataMap['seller'] ?? "NULL_NAME",
+      sellerDisplayName: dataMap['sellerDisplayName'] ?? "NULL_NAME",
       price: dataMap['price'] ?? 0,
       isOnSale: dataMap['isOnSale'] ?? true,
       photoUrl: dataMap["photoUrl"] ?? "https://www.google.com/search?q=resim&sxsrf=AOaemvK7ZJcn_d10R5R_Ud4anuePvKfTLw:1640451347562&tbm=isch&source=iu&ictx=1&fir=__Sz5QrzgaLGQM%252CQqB-ANoE8WAWxM%252C_%253BsOq7MsHbHDLXMM%252CCby56JbflgexjM%252C_%253BS70l8sydBMSnFM%252CQfjjSjUDG3aNxM%252C_%253BEp-fpHBd4_4fmM%252ChHZhF9HOp-GSTM%252C_%253B1zdi0mQ1-m0qvM%252CFD4f9XfSM9BOyM%252C_%253BnMAwpdurIJpWVM%252ClopRlmOVgH8l9M%252C_%253BTLg1yYGXRaO8RM%252CHnjvaDa-2nsc1M%252C_%253BHz1Zp-C_m3U8UM%252CX3aYi0eT-lR7OM%252C_%253Bu9G6iqYTJ6mB4M%252CPjgHitmFUPexwM%252C_%253B3PB5EWdTJ__kTM%252CQfjjSjUDG3aNxM%252C_%253Bf38-IZ6LUM6OGM%252CjEKL356qqhkyLM%252C_%253Bt5FXRB4rwPQ_CM%252CHywpbdcUr65P-M%252C_%253BzTzg4T1EUp1DBM%252CTqgB9i1x2xK4PM%252C_%253Bi0z-sd7wiQsjBM%252CQM1dtXwplDn0aM%252C_&vet=1&usg=AI4_-kS1KRYCnxuCxGJRbQOZBnx-zWpM2Q&sa=X&ved=2ahUKEwj2od6-tf_0AhXnSfEDHRBUBl4Q9QF6BAgFEAE#imgrc=__Sz5QrzgaLGQM",
@@ -56,8 +60,10 @@ Future<void> addProduct(String namec, String categoryc,String sellerc,int pricec
   return _collectionRef.doc(namec + sellerc)
       .set({
     'name': namec,
+    'displayName': namec,
     'category': categoryc,
     'seller': sellerc,
+    'sellerDisplayName': sellerc,
     'price': pricec,
     'description': descriptionc,
     'isOnSale': false,
@@ -85,7 +91,9 @@ Future<Product> getProdcutWithUrl(String url) async{  //productname + seller
     Product finalProduct = Product(
       name: dataMap['name'] ?? "NULL_NAME",
       category: dataMap['category'] ?? "NULL_NAME",
+      displayName: dataMap['displayName'] ?? "NULL_NAME",
       seller: dataMap['seller'] ?? "NULL_NAME",
+      sellerDisplayName: dataMap['sellerDisplayName'] ?? "NULL_NAME",
       price: dataMap['price'] ?? 0,
       isOnSale: dataMap['isOnSale'] ?? true,
       photoUrl: dataMap["photoUrl"] ?? "https://www.google.com/search?q=resim&sxsrf=AOaemvK7ZJcn_d10R5R_Ud4anuePvKfTLw:1640451347562&tbm=isch&source=iu&ictx=1&fir=__Sz5QrzgaLGQM%252CQqB-ANoE8WAWxM%252C_%253BsOq7MsHbHDLXMM%252CCby56JbflgexjM%252C_%253BS70l8sydBMSnFM%252CQfjjSjUDG3aNxM%252C_%253BEp-fpHBd4_4fmM%252ChHZhF9HOp-GSTM%252C_%253B1zdi0mQ1-m0qvM%252CFD4f9XfSM9BOyM%252C_%253BnMAwpdurIJpWVM%252ClopRlmOVgH8l9M%252C_%253BTLg1yYGXRaO8RM%252CHnjvaDa-2nsc1M%252C_%253BHz1Zp-C_m3U8UM%252CX3aYi0eT-lR7OM%252C_%253Bu9G6iqYTJ6mB4M%252CPjgHitmFUPexwM%252C_%253B3PB5EWdTJ__kTM%252CQfjjSjUDG3aNxM%252C_%253Bf38-IZ6LUM6OGM%252CjEKL356qqhkyLM%252C_%253Bt5FXRB4rwPQ_CM%252CHywpbdcUr65P-M%252C_%253BzTzg4T1EUp1DBM%252CTqgB9i1x2xK4PM%252C_%253Bi0z-sd7wiQsjBM%252CQM1dtXwplDn0aM%252C_&vet=1&usg=AI4_-kS1KRYCnxuCxGJRbQOZBnx-zWpM2Q&sa=X&ved=2ahUKEwj2od6-tf_0AhXnSfEDHRBUBl4Q9QF6BAgFEAE#imgrc=__Sz5QrzgaLGQM",
@@ -102,7 +110,9 @@ Future<Product> getProdcutWithUrl(String url) async{  //productname + seller
   return Product(
     name: "NULL_NAME",
     category:  "NULL_NAME",
+    displayName: "NULL_NAME",
     seller: "NULL_NAME",
+    sellerDisplayName: "NULL_NAME",
     price:  0,
     isOnSale:  true,
     photoUrl:  "https://www.google.com/search?q=resim&sxsrf=AOaemvK7ZJcn_d10R5R_Ud4anuePvKfTLw:1640451347562&tbm=isch&source=iu&ictx=1&fir=__Sz5QrzgaLGQM%252CQqB-ANoE8WAWxM%252C_%253BsOq7MsHbHDLXMM%252CCby56JbflgexjM%252C_%253BS70l8sydBMSnFM%252CQfjjSjUDG3aNxM%252C_%253BEp-fpHBd4_4fmM%252ChHZhF9HOp-GSTM%252C_%253B1zdi0mQ1-m0qvM%252CFD4f9XfSM9BOyM%252C_%253BnMAwpdurIJpWVM%252ClopRlmOVgH8l9M%252C_%253BTLg1yYGXRaO8RM%252CHnjvaDa-2nsc1M%252C_%253BHz1Zp-C_m3U8UM%252CX3aYi0eT-lR7OM%252C_%253Bu9G6iqYTJ6mB4M%252CPjgHitmFUPexwM%252C_%253B3PB5EWdTJ__kTM%252CQfjjSjUDG3aNxM%252C_%253Bf38-IZ6LUM6OGM%252CjEKL356qqhkyLM%252C_%253Bt5FXRB4rwPQ_CM%252CHywpbdcUr65P-M%252C_%253BzTzg4T1EUp1DBM%252CTqgB9i1x2xK4PM%252C_%253Bi0z-sd7wiQsjBM%252CQM1dtXwplDn0aM%252C_&vet=1&usg=AI4_-kS1KRYCnxuCxGJRbQOZBnx-zWpM2Q&sa=X&ved=2ahUKEwj2od6-tf_0AhXnSfEDHRBUBl4Q9QF6BAgFEAE#imgrc=__Sz5QrzgaLGQM",
@@ -146,7 +156,7 @@ Future<void> updateProductName(String productKey, String nameNew) async{
   Product current = await getProdcutWithUrl(productKey);
   return _collectionRef.doc(productKey)
       .update({
-    "name": nameNew,
+    "displayName": nameNew,
   })
       .then((value) => print("name of the product Updated"))
       .catchError((error) => print("Failed to update name of the product: $error"));
@@ -156,7 +166,7 @@ Future<void> updateProductSellerName(String productKey, String sellerNameNew) as
   Product current = await getProdcutWithUrl(productKey);
   return _collectionRef.doc(productKey)
       .update({
-    "seller": sellerNameNew,
+    "sellerDisplayName": sellerNameNew,
   })
       .then((value) => print("name of the product Updated"))
       .catchError((error) => print("Failed to update name of the product: $error"));

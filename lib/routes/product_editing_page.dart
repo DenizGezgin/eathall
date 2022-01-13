@@ -35,10 +35,11 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
   int emptyCount = 0;
   String newProductName = "";
   String newCategoryName = "";
-  int newPrice = 0;
+  int newPrice =  -1;
   String newDescription = "";
   String newPhotoUrl = "";
-  String priceSeyi = "";
+  String priceSeyi = "EMPTY_FIELD";
+  bool isChanged = false;
 
 
   @override
@@ -106,6 +107,13 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
       } catch (e) {
         print(e.toString());
       }
+    }
+
+    bool isNumeric(String s) {
+      if(s == null) {
+        return false;
+      }
+      return int.tryParse(s) != null;
     }
 
     Future pickImage() async {
@@ -215,7 +223,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                 onSaved: (value) {
                   if (value != null) {
                     newProductName = value;
-                    updateProductName(widget.myProduct.name! + widget.myProduct.seller!, newProductName);
+
                   }
                 },
               ),
@@ -255,7 +263,6 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                 onSaved: (value) {
                   if (value != null) {
                     newCategoryName = value;
-                    updateProductCategory(widget.myProduct.name! + widget.myProduct.seller!, newCategoryName);
                   }
                 },
               ),
@@ -266,7 +273,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                 decoration: InputDecoration(
                   fillColor: AppColors.background,
                   filled: true,
-                  hintText: 'Price of the Product',
+                  hintText: 'Price of the Product (Please only enter integers)',
                   errorStyle: loginErrorStyle,
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -292,9 +299,11 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
 
                 onSaved: (value) {
                   if (value != null) {
-                    var one = int.parse(value);
-                    newPrice = one;
-                    updateProductPrice(widget.myProduct.name! + widget.myProduct.seller!, newPrice);
+                    priceSeyi = value;
+                    var one = int.tryParse(priceSeyi);
+                    if(one != null){
+                      newPrice = one;
+                    }
                   }
                 },
               ),
@@ -334,7 +343,6 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                 onSaved: (value) {
                   if (value != null) {
                     newDescription = value;
-                    updateProductDescription(widget.myProduct.name! + widget.myProduct.seller!, newDescription);
                   }
                 },
               ),
@@ -350,12 +358,42 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                   formKey.currentState!.save();
                   print("ASAGDA");
                   print("URI" + photoUrl);
+
                   if(photoUrl != "" )
                   {
                     await updateProductPhotoUrl(widget.myProduct.name! + widget.myProduct.seller!, photoUrl);
+                    isChanged = true;
                   }
+                  if(newProductName != ""){
+                    updateProductName(widget.myProduct.name! + widget.myProduct.seller!, newProductName);
+                    isChanged = true;
+                  }
+                  if(newDescription != ""){
+                    updateProductDescription(widget.myProduct.name! + widget.myProduct.seller!, newDescription);
+                    isChanged = true;
+                  }
+                  if(priceSeyi != "EMPTY_FIELD" && priceSeyi != ""){ //this is problematic
+                    updateProductPrice(widget.myProduct.name! + widget.myProduct.seller!, newPrice);
+                    isChanged = true;
+                  }
+                  if(newCategoryName != ""){
+                    updateProductCategory(widget.myProduct.name! + widget.myProduct.seller!, newCategoryName);
+                    isChanged = true;
+                  }
+
+
+
+                  //showAlertDialog("Error", "No changes have been saved, please try again with an only integer input for the price field.");
+
                   //save changes
+
+
+                  if(isChanged){
+                    showAlertDialog("Success", "Your changes have been saved successfully.");
+                  }
+
                   setState(() {});
+
                 },
               ),
 
@@ -370,8 +408,10 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
                       //removing product
                       removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
                       deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
-                      showAlertDialog("Success", "Your product has been deleted succesfully.");
-                      Navigator.of(context).pop();
+                      print("****************************here***********************");
+                      showAlertDialog("Success", "Your product has been deleted successfully.");
+                      setState(() {});
+
                     },
                     child: Text("Remove Product", style: TextStyle(color: Colors.red)),
                   ),

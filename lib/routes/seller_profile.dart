@@ -237,14 +237,14 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           child: ListTile(
                             title: Text(
-                              myProductsOnSale[index].name!,
+                              myProductsOnSale[index].displayName!,
                             ),
                             subtitle: Row(
                               children: [
                                 Text(
                                   "${myProductsOnSale[index].price!}" + "TL    ",
                                 ),
-                                Text(myProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary))
+                                Text(myProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic))
                               ],
                             ),
                             trailing: IconButton(
@@ -287,7 +287,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           child: ListTile(
                             title: Text(
-                              mySoldProducts[index].name!,
+                              mySoldProducts[index].displayName!,
                             ),
                             subtitle: Text(
                               "${mySoldProducts[index].price!}",
