@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/edit_profile.dart';
 import 'package:cs310_step3/routes/pastPurchase.dart';
 import 'package:cs310_step3/routes/seller_profile.dart';
+import 'package:cs310_step3/routes/settings_page.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:cs310_step3/utils/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ import '/utils/styles.dart';
 import 'commentReqs.dart';
 import 'login_page.dart';
 import '/services/authentication_file.dart';
+import 'myComments_page.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -274,7 +276,13 @@ class  _ProfilePageState extends State<ProfilePage>{
               color: Colors.white,
 
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyCommentsPage(myUser: widget.myUser!),
+                      ));
+                },
                 child: Row(
                   children: [
                     Icon(Icons.mode_comment, color: Colors.black),
@@ -290,7 +298,13 @@ class  _ProfilePageState extends State<ProfilePage>{
               color: Colors.white,
 
               child: FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsPage(myUser: widget.myUser!),
+                      ));
+                },
                 child: Row(
                   children: [
                     Icon(Icons.settings, color: Colors.black),

@@ -35,7 +35,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
   int emptyCount = 0;
   String newProductName = "";
   String newCategoryName = "";
-  int newPrice =  -1;
+  late int newPrice;
   String newDescription = "";
   String newPhotoUrl = "";
   String priceSeyi = "EMPTY_FIELD";
@@ -398,25 +398,43 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
               ),
 
             ),
-            Container(
-              padding: EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  OutlinedButton(
-                    onPressed: (){
-                      //removing product
-                      removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
-                      deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
-                      print("****************************here***********************");
-                      showAlertDialog("Success", "Your product has been deleted successfully.");
-                      setState(() {});
+            Divider(),
 
-                    },
-                    child: Text("Remove Product", style: TextStyle(color: Colors.red)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:10),
+                  child: Column(
+                    children: [
+                      Text("This product is currently on sale."),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right:10),
+                  child: Row(
+                    children: [
+                      OutlinedButton(
+                        onPressed: (){
+                          //removing product
+                          removeFromProductList(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
+                          deleteProduct(widget.myProduct.name! + widget.myProduct.seller!);
+                          print("****************************here***********************");
+                          showAlertDialog("Success", "Your product has been deleted successfully.");
+                          setState(() {});
+
+                        },
+                        child: Row(children: [
+                          Text("Remove Product", style: TextStyle(color: Colors.red)),
+                          Icon(Icons.delete, color: Colors.red),
+
+                        ],),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
 
           ],
