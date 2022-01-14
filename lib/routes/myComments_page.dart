@@ -55,7 +55,7 @@ class  _MyCommentsPageState extends State<MyCommentsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: AppColors.primary)/*AppBar(
           backgroundColor: AppColors.primary,
           leading: IconButton(
             onPressed: () {
@@ -82,7 +82,7 @@ class  _MyCommentsPageState extends State<MyCommentsPage> {
               icon: Icon(Icons.add_alert),
             ),
           ]
-      ),
+      ),*/,
       body: SingleChildScrollView(
       ),
     );

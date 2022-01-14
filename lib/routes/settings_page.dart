@@ -31,7 +31,7 @@ class  _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: AppColors.primary),/*AppBar(
           backgroundColor: AppColors.primary,
           leading: IconButton(
             onPressed: () {
@@ -58,7 +58,7 @@ class  _SettingsPageState extends State<SettingsPage> {
               icon: Icon(Icons.add_alert),
             ),
           ]
-      ),
+      ),*/
       body: SingleChildScrollView(
       ),
     );

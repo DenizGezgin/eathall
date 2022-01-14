@@ -75,7 +75,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
 
     if (user != null) {
       return Scaffold(
-        appBar: AppBar(
+        appBar: AppBar(backgroundColor: AppColors.primary),/*AppBar(
             backgroundColor: AppColors.primary,
             leading: IconButton(
               onPressed: () {
@@ -102,7 +102,7 @@ class  _SellerProfileBuyerPageState extends State<SellerProfileBuyerPage> {
                 icon: Icon(Icons.add_alert),
               ),
             ]
-        ),
+        ),*/
         body: SingleChildScrollView(
           child: Column(
             children: [
