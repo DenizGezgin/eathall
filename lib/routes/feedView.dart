@@ -191,10 +191,19 @@ class MainFeedView extends StatefulWidget {
 
 class _MainFeedViewState extends State<MainFeedView> {
 
+  List<Product> allProductsWithDisabled = [];
   List<Product> allProducts = [];
 
   void asyncMethod() async {
-    allProducts = await getAllData();
+    allProductsWithDisabled = await getAllData();
+
+    for(Product theProduct in allProductsWithDisabled){
+      UserFirebase thatUser = await getUserWithMail(theProduct!.sellerMail!);
+      if(thatUser.disabled! == false){
+        allProducts.add(theProduct);
+      }
+    }
+
     setState(() {
 
     });

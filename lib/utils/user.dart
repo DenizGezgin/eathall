@@ -310,7 +310,7 @@ Future<void> disableUser(String userMail) async{
     "comments": myUser.comments,
     "bookmarks": myUser.bookmarks,
     "credit_cards": myUser.bought_products,
-    "disabled": false,
+    "disabled": true, //?
     "shopping_card": myUser.shopping_card,
     "bought_products": myUser.bought_products,
     "products_onsale": myUser.products_onsale,
