@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/addProduct.dart';
+import 'package:cs310_step3/routes/feedView.dart';
 import 'package:cs310_step3/routes/mockPaymentPage.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/redirection_page.dart';
@@ -393,11 +394,29 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     //String productKey = namec + widget.myUser!.name! + " " + widget.myUser!.surname!;
                     //updateSoldProducts(widget.myUser!.email!, productKey);
 
-                    showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
 
                     // PAST PURCHASE A EKLE
-
                     // SATICININ SATIŞLARINA EKLENECEK
+                    //product key = foodnname+username + " " + usersurname
+                    for (Product prod in myPosts){
+                      String productKey = prod.name! + widget.myUser!.name! + " " + widget.myUser!.surname!;
+                      updateBoughtProducts(widget.myUser!.email!, productKey);
+                      updatePrevSales(widget.myUser!.email!, productKey);
+                    }
+
+
+
+
+
+
+                    showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
+
+
+
+
+
+
+
 
 
                     setState(() {});
