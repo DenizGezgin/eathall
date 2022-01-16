@@ -405,7 +405,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                       String productKey = prod.name! + widget.myUser!.name! + " " + widget.myUser!.surname!;
                       updateBoughtProducts(widget.myUser!.email!, productKey);
                       updatePrevSales(prod.sellerMail!, productKey);
-                      removeFromCard(widget.myUser!.email!, productKey);
+                      removeFromCard(widget.myUser!.email!, productKey); //ZORRRRRRRRRTTTTTTTTTTTTTTTTTTT
                     }
 
                     showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
