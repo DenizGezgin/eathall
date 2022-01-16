@@ -83,7 +83,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                   ),
                   actions: [
                     TextButton(onPressed: () {
-                      deactivate();
+                      disableUser(widget.myUser!.email!);
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(
@@ -161,159 +161,171 @@ class  _ProfilePageState extends State<ProfilePage>{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(2),
-              child: OutlinedButton(
-                child: Text("Seller Profile", style: TextStyle(color: Colors.black)),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SellerProfilePage(myUser: widget.myUser)
-                      ));
-                },
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: CircleAvatar(
-                radius: 25,
-                child: ClipOval(
-
-                  child: Image.network(widget.myUser!.photoUrl!,
-                    fit: BoxFit.fill, height: 200, width: 100,),
-                ),
-              ),
-            ),
-            Text(widget.myUser!.name! + " " + widget.myUser!.surname!,
-                textAlign: TextAlign.center,
-                style: smallTitleBlackTextStyle
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-
+            Container(
+              height: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Padding(
-
                     padding: const EdgeInsets.all(2),
                     child: OutlinedButton(
-                      child: Text("Edit\nProfile", textAlign: TextAlign.center,
-                          style: loginSignupOrContinueSmallTextStyleBlack),
+                      child: Text("Seller Profile", style: TextStyle(color: Colors.black)),
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EditProfilePage(myUser: widget.myUser)
+                                builder: (context) => SellerProfilePage(myUser: widget.myUser)
                             ));
                       },
                     ),
-
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: OutlinedButton(
-                      child: Text(
-                          "Deactivate\nAccount", textAlign: TextAlign.center,
-                          style: loginSignupOrContinueSmallTextStyleBlack),
-                      onPressed: () {
-                        showAlertDialog("Warning", "Are you sure you want to deactivate your account?", false);
+                    padding: const EdgeInsets.all(10),
+                    child: CircleAvatar(
+                      radius: 25,
+                      child: ClipOval(
 
-                        //pop up something
-                      },
+                        child: Image.network(widget.myUser!.photoUrl!,
+                          fit: BoxFit.fill, height: 200, width: 100,),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: OutlinedButton(
-                      child: Text(
-                          "Delete\nAccount", textAlign: TextAlign.center,
-                          style: loginSignupOrContinueSmallTextStyleBlack),
-                      onPressed: () {
-                        showAlertDialog("Warning", "Are you sure you want to delete your account? This action cannot be undone.", true);
-
-                        //pop up something
-                      },
-                    ),
+                  Text(widget.myUser!.name! + " " + widget.myUser!.surname!,
+                      textAlign: TextAlign.center,
+                      style: smallTitleBlackTextStyle
                   ),
-                ]
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+
+                      Padding(
+
+                        padding: const EdgeInsets.all(2),
+                        child: OutlinedButton(
+                          child: Text("Edit\nProfile", textAlign: TextAlign.center,
+                              style: loginSignupOrContinueSmallTextStyleBlack),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfilePage(myUser: widget.myUser)
+                                ));
+                          },
+                        ),
+
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: OutlinedButton(
+                          child: Text(
+                              "Deactivate\nAccount", textAlign: TextAlign.center,
+                              style: loginSignupOrContinueSmallTextStyleBlack),
+                          onPressed: () {
+                            showAlertDialog("Warning", "Are you sure you want to deactivate your account?", false);
+
+                            //pop up something
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: OutlinedButton(
+                          child: Text(
+                              "Delete\nAccount", textAlign: TextAlign.center,
+                              style: loginSignupOrContinueSmallTextStyleBlack),
+                          onPressed: () {
+                            showAlertDialog("Warning", "Are you sure you want to delete your account? This action cannot be undone.", true);
+
+                            //pop up something
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
 
             Divider(
               color: AppColors.primary,
               thickness: 1,
             ),
-            Container(
-              height: 20,
-              width: 400,
-              color: Colors.white,
+           Column(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               Container(
+                 height: 20,
+                 width: 400,
+                 color: Colors.white,
 
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => pastPurchese(userMail: widget.myUser!.email!),
-                      ));
+                 child: FlatButton(
+                   onPressed: () {
+                     Navigator.push(
+                         context,
+                         MaterialPageRoute(
+                           builder: (context) => pastPurchese(userMail: widget.myUser!.email!),
+                         ));
 
 
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.account_balance_wallet_rounded,
-                        color: Colors.black),
-                    Text("Purchases",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
+                   },
+                   child: Row(
+                     children: [
+                       Icon(Icons.account_balance_wallet_rounded,
+                           color: Colors.black),
+                       Text("Purchases",
+                           style: loginSignupOrContinueSmallTextStyleBlack),
+                     ],
+                   ),
+                 ),
+               ),
 
-            Container(
-              height: 20,
-              width: 400,
-              color: Colors.white,
+               Container(
+                 height: 20,
+                 width: 400,
+                 color: Colors.white,
 
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyCommentsPage(myUser: widget.myUser!),
-                      ));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.mode_comment, color: Colors.black),
-                    Text("Comments",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: 20,
-              width: 400,
-              color: Colors.white,
+                 child: FlatButton(
+                   onPressed: () {
+                     Navigator.push(
+                         context,
+                         MaterialPageRoute(
+                           builder: (context) => MyCommentsPage(myUser: widget.myUser!),
+                         ));
+                   },
+                   child: Row(
+                     children: [
+                       Icon(Icons.mode_comment, color: Colors.black),
+                       Text("Comments",
+                           style: loginSignupOrContinueSmallTextStyleBlack),
+                     ],
+                   ),
+                 ),
+               ),
+               Container(
+                 height: 20,
+                 width: 400,
+                 color: Colors.white,
 
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingsPage(myUser: widget.myUser!),
-                      ));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.settings, color: Colors.black),
-                    Text("Settings",
-                        style: loginSignupOrContinueSmallTextStyleBlack),
-                  ],
-                ),
-              ),
-            ),
+                 child: FlatButton(
+                   onPressed: () {
+                     Navigator.push(
+                         context,
+                         MaterialPageRoute(
+                           builder: (context) => SettingsPage(myUser: widget.myUser!),
+                         ));
+                   },
+                   child: Row(
+                     children: [
+                       Icon(Icons.settings, color: Colors.black),
+                       Text("Settings",
+                           style: loginSignupOrContinueSmallTextStyleBlack),
+                     ],
+                   ),
+                 ),
+               ),
+             ],
+           ),
           ],
         ),
       ),
