@@ -83,7 +83,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                   ),
                   actions: [
                     TextButton(onPressed: () {
-                      deactivate();
+                      disableUser(widget.myUser!.email!);
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(
