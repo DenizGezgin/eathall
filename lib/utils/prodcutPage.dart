@@ -1,3 +1,4 @@
+import 'package:cs310_step3/routes/anonMockPaymentPage.dart';
 import 'package:cs310_step3/routes/seller_profile_buyers_see.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/productClass.dart';
@@ -222,12 +223,18 @@ class _productPageState extends State<productPage> {
                           onPressed: (){
                             if(widget.myUser != null)
                               {
+                                print(widget.myUser!.name.toString());
                                 updateCard(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
                                 showAlertDialog("Success", "Product is added to the card.");
                               }
                             else
                               {
                                 print("NullUser");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => anonMockPaymentPage(prod: widget.myProduct,),
+                                    ));
                               }
 
                           },
