@@ -402,7 +402,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     // SATICININ SATIŞLARINA EKLENECEK
                     //product key = foodnname+username + " " + usersurname
                     for (Product prod in myPosts){
-                      String productKey = prod.name! + widget.myUser!.name! + " " + widget.myUser!.surname!;
+                      String productKey = prod.name! + prod.seller!;
                       addBoughtProd(widget.myUser!.email!, productKey);
                       updatePrevSales(prod.sellerMail!, productKey);
                        //ZORRRRRRRRRTTTTTTTTTTTTTTTTTTT
@@ -410,7 +410,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     cleanCart(widget.myUser!.email!);
 
 
-                    showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
+                    showAlertDialog("Purchase Succesfull" , "Your prdoduct will be delivered soon!");
 
                     setState(() {
                       asyncMethod();

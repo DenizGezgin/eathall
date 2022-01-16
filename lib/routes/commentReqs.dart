@@ -51,52 +51,54 @@ class _ApproveCommentsState extends State<ApproveComments> {
 
     return Scaffold(
       appBar: AppBar(backgroundColor: AppColors.primary,),
-      body: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(onPressed: (){
-                  asyncMethod();
-                  print(myPosts.length);
-                }, icon: Icon(Icons.refresh, color: AppColors.primary,))
-              ],
-            ),
-            SingleChildScrollView(
-                child:  ListView.builder(
-                    itemCount: myPosts.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        semanticContainer: true,
-                        elevation: 2,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: ListTile(
-                          title: Text(
-                            myPosts[index]["user"],
-                          ),
-                          subtitle: Text(
-                            myPosts[index]["data"],
-                          ),
-                          leading: IconButton(onPressed: (){
-                            addAprrovedComment(myPosts[index]["userMail"],myPosts[index]);
-                            addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
-                          }, icon: Icon(Icons.check_box, color: Colors.green, )),
-                          trailing: RatingBarIndicator(
-                            rating: myPosts[index]["rating"],
-                            itemBuilder: (context, index) => Icon(
-                              Icons.star_rate_outlined,
-                              color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Column(
+            children: [
+              Row(
+                children: [
+                  IconButton(onPressed: (){
+                    asyncMethod();
+                    print(myPosts.length);
+                  }, icon: Icon(Icons.refresh, color: AppColors.primary,))
+                ],
+              ),
+              SingleChildScrollView(
+                  child:  ListView.builder(
+                      itemCount: myPosts.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          semanticContainer: true,
+                          elevation: 2,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: ListTile(
+                            title: Text(
+                              myPosts[index]["user"],
                             ),
-                            itemCount: 5,
-                            itemSize: 20.0,
-                            direction: Axis.horizontal,
+                            subtitle: Text(
+                              myPosts[index]["data"],
+                            ),
+                            leading: IconButton(onPressed: (){
+                              addAprrovedComment(myPosts[index]["userMail"],myPosts[index]);
+                              addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
+                            }, icon: Icon(Icons.check_box, color: Colors.green, )),
+                            trailing: RatingBarIndicator(
+                              rating: myPosts[index]["rating"],
+                              itemBuilder: (context, index) => Icon(
+                                Icons.star_rate_outlined,
+                                color: Colors.amber,
+                              ),
+                              itemCount: 5,
+                              itemSize: 20.0,
+                              direction: Axis.horizontal,
 
+                            ),
                           ),
-                        ),
-                      );
-                    })
-            ),
-          ]
+                        );
+                      })
+              ),
+            ]
+        ),
       ),
     );
   }
