@@ -267,7 +267,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                 padding: const EdgeInsets.all(5),
                 child: Container(
                   height: 30,
-                  width: 368,
+                  width: 369,
                   color: AppColors.loginToContinueBackGround,
                   child: Padding(
                     padding: const EdgeInsets.only(top:6),

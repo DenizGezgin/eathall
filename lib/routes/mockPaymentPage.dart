@@ -428,6 +428,17 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                   backgroundColor: AppColors.purchaseAndAdd,
                 ),
               ),
+              OutlinedButton(
+                onPressed: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FeedView()
+                      )
+                  );
+                },
+                child: Text("Return to Main Page", style:TextStyle(color: AppColors.primary)),
+              ),
             ]
         ),
       ),
