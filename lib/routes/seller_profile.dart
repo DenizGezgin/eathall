@@ -292,7 +292,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                             subtitle: Text(
                               "${mySoldProducts[index].price!}",
                             ),
-                            trailing: Text(mySoldProducts[index].category!),
+                            trailing: Text(mySoldProducts[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic )),
                           ),
                         );
                       })
