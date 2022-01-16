@@ -39,7 +39,7 @@ class _productPageState extends State<productPage> {
                 TextButton(onPressed: () {
                   Navigator.of(context).pop(); //pop the current alert view
                 },
-                    child: Text("Okey"))
+                    child: Text("OK"))
               ],
             );
           }
@@ -223,7 +223,7 @@ class _productPageState extends State<productPage> {
                             if(widget.myUser != null)
                               {
                                 updateCard(widget.myUser!.email!, widget.myProduct.name! + widget.myProduct.seller!);
-                                showAlertDialog("Sucsess", "Product is added to the card.");
+                                showAlertDialog("Success", "Product is added to the card.");
                               }
                             else
                               {
