@@ -125,7 +125,7 @@ Future<void> addBoughtProd(String userMail, String productKey) async{
 
   return _collectionRef.doc(userMail)
       .update({
-    "comment_approves": FieldValue.arrayUnion(newItem),
+    "bought_products": FieldValue.arrayUnion(newItem),
   })
       .then((value) => print("Product Added to list Updated"))
       .catchError((error) => print("Failed toComment Added to approve list user: $error"));
