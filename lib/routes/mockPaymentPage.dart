@@ -403,14 +403,18 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     //product key = foodnname+username + " " + usersurname
                     for (Product prod in myPosts){
                       String productKey = prod.name! + widget.myUser!.name! + " " + widget.myUser!.surname!;
-                      updateBoughtProducts(widget.myUser!.email!, productKey);
+                      addBoughtProd(widget.myUser!.email!, productKey);
                       updatePrevSales(prod.sellerMail!, productKey);
-                      removeFromCard(widget.myUser!.email!, productKey); //ZORRRRRRRRRTTTTTTTTTTTTTTTTTTT
+                       //ZORRRRRRRRRTTTTTTTTTTTTTTTTTTT
                     }
+                    cleanCart(widget.myUser!.email!);
+
 
                     showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
 
-                    setState(() {});
+                    setState(() {
+                      asyncMethod();
+                    });
                   }
                 },
                 child: Padding(

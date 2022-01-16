@@ -114,6 +114,23 @@ Future<void> addPendingComment(String userMail, String commentData, double final
       .catchError((error) => print("Failed toComment Added to approve list user: $error"));
 }
 
+Future<void> addBoughtProd(String userMail, String productKey) async{
+  //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL
+  Map<String, dynamic> myProducts = {};
+
+  myProducts["date"] = DateTime.now();
+  myProducts["isAlreadyRated"] = false;
+  myProducts["productKey"] = productKey;
+  List<dynamic> newItem = [myProducts];
+
+  return _collectionRef.doc(userMail)
+      .update({
+    "comment_approves": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("Product Added to list Updated"))
+      .catchError((error) => print("Failed toComment Added to approve list user: $error"));
+}
+
 Future<void> addAprrovedComment(String userMail, Map<String, dynamic> myComment) async{
   //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL + PRODUCTKEY
   List<dynamic> newItem = [myComment];
@@ -144,9 +161,19 @@ Future<void> updateUserRating(String userMail, double raiting) async{
 
 Future<void> removeFromCard(String userMail, String productKey) async{
   List<dynamic> newItem = [productKey];
+  print(productKey);
   return _collectionRef.doc(userMail)
       .update({
     "shopping_card": FieldValue.arrayRemove(newItem),
+  })
+      .then((value) => print("User Updated zortttt"))
+      .catchError((error) => print("Failed zorttt to update user: $error"));
+}
+
+Future<void> cleanCart(String userMail) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "shopping_card": [],
   })
       .then((value) => print("User Updated"))
       .catchError((error) => print("Failed to update user: $error"));
