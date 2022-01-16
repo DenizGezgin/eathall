@@ -28,18 +28,19 @@ import 'package:flutter/material.dart';
 
 import 'login_page.dart';
 
-class MockPaymentPage extends StatefulWidget {
+class anonMockPaymentPage extends StatefulWidget {
 
   @override
-  _MockPaymentPageState createState() => _MockPaymentPageState();
-  MockPaymentPage({Key? key, this.myUser}) : super(key: key);
+  _anonMockPaymentPageState createState() => _anonMockPaymentPageState();
+  anonMockPaymentPage({Key? key, this.prod}) : super(key: key);
   UserFirebase? myUser;
+  Product? prod;
   final formKey = GlobalKey<FormState>();
 }
 
-class _MockPaymentPageState extends State<MockPaymentPage> {
+class _anonMockPaymentPageState extends State<anonMockPaymentPage> {
+  List<Product> postList = [];
 
-  List<Product> myPosts = [];
 
   late String namec;
   late int cardno;
@@ -48,7 +49,6 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
   late bool datebool;
 
   Future<void> asyncMethod() async {
-
     setState(() {
 
     });
@@ -68,10 +68,8 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
 
   double total = 0;
 
-  double getTotal(double total){
-    for(Product prod in myPosts){
-      total += prod!.price!.toDouble();
-    }
+  double getTotal(double total) {
+    total = widget.prod!.price!.toDouble();
     return total!;
   }
 
@@ -98,6 +96,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
       );
     }
 
+    postList.add(widget.prod!);
 
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +105,6 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
             onPressed: () {
               auth.signOut();
               Navigator.pushNamed(context, "/Welcome");
-
             },
             icon: Icon(Icons.logout),
           ),
@@ -121,7 +119,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
           ),
           actions: <Widget>[
             IconButton(
-              onPressed:(){
+              onPressed: () {
                 Navigator.pushNamed(context, "/notificationsPage");
               },
               icon: Icon(Icons.add_alert),
@@ -130,20 +128,22 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.blue,
-        child: Text("Total Price: ${getTotal(0).toString()}", textAlign: TextAlign.center, style: TextStyle(
-          fontFamily: 'Sansita_Swashed',
-          color: Colors.white,
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-          letterSpacing: -0.7,
-        ),
+        child: Text(
+          "Total Price: ${getTotal(0).toString()}", textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Sansita_Swashed',
+            color: Colors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -0.7,
+          ),
         ),
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
             children: [
-              Text("🛒 ITEMS IN THE CART 🛒", style: TextStyle(
+              Text("🛒 ITEM TO BE BOUGHT 🛒", style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -154,14 +154,16 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
-                  children: myPosts.map(
+                  children: postList.map(
                           (product) =>
                           CartTile(
                             post: product,
                             delete: () {
                               setState(() {
-                                total = (total! + product.price!.truncateToDouble());
-                                removeFromCard(widget.myUser!.email!, product.name! + product.seller!);
+                                total =
+                                (total! + product.price!.truncateToDouble());
+                                removeFromCard(widget.myUser!.email!,
+                                    product.name! + product.seller!);
                                 asyncMethod();
                               });
                             },)
@@ -218,8 +220,9 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                                     String trimmedValue = value.trim();
                                     if (trimmedValue.isEmpty) {
                                       return 'Credit Card Number field cannot be empty';
-                                    }else{
-                                      if(trimmedValue.length < 8 || trimmedValue.length > 19){
+                                    } else {
+                                      if (trimmedValue.length < 8 ||
+                                          trimmedValue.length > 19) {
                                         return 'Credit Card Number format is wrong';
                                       }
                                     }
@@ -305,8 +308,9 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                                     String trimmedValue = value.trim();
                                     if (trimmedValue.isEmpty) {
                                       return 'Expiration Date field cannot be empty';
-                                    }else{
-                                      if(trimmedValue.length != 5 || trimmedValue[2] != '/'){
+                                    } else {
+                                      if (trimmedValue.length != 5 ||
+                                          trimmedValue[2] != '/') {
                                         datebool = false;
                                         return 'Date format is wrong';
                                       }
@@ -346,8 +350,8 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                                     String trimmedValue = value.trim();
                                     if (trimmedValue.isEmpty) {
                                       return 'CVC code field cannot be empty';
-                                    }else{
-                                      if(trimmedValue.length != 3){
+                                    } else {
+                                      if (trimmedValue.length != 3) {
                                         return 'CVC must be 3 digit number';
                                       }
                                     }
@@ -372,14 +376,14 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
               ),
 
 
-
               SizedBox(height: 16,),
 
               OutlinedButton(
                 onPressed: () {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
-                    print(namec + " " + cardno.toString() + " " + date + " " + security.toString());
+                    print(namec + " " + cardno.toString() + " " + date + " " +
+                        security.toString());
                     widget.formKey.currentState!.reset();
 
                     //String productKey = namec + widget.myUser!.name! + " " + widget.myUser!.surname!;
@@ -389,16 +393,17 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     // PAST PURCHASE A EKLE
                     // SATICININ SATIŞLARINA EKLENECEK
                     //product key = foodnname+username + " " + usersurname
-                    for (Product prod in myPosts){
-                      String productKey = prod.name! + widget.myUser!.name! + " " + widget.myUser!.surname!;
-                      addBoughtProd(widget.myUser!.email!, productKey);
-                      updatePrevSales(prod.sellerMail!, productKey);
-                      //ZORRRRRRRRRTTTTTTTTTTTTTTTTTTT
-                    }
-                    cleanCart(widget.myUser!.email!);
+
+                    //for (Product prod in postList){
+                    //  String productKey = prod.name! + widget.myUser!.name! + " " + widget.myUser!.surname!;
+                    //  addBoughtProd(widget.myUser!.email!, productKey);
+                    //  updatePrevSales(prod.sellerMail!, productKey);
+                    //}
+                    //cleanCart(widget.myUser!.email!);
 
 
-                    showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
+                    showAlertDialog("Purchase Sucsefull",
+                        "Your prdoduct will be delivered soon!");
 
                     setState(() {
                       asyncMethod();
