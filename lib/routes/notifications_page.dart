@@ -21,7 +21,7 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
     setState(() {
       counter++;
       print(counter);
-      addNotification(entries, notification("Notification message ${counter}"));
+      addNotification(entries, notification(msg: "Notification message ${counter}"));
     });
   }
 
