@@ -80,9 +80,30 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
     return myPostsPrev;
   }
 
+  double total = 0;
+
+  double getTotal(double total){
+    for(Product prod in myPosts){
+      total += prod!.price!.toDouble();
+    }
+    return total!;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+        child: Text("Total Price: ${getTotal(0).toString()}", textAlign: TextAlign.center, style: TextStyle(
+          fontFamily: 'Sansita_Swashed',
+          color: Colors.white,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          letterSpacing: -0.7,
+        ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
