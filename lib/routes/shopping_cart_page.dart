@@ -150,7 +150,7 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MockPaymentPage()
+                          builder: (context) => MockPaymentPage(myUser: widget.myUser,)
                       ));
                 },
                 child: Padding(

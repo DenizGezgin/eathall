@@ -162,6 +162,15 @@ Future<void> removeFromProductList(String userMail, String productKey) async{
       .catchError((error) => print("Failed to remove product from product list: $error"));
 }
 
+Future<void> clearShoppingCart(String userMail, String productKey) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "shopping_card": FieldValue.delete(),
+  })
+      .then((value) => print("product removed from product list"))
+      .catchError((error) => print("Failed to remove product from product list: $error"));
+}
+
 
 Future<UserFirebase> getUserWithMail(String userMail) async{
   var documentSnapshot = await _collectionRef.doc(userMail).get();

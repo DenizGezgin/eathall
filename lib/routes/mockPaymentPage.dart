@@ -78,9 +78,14 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
     return myPostsPrev;
   }
 
-  double? total = 0;
+  double total = 0;
 
-
+  double getTotal(double total){
+    for(Product prod in myPosts){
+      total += prod!.price!.toDouble();
+    }
+    return total!;
+  }
 
 
   @override
@@ -107,7 +112,6 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
 
 
     return Scaffold(
-
       appBar: AppBar(
           backgroundColor: AppColors.primary,
           leading: IconButton(
@@ -138,8 +142,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.blue,
-        
-        child: Text("Total Price: ${total}", textAlign: TextAlign.center, style: TextStyle(
+        child: Text("Total Price: ${getTotal(0).toString()}", textAlign: TextAlign.center, style: TextStyle(
           fontFamily: 'Sansita_Swashed',
           color: Colors.white,
           fontSize: 30,
@@ -404,20 +407,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                       updatePrevSales(widget.myUser!.email!, productKey);
                     }
 
-
-
-
-
-
                     showAlertDialog("Purchase Sucsefull" , "Your prdoduct will be delivered soon!");
-
-
-
-
-
-
-
-
 
                     setState(() {});
                   }
