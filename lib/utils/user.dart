@@ -465,3 +465,14 @@ Future<void> enableUser(String userMail) async{
 }
 
 //calculate average rating
+
+
+Future<void> removeFromCardNotif(String userMail, String notifKey) async{
+  List<dynamic> newItem = [notifKey];
+  return _collectionRef.doc(userMail)
+      .update({
+    "notification": FieldValue.arrayRemove(newItem),
+  })
+      .then((value) => print("User Updated"))
+      .catchError((error) => print("Failed to update user: $error"));
+}

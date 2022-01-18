@@ -78,9 +78,20 @@ class _productPageState extends State<productPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text(widget.myProduct.displayName!,
-              style: TextStyle(fontWeight: FontWeight.bold,
-              fontSize: 28),)
+                Column(
+                  children: [
+                    Text(widget.myProduct.displayName!,
+                    style: TextStyle(fontWeight: FontWeight.bold,
+                    fontSize: 28),),
+                    /*Container(
+                        child: Text(widget.myProduct.category!, style: TextStyle(fontStyle: FontStyle.italic, color: AppColors.primary,
+                          fontSize: 14,
+                        )),
+                        padding: const EdgeInsets.all(8),
+                    ),*/
+                  ],
+                ),
+
             ],),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +137,7 @@ class _productPageState extends State<productPage> {
               children: [
                 Container(
                   width: 370.0,
-                  height: 100.0,
+                  height: 80.0,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.white)
 
@@ -139,7 +150,7 @@ class _productPageState extends State<productPage> {
                         style: TextStyle(
                           fontFamily: 'Arial',
                           color: Colors.grey,
-                          fontSize: 18,
+                          fontSize: 16,
                           height: 1,
                         ),
                       ),

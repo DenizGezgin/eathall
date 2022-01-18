@@ -170,7 +170,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                         padding: const EdgeInsets.only(top: 2),
                         child: Container(
                           color: Colors.black,
-                          width: 267.5,
+                          width: 272.22,
                           height: 1,
                         ),
                       ),

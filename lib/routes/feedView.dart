@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/addProduct.dart';
+import 'package:cs310_step3/routes/notifications_page.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/redirection_page.dart';
 import 'package:cs310_step3/routes/search_explore.dart';
@@ -120,7 +121,17 @@ class _FeedViewState extends State<FeedView> {
           actions: <Widget>[
             IconButton(
               onPressed:(){
-                Navigator.pushNamed(context, "/notificationsPage");
+                if(widget.myUser != null){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationsPage(myUser: widget.myUser)
+                      )
+                  );
+                }
+                else{
+                  Navigator.pushNamed(context, "/redirectionPage");
+                }
               },
               icon: Icon(Icons.add_alert),
             ),

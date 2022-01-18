@@ -109,7 +109,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                   TextButton(onPressed: () {
                     Navigator.of(context).pop(); //pop the current alert view
                   },
-                      child: Text("OK"))
+                      child: Text("OK", style: TextStyle(color: AppColors.purchaseAndAdd)))
                 ],
               );
             }
@@ -325,7 +325,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                 padding: const EdgeInsets.all(2),
                 child: OutlinedButton(
-                  child: Text("Save Changes", textAlign: TextAlign.center, style: loginSignupOrContinueSmallTextStyleBlack),
+                  child: Text("Save Changes", textAlign: TextAlign.center, style: TextStyle(color: AppColors.purchaseAndAdd)),
                   onPressed: () async {
                     print(photoUrl + "  photo url");
                     print("********************here*******************");

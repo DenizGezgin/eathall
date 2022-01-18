@@ -1,6 +1,11 @@
+import 'package:cs310_step3/routes/redirection_page.dart';
+import 'package:cs310_step3/utils/cart_tile.dart';
+import 'package:cs310_step3/utils/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
 import 'package:cs310_step3/main.dart';
@@ -11,22 +16,56 @@ import 'login_page.dart';
 class NotificationsPage extends StatefulWidget {
   @override
   State<NotificationsPage> createState() => _NotificaitonsPageState();
+  NotificationsPage({Key? key, this.myUser}) : super(key: key);
+  UserFirebase? myUser;
 }
+
+String theUser = "";
 
 class _NotificaitonsPageState extends State<NotificationsPage>{
   int counter = 0;
-  List<notification> entries = [];
+  List<notification> myNotifications = [];
+
+  Future<void> asyncMethod() async {
+    myNotifications = await getNotifications();
+    setState(() {
+
+    });
+  }
+
+  void initState() {
+    asyncMethod();
+    super.initState();
+  }
+
+  Future<List<notification>> getNotifications() async {
+    List<notification> myNotificationPrev = [];
+    widget.myUser = await getUserWithMail(widget.myUser!.email!);
+    List<dynamic> myKeys = widget.myUser!.shopping_card!;
+    notification current;
+    for(String key in myKeys)
+    {
+      current = await getNotificationWithUrl(key);
+      print(current);
+      myNotificationPrev.add(current);
+    }
+    return myNotificationPrev;
+  }
 
   buttonPressed() {
     setState(() {
       counter++;
       print(counter);
-      addNotification(entries, notification(msg: "Notification message ${counter}"));
+      //addNotification(myNotifications, notification("Notification message", "date", "hour"));
     });
+  }
+  pressButton(){
+    addNotification("Message2", "DATE", "HOUR");
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
 
     Future<void> showAlertDialog(String title, String message) async {
       return showDialog(context: context,
@@ -64,29 +103,66 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
       );
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-          backgroundColor: AppColors.primary,
-          centerTitle: true,
-          title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
-            fontFamily: 'Sansita_Swashed',
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.7,
-          ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              onPressed:(){
-                Navigator.pushNamed(context, "/notificationsPage");
-              },
-              icon: Icon(Icons.add_alert),
+    if(user != null)
+    {
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+            backgroundColor: AppColors.primary,
+            centerTitle: true,
+            title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
+              fontFamily: 'Sansita_Swashed',
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.7,
             ),
-          ]
-      ),
-      body: Center(
+            ),
+            actions: <Widget>[
+              IconButton(
+                onPressed:(){
+                  Navigator.pushNamed(context, "/notificationsPage");
+                },
+                icon: Icon(Icons.add_alert),
+              ),
+            ]
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              //Text("Current userrr" + widget.myUser!.name!),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: myNotifications.map(
+                          (notification) =>
+                          CartTileNotification(
+                            notif: notification,
+                            delete: () {
+                              setState(() {
+                                removeFromCardNotif(widget.myUser!.email!, notification!.msg!);
+                                asyncMethod();
+                              });
+                            },)
+                  ).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            pressButton();
+            setState(() {
+              //pressButton();
+            });
+          },
+          backgroundColor: Colors.green,
+           child: const Icon(Icons.navigation),
+    ),
+
+
+        /*SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -204,7 +280,36 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
             ],
           )
       ),
-    );
+
+       */
+      );
+    }
+    else {
+      return RedirectionPage();
+      /*Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+            backgroundColor: AppColors.primary,
+            centerTitle: true,
+            title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
+              fontFamily: 'Sansita_Swashed',
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.7,
+            ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                onPressed:(){
+                  Navigator.pushNamed(context, "/notificationsPage");
+                },
+                icon: Icon(Icons.add_alert),
+              ),
+            ]
+        ),
+      );*/
+    }
   }
 
   Widget prefixIcon(){
@@ -275,9 +380,11 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
 
 }
 
+/*
 void addNotification(List<notification> entries, notification notif) {
   entries.add(notif);
 }
+ */
 
 Widget displayNotifications(List<notification> entries){
   return ListView.separated(

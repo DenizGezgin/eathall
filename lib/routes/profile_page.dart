@@ -207,12 +207,13 @@ class  _ProfilePageState extends State<ProfilePage>{
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
 
                     padding: const EdgeInsets.all(2),
                     child: OutlinedButton(
-                      child: Text("Edit\nProfile", textAlign: TextAlign.center,
+                      child: Text("Edit Profile", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
                       onPressed: () {
                         Navigator.push(
@@ -228,7 +229,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                     padding: const EdgeInsets.all(2),
                     child: OutlinedButton(
                       child: Text(
-                          "Deactivate\nAccount", textAlign: TextAlign.center,
+                          "Deactivate Account", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
                       onPressed: () {
                         showAlertDialog("Warning", "Are you sure you want to deactivate your account?", false);
@@ -241,7 +242,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                     padding: const EdgeInsets.all(2),
                     child: OutlinedButton(
                       child: Text(
-                          "Delete\nAccount", textAlign: TextAlign.center,
+                          "Delete Account", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
                       onPressed: () {
                         showAlertDialog("Warning", "Are you sure you want to delete your account? This action cannot be undone.", true);
@@ -263,11 +264,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
                  Container(
-                   height: 20,
+                   height: 60,
                    width: 400,
                    color: Colors.white,
 
-                   child: FlatButton(
+                   child: OutlinedButton(
                      onPressed: () {
                        Navigator.push(
                            context,
@@ -278,10 +279,11 @@ class  _ProfilePageState extends State<ProfilePage>{
 
                      },
                      child: Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
                        children: [
                          Icon(Icons.account_balance_wallet_rounded,
                              color: Colors.black),
-                         Text("Purchases",
+                         Text(" Purchases",
                              style: loginSignupOrContinueSmallTextStyleBlack),
                        ],
                      ),
@@ -289,11 +291,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                  ),
 
                  Container(
-                   height: 20,
+                   height: 60,
                    width: 400,
                    color: Colors.white,
 
-                   child: FlatButton(
+                   child: OutlinedButton(
                      onPressed: () {
                        Navigator.push(
                            context,
@@ -302,20 +304,21 @@ class  _ProfilePageState extends State<ProfilePage>{
                            ));
                      },
                      child: Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
                        children: [
                          Icon(Icons.mode_comment, color: Colors.black),
-                         Text("Comments",
+                         Text(" Comments",
                              style: loginSignupOrContinueSmallTextStyleBlack),
                        ],
                      ),
                    ),
                  ),
                  Container(
-                   height: 20,
+                   height: 60,
                    width: 400,
                    color: Colors.white,
 
-                   child: FlatButton(
+                   child: OutlinedButton(
                      onPressed: () {
                        Navigator.push(
                            context,
@@ -324,9 +327,10 @@ class  _ProfilePageState extends State<ProfilePage>{
                            ));
                      },
                      child: Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
                        children: [
                          Icon(Icons.settings, color: Colors.black),
-                         Text("Settings",
+                         Text(" Settings",
                              style: loginSignupOrContinueSmallTextStyleBlack),
                        ],
                      ),

@@ -96,7 +96,16 @@ class _pastPurcheseState extends State<pastPurchese> {
                                                                         sellerMail:myPosts[index].sellerMail!, url:myPosts[index].photoUrl!, productName:myPosts[index].name!, seller:myPosts[index].seller! , index: index),
                               ));
 
-                        }, child: Text("Rate and Comment")),
+                        }, child: Container(
+                            child: Text("Rate and\nComment", textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color:AppColors.purchaseAndAdd,
+                                )),
+                          padding: const EdgeInsets.only(left:3, right:3),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.purchaseAndAdd),
+                          ),
+                        ),),
                       ),
                     );
                   })
