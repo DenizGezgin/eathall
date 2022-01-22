@@ -82,15 +82,15 @@ class  _ProfilePageState extends State<ProfilePage>{
                     child: Text(message),
                   ),
                   actions: [
-                    TextButton(onPressed: () {
-                      disableUser(widget.myUser!.email!);
+                    TextButton(onPressed: () async{
+                      await makeUserDisabled(widget.myUser!.email!);
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(
                           context, "/Welcome"); //pop the current alert view
                     },
                         child: Text("YES")),
-                    TextButton(onPressed: () {
+                    TextButton(onPressed: () async{
                       Navigator.of(context).pop(); //pop the current alert view
                     },
                         child: Text("NO"))
@@ -130,8 +130,8 @@ class  _ProfilePageState extends State<ProfilePage>{
                     child: Text(message),
                   ),
                   actions: [
-                    TextButton(onPressed: () {
-
+                    TextButton(onPressed: () async{
+                      await makeUserDisabled(widget.myUser!.email!);
                       Navigator.of(context).pop();
                       auth.signOut();
                       Navigator.pushNamed(

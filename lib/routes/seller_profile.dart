@@ -95,6 +95,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
 
     if (user != null) {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(backgroundColor: AppColors.primary),/* AppBar(
             backgroundColor: AppColors.primary,
             leading: IconButton(

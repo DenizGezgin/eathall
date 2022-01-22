@@ -126,6 +126,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: AppColors.primary,
