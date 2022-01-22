@@ -476,3 +476,25 @@ Future<void> removeFromCardNotif(String userMail, String notifKey) async{
       .then((value) => print("User Updated"))
       .catchError((error) => print("Failed to update user: $error"));
 }
+
+
+Future<void> makeUserDisabled(String userMail) async{
+  print("$userMail, in function");
+  //bool disabled = true;
+  return _collectionRef.doc(userMail)
+      .update({
+    "disabled": true
+  })
+      .then((value) => print("this user has been disabled"))
+      .catchError((error) => print("Failed to disable this user: $error"));
+}
+
+
+Future<void> makeUserEnabled(String userMail) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "disabled": false,
+  })
+      .then((value) => print("this user has been enabled"))
+      .catchError((error) => print("Failed to enable the user: $error"));
+}

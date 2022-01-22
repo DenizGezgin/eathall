@@ -238,6 +238,11 @@ class _LoginState extends State<Login> {
                               }
                               else
                                 {
+
+                                  if(myUserc.disabled!){
+                                    await makeUserEnabled(myUserc.email!);
+                                  }
+
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
