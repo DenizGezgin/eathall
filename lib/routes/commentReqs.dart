@@ -79,7 +79,7 @@ class _ApproveCommentsState extends State<ApproveComments> {
                               myPosts[index]["data"],
                             ),
                             leading: IconButton(onPressed: (){
-                              addAprrovedComment(myPosts[index]["userMail"],myPosts[index]);
+                              addAprrovedComment(myPosts[index]["userMail"],myPosts[index], index);
                               addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
                             }, icon: Icon(Icons.check_box, color: Colors.green, )),
                             trailing: RatingBarIndicator(

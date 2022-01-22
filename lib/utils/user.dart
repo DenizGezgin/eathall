@@ -131,14 +131,16 @@ Future<void> addBoughtProd(String userMail, String productKey) async{
       .catchError((error) => print("Failed toComment Added to approve list user: $error"));
 }
 
-Future<void> addAprrovedComment(String userMail, Map<String, dynamic> myComment) async{
+Future<void> addAprrovedComment(String userMail, Map<String, dynamic> myComment, index) async{
   //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL + PRODUCTKEY
   List<dynamic> newItem = [myComment];
+  UserFirebase user = await getUserWithMail(userMail);
+  List<dynamic> temp = user.comment_approves!;
+  temp.removeAt(index);
   _collectionRef.doc(userMail)
       .update({
-    "comment_approves": FieldValue.arrayRemove(newItem),
+    "comment_approves": temp,
   });
-
   return _collectionRef.doc(userMail)
       .update({
     "comments": FieldValue.arrayUnion(newItem),
