@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/utils/color.dart';
 import 'package:cs310_step3/utils/prodcutPage.dart';
@@ -16,7 +18,7 @@ class SearchFeed extends StatefulWidget {
 }
 
 class _SearchFeedState extends State<SearchFeed> {
-  List<String> searchTypes = ["seller", "name"];
+  List<String> searchTypes = ["sellerDisplayName", "displayName"];
   late int currentSearchType;
   late String currentFilter;
 
