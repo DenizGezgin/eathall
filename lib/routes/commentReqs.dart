@@ -78,9 +78,9 @@ class _ApproveCommentsState extends State<ApproveComments> {
                             subtitle: Text(
                               myPosts[index]["data"],
                             ),
-                            leading: IconButton(onPressed: (){
-                              addAprrovedComment(myPosts[index]["userMail"],myPosts[index]);
-                              addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
+                            leading: IconButton(onPressed: () async{
+                              await addAprrovedComment(myPosts[index]["userMail"],myPosts[index]);
+                              await addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
                             }, icon: Icon(Icons.check_box, color: Colors.green, )),
                             trailing: RatingBarIndicator(
                               rating: myPosts[index]["rating"],

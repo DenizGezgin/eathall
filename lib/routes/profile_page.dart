@@ -198,10 +198,6 @@ class  _ProfilePageState extends State<ProfilePage>{
                 ],
               ),
             ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
             Container(
               height: 160,
 
@@ -215,6 +211,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                     child: OutlinedButton(
                       child: Text("Edit Profile", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.black,
+                          backgroundColor: Colors.white,
+                          side: BorderSide(color: AppColors.primary, width: 1),
+                        ),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -231,6 +232,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                       child: Text(
                           "Deactivate Account", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.black,
+                          backgroundColor: Colors.white,
+                          side: BorderSide(color: AppColors.primary, width: 1),
+                        ),
                       onPressed: () {
                         showAlertDialog("Warning", "Are you sure you want to deactivate your account?", false);
 
@@ -244,6 +250,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                       child: Text(
                           "Delete Account", textAlign: TextAlign.center,
                           style: loginSignupOrContinueSmallTextStyleBlack),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.black,
+                          backgroundColor: Colors.white,
+                          side: BorderSide(color: AppColors.primary, width: 1),
+                        ),
                       onPressed: () {
                         showAlertDialog("Warning", "Are you sure you want to delete your account? This action cannot be undone.", true);
 
@@ -254,14 +265,11 @@ class  _ProfilePageState extends State<ProfilePage>{
                 ],
               ),
             ),
-            Divider(
-              color: AppColors.primary,
-              thickness: 1,
-            ),
+
            Container(
             height: 254,
              child: Column(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                children: [
                  Container(
                    height: 60,
@@ -283,9 +291,14 @@ class  _ProfilePageState extends State<ProfilePage>{
                        children: [
                          Icon(Icons.account_balance_wallet_rounded,
                              color: Colors.black),
-                         Text(" Purchases",
+                         Text(" My Purchases",
                              style: loginSignupOrContinueSmallTextStyleBlack),
                        ],
+                     ),
+                     style: OutlinedButton.styleFrom(
+                       primary: Colors.black,
+                       backgroundColor: Colors.white,
+                       side: BorderSide(color: AppColors.primary, width: 1),
                      ),
                    ),
                  ),
@@ -307,13 +320,18 @@ class  _ProfilePageState extends State<ProfilePage>{
                        mainAxisAlignment: MainAxisAlignment.center,
                        children: [
                          Icon(Icons.mode_comment, color: Colors.black),
-                         Text(" Comments",
+                         Text(" My Comments",
                              style: loginSignupOrContinueSmallTextStyleBlack),
                        ],
                      ),
+                       style: OutlinedButton.styleFrom(
+                         primary: Colors.black,
+                         backgroundColor: Colors.white,
+                         side: BorderSide(color: AppColors.primary, width: 1),
+                       )
                    ),
                  ),
-                 Container(
+                 /*Container(
                    height: 60,
                    width: 400,
                    color: Colors.white,
@@ -335,7 +353,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                        ],
                      ),
                    ),
-                 ),
+                 ),*/
                ],
              ),
            ),

@@ -227,42 +227,40 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                   ),
                 ),
               ),
-              SingleChildScrollView(
-                  child:  ListView.builder(
-                      itemCount: myProductsOnSale.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          semanticContainer: true,
-                          elevation: 2,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: ListTile(
-                            title: Text(
-                              myProductsOnSale[index].displayName!,
+              ListView.builder(
+                  itemCount: myProductsOnSale.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      semanticContainer: true,
+                      elevation: 2,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: ListTile(
+                        title: Text(
+                          myProductsOnSale[index].displayName!,
+                        ),
+                        subtitle: Row(
+                          children: [
+                            Text(
+                              "${myProductsOnSale[index].price!}" + "TL    ",
                             ),
-                            subtitle: Row(
-                              children: [
-                                Text(
-                                  "${myProductsOnSale[index].price!}" + "TL    ",
-                                ),
-                                Text(myProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic))
-                              ],
-                            ),
-                            trailing: IconButton(
-                              icon: Icon(Icons.edit, color: AppColors.purchaseAndAdd),
-                              onPressed: (){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProductEditingPage(myProduct: myProductsOnSale[index], myUser: widget.myUser)
-                                    )
-                                );
-                              },
-                            ),
-                          ),
-                        );
-                      })
-              ),
+                            Text(myProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic))
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.edit, color: AppColors.purchaseAndAdd),
+                          onPressed: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductEditingPage(myProduct: myProductsOnSale[index], myUser: widget.myUser)
+                                )
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }),
               //for the products on sale
               Padding(
                 padding: const EdgeInsets.all(5),
@@ -277,27 +275,25 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                 ),
               ),
 
-              SingleChildScrollView(
-                  child:  ListView.builder(
-                      itemCount: mySoldProducts.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          semanticContainer: true,
-                          elevation: 2,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: ListTile(
-                            title: Text(
-                              mySoldProducts[index].displayName!,
-                            ),
-                            subtitle: Text(
-                              "${mySoldProducts[index].price!}",
-                            ),
-                            trailing: Text(mySoldProducts[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic )),
-                          ),
-                        );
-                      })
-              ),
+              ListView.builder(
+                  itemCount: mySoldProducts.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      semanticContainer: true,
+                      elevation: 2,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: ListTile(
+                        title: Text(
+                          mySoldProducts[index].displayName!,
+                        ),
+                        subtitle: Text(
+                          "${mySoldProducts[index].price!}",
+                        ),
+                        trailing: Text(mySoldProducts[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic )),
+                      ),
+                    );
+                  }),
               //for the sold products
               Padding(
                 padding: const EdgeInsets.all(5),
