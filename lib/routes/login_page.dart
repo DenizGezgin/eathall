@@ -240,6 +240,7 @@ class _LoginState extends State<Login> {
                                 {
 
                                   if(myUserc.disabled!){
+                                    await addNotificaitonToUser(myUserc.email!, "You have activated your account again.");
                                     await makeUserEnabled(myUserc.email!);
                                   }
 

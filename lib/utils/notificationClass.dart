@@ -114,17 +114,8 @@ class CartTileNotification extends StatelessWidget {
                 ),
 
                 Spacer(),
+                Text("${notif.hour.toString()}"),
 
-                IconButton(
-                  onPressed: delete,
-                  padding: EdgeInsets.all(0),
-                  iconSize: 14,
-                  splashRadius: 24,
-                  color: Colors.red,
-                  icon: Icon(
-                    Icons.delete,
-                  ),
-                ),
               ],
             ),
           ],

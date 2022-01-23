@@ -390,6 +390,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
 
 
                   if(isChanged){
+                    addNotificaitonToUser(widget.myUser!.email!, "you have edited you product succesfully.");
                     showAlertDialog("Success", "Your changes have been saved successfully.");
                   }
 

@@ -356,10 +356,12 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                       auth.signOut();
                       Navigator.pushNamed(context, "/Welcome");
                     }
+
                     //save changes
                     setState((){
                     });
                     if(isChanged){
+                      addNotificaitonToUser(widget.myUser!.email!, "You have edited your profile succesfully.");
                       showAlertDialog("Success", "Your changes have been saved successfully. PLease login again to see your changes.");
                       auth.signOut();
                       Navigator.pushNamed(context, "/Welcome");

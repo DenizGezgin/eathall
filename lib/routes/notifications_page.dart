@@ -41,14 +41,25 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
   Future<List<notification>> getNotifications() async {
     List<notification> myNotificationPrev = [];
     widget.myUser = await getUserWithMail(widget.myUser!.email!);
-    List<dynamic> myKeys = widget.myUser!.shopping_card!;
-    notification current;
-    for(String key in myKeys)
+    List<dynamic> myKeys = widget.myUser!.notifications!;
+    for(dynamic key in myKeys)
     {
-      current = await getNotificationWithUrl(key);
-      print(current);
+      notification current = notification();
+
+      current.msg = key["msg"];
+      current.hour = key["hour"];
+      current.date = key["date"];
       myNotificationPrev.add(current);
     }
+
+
+    for(notification n in myNotificationPrev){
+      print(n.msg);
+      print(n.hour);
+      print(n.date);
+    }
+
+
     return myNotificationPrev;
   }
 
@@ -60,7 +71,9 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
     });
   }
   pressButton(){
-    addNotification("Message2", "DATE", "HOUR");
+    addNotificaitonToUser(widget.myUser!.email!, "notificationExample");
+    addNotificaitonToUser(widget.myUser!.email!, "notificationExample2");
+
   }
 
   @override
@@ -129,37 +142,54 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
         ),
         body: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //Text("Current userrr" + widget.myUser!.name!),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: myNotifications.map(
-                          (notification) =>
+                          (notificationOf) =>
                           CartTileNotification(
-                            notif: notification,
+                            notif: notificationOf,
                             delete: () {
+
+                              asyncMethod();
                               setState(() {
-                                removeFromCardNotif(widget.myUser!.email!, notification!.msg!);
-                                asyncMethod();
                               });
                             },)
                   ).toList(),
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () async{
+                      await clearNotificationsList(widget.myUser!.email!);
+
+                      setState(() {
+
+                      });
+                    },
+                    child: Text("Delete all notifications", style: TextStyle(color: Colors.black)),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.grey,),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            pressButton();
-            setState(() {
-              //pressButton();
-            });
-          },
-          backgroundColor: Colors.green,
-           child: const Icon(Icons.navigation),
-    ),
+       /* bottomNavigationBar:  TextButton(
+            onPressed: (){
+
+            },
+
+            child: Text("Delete all notifications", style: TextStyle(color: Colors.black)),
+            style: TextButton.styleFrom(
+            backgroundColor: Colors.grey,),
+          ),*/
 
 
         /*SingleChildScrollView(

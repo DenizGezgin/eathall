@@ -83,6 +83,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                   ),
                   actions: [
                     TextButton(onPressed: () async{
+                      await addNotificaitonToUser(widget.myUser!.email!, "You have deactivated your account.");
                       await makeUserDisabled(widget.myUser!.email!);
                       Navigator.of(context).pop();
                       auth.signOut();

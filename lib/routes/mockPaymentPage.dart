@@ -409,7 +409,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     }
                     cleanCart(widget.myUser!.email!);
 
-
+                    addNotificaitonToUser(widget.myUser!.email!, "You have succesfully bought a product.");
                     showAlertDialog("Purchase Succesfull" , "Your prdoduct will be delivered soon!");
 
                     setState(() {

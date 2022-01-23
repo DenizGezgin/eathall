@@ -245,7 +245,8 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
               //put comment to seller approve box
               addPendingComment(widget.sellerMail, commentData, final_rating, widget.index, widget.productKey, widget.buyerMail);
               //put comment to user comment box
-
+              addNotificaitonToUser(myBuyer!.email!, "You have made a comment or/and a rating to a product.");
+              addNotificaitonToUser(mySeller!.email!, "You have recieved a pending comment for you product.");
               Navigator.pop(context);
 
 

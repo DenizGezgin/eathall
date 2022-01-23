@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cs310_step3/utils/notificationClass.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -500,3 +501,36 @@ Future<void> makeUserEnabled(String userMail) async{
       .then((value) => print("this user has been enabled"))
       .catchError((error) => print("Failed to enable the user: $error"));
 }
+
+Future<void> addNotificaitonToUser(String userMail, String message) async{
+  //commentFields: USER + DATA + RATING + ISAPPROVED + USERMAIL
+  dynamic dateTimeNow = DateTime.now();
+  /*notification notif = notification();
+  notif.hour = dateTimeNow.hour.toString();
+  notif.date = dateTimeNow.day.toString() + "/" +  dateTimeNow.month.toString() + "/" + dateTimeNow.year.toString();
+  notif.msg = message;*/
+
+  Map<String, dynamic> myNotifications = {};
+
+  myNotifications["date"] = dateTimeNow.day.toString() + "/" +  dateTimeNow.month.toString() + "/" + dateTimeNow.year.toString();
+  myNotifications["hour"] = dateTimeNow.hour.toString() + ":" + dateTimeNow.minute.toString();
+  myNotifications["msg"] = message;
+  List<dynamic> newItem = [myNotifications];
+
+  return _collectionRef.doc(userMail)
+      .update({
+    "notifications": FieldValue.arrayUnion(newItem),
+  })
+      .then((value) => print("Notification added to list Updated"))
+      .catchError((error) => print("Failed to add the notification to list user: $error"));
+}
+
+Future<void> clearNotificationsList(String userMail) async{
+  return _collectionRef.doc(userMail)
+      .update({
+    "notifications": [],
+  })
+      .then((value) => print("notifications list has been cleared."))
+      .catchError((error) => print("Failed clear the notifications list: $error"));
+}
+
