@@ -242,7 +242,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                         subtitle: Row(
                           children: [
                             Text(
-                              "${myProductsOnSale[index].price!}" + "TL    ",
+                              "${myProductsOnSale[index].price!}" + " TL   ",
                             ),
                             Text(myProductsOnSale[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic))
                           ],
@@ -288,7 +288,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                           mySoldProducts[index].displayName!,
                         ),
                         subtitle: Text(
-                          "${mySoldProducts[index].price!}",
+                          "${mySoldProducts[index].price!} TL",
                         ),
                         trailing: Text(mySoldProducts[index].category!, style: TextStyle(color: AppColors.primary, fontStyle: FontStyle.italic )),
                       ),
