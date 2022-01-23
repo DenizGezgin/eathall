@@ -234,22 +234,24 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
               ],
             ),
             SizedBox(height: 50,),
-            OutlinedButton(onPressed: (){
+            OutlinedButton(onPressed: () async{
 
               //commentFields: USER + DATA + RATING + ISAPPROVED
               widget.formKey.currentState!.save();
 
               //update ratings
-              updateProductRating(widget.productKey, final_rating);
-              updateUserRating(widget.sellerMail, final_rating);
+              await updateProductRating(widget.productKey, final_rating);
+              await updateUserRating(widget.sellerMail, final_rating);
               //put comment to seller approve box
-              addPendingComment(widget.sellerMail, commentData, final_rating, widget.index, widget.productKey, widget.buyerMail);
+              await addPendingComment(widget.sellerMail, commentData, final_rating, widget.index, widget.productKey, widget.buyerMail);
               //put comment to user comment box
-              addNotificaitonToUser(myBuyer!.email!, "You have made a comment or/and a rating to a product.");
-              addNotificaitonToUser(mySeller!.email!, "You have recieved a pending comment for you product.");
+              await addNotificaitonToUser(widget.buyerMail, "You have made a comment or/and a rating to a product.");
+              await addNotificaitonToUser(widget.sellerMail, "You have recieved a pending comment for you product.");
               Navigator.pop(context);
 
+              setState(() {
 
+              });
             }, child: Text("Send", style: TextStyle(color: Colors.green))),
           ],
         ),

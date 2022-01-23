@@ -512,8 +512,21 @@ Future<void> addNotificaitonToUser(String userMail, String message) async{
 
   Map<String, dynamic> myNotifications = {};
 
+  late String min;
+  if(dateTimeNow.minute.toString() == "0" || dateTimeNow.minute.toString() == "1" ||dateTimeNow.minute.toString() == "2" ||
+      dateTimeNow.minute.toString() == "3" ||dateTimeNow.minute.toString() == "4" ||dateTimeNow.minute.toString() == "5" ||
+      dateTimeNow.minute.toString() == "6" ||dateTimeNow.minute.toString() == "7" ||dateTimeNow.minute.toString() == "8" ||
+      dateTimeNow.minute.toString() == "9"){
+    min = "0"+dateTimeNow.minute.toString();
+
+  }
+  else{
+    min = dateTimeNow.minute.toString();
+  }
+
+
   myNotifications["date"] = dateTimeNow.day.toString() + "/" +  dateTimeNow.month.toString() + "/" + dateTimeNow.year.toString();
-  myNotifications["hour"] = dateTimeNow.hour.toString() + ":" + dateTimeNow.minute.toString();
+  myNotifications["hour"] = dateTimeNow.hour.toString() + ":" + min;
   myNotifications["msg"] = message;
   List<dynamic> newItem = [myNotifications];
 
