@@ -49,6 +49,7 @@ class _pastPurcheseState extends State<pastPurchese> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(backgroundColor: AppColors.primary)
       ,
       body: SingleChildScrollView(
@@ -149,6 +150,7 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(backgroundColor: AppColors.primary,),
       body: Form(
         key: widget.formKey,

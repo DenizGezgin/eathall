@@ -126,7 +126,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
           key: formKey,
           child: Column(
             children: [
-              //burada foto degistirme olmalı storage vb
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -276,7 +276,7 @@ class  _EditProfilePageState extends State<EditProfilePage>{
 
                     onSaved: (value) {
                       if (value != null) {
-                        passUser = value; //burası eksik
+                        passUser = value;
                       }
                     },
                   ),
