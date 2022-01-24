@@ -3,6 +3,7 @@ import 'package:cs310_step3/utils/notificationClass.dart';
 import 'package:cs310_step3/utils/productClass.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 class UserFirebase
 {
   final String? email;
@@ -23,6 +24,7 @@ class UserFirebase
   final bool? disabled;
   final double? averageRating;
   final int? numberOfRatings;
+  //late final Position? position;
 
 
   UserFirebase({this.numberOfRatings, this.prev_sales, this.notifications, this.photoUrl, this.email, this.name, this.surname, this.adress, this.comments, this.bookmarks, this.credit_cards, this.shopping_card, this.bought_products, this.products_onsale, this.comment_approves, this.disabled, this.averageRating});
@@ -49,6 +51,7 @@ Future<void> updateSoldProducts(String userMail, String productKey) async{
       .then((value) => print("User Updated"))
       .catchError((error) => print("Failed to update user: $error"));
 }
+
 
 Future<void> updateBoughtProducts(String userMail, String productKey) async{
   List<dynamic> newItem = [productKey];

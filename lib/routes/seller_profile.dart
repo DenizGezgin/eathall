@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 import '/utils/color.dart';
 import '/utils/styles.dart';
 import 'package:cs310_step3/utils/styles.dart';
-
 import 'login_page.dart';
 
 
@@ -60,6 +59,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
     }
     return myPostsPrev;
   }
+
 
   Future<List<Product>> getSoldProducts() async {
     List<Product> myPostsPrev = [];
@@ -321,6 +321,7 @@ class  _SellerProfilePageState extends State<SellerProfilePage> {
                   ),
                 ),
               ),
+
             ],
           ),
         ),

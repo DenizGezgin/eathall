@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/addProduct.dart';
+import 'package:cs310_step3/routes/anonMockPaymentPage.dart';
 import 'package:cs310_step3/routes/mockPaymentPage.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/redirection_page.dart';
@@ -169,12 +170,21 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
             OutlinedButton(
                 onPressed: () {
 
+                  if(widget.myUser == null){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => anonMockPaymentPage()
+                        ));
+                  }else{
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MockPaymentPage(myUser: widget.myUser,)
+                        ));
+                  }
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MockPaymentPage(myUser: widget.myUser,)
-                      ));
+
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
