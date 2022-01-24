@@ -129,7 +129,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.primary,/*
           leading: IconButton(
             onPressed: () {
               auth.signOut();
@@ -154,7 +154,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
               },
               icon: Icon(Icons.add_alert),
             ),
-          ]
+          ]*/
       ),
       body: Form(
         key: formKey,
@@ -390,7 +390,7 @@ class _ProductEditingPageState extends State<ProductEditingPage> {
 
 
                   if(isChanged){
-                    addNotificaitonToUser(widget.myUser!.email!, "you have edited you product succesfully.");
+                    addNotificaitonToUser(widget.myUser!.email!, "You have edited your product successfully.");
                     showAlertDialog("Success", "Your changes have been saved successfully.");
                   }
 

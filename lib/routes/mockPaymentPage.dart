@@ -388,7 +388,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
               SizedBox(height: 16,),
 
               OutlinedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
                     print(namec + " " + cardno.toString() + " " + date + " " + security.toString());
@@ -403,14 +403,15 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     //product key = foodnname+username + " " + usersurname
                     for (Product prod in myPosts){
                       String productKey = prod.name! + prod.seller!;
-                      addBoughtProd(widget.myUser!.email!, productKey);
-                      updatePrevSales(prod.sellerMail!, productKey);
-                       //ZORRRRRRRRRTTTTTTTTTTTTTTTTTTT
-                    }
-                    cleanCart(widget.myUser!.email!);
+                      await addBoughtProd(widget.myUser!.email!, productKey);
+                      await updatePrevSales(prod.sellerMail!, productKey);
+                      await addNotificaitonToUser(prod.sellerMail!, "Your product has been bought by a user.");
 
-                    addNotificaitonToUser(widget.myUser!.email!, "You have succesfully bought a product.");
-                    showAlertDialog("Purchase Succesfull" , "Your prdoduct will be delivered soon!");
+                    }
+                    await cleanCart(widget.myUser!.email!);
+
+                    await addNotificaitonToUser(widget.myUser!.email!, "You have made a purchase successfully.");
+                    await showAlertDialog("Purchase Successful" , "Your prdoduct/products will be delivered soon!");
 
                     setState(() {
                       asyncMethod();
@@ -433,7 +434,7 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => FeedView()
+                          builder: (context) => FeedView(myUser: widget.myUser!)
                       )
                   );
                 },

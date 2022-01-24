@@ -361,8 +361,8 @@ class  _EditProfilePageState extends State<EditProfilePage>{
                     setState((){
                     });
                     if(isChanged){
-                      addNotificaitonToUser(widget.myUser!.email!, "You have edited your profile succesfully.");
-                      showAlertDialog("Success", "Your changes have been saved successfully. PLease login again to see your changes.");
+                      await addNotificaitonToUser(widget.myUser!.email!, "You have edited your profile successfully.");
+                      await showAlertDialog("Success", "Your changes have been saved successfully. Please login again to see your changes.");
                       auth.signOut();
                       Navigator.pushNamed(context, "/Welcome");
                     }

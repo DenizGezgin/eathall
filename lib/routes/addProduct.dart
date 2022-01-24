@@ -320,16 +320,17 @@ class _addProductPageState extends State<addProductPage> {
                       Expanded(
                         flex: 1,
                         child: OutlinedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             if (widget.formKey.currentState!.validate() && _image != null) {
                               widget.formKey.currentState!.save();
                               print(namec + " " + category + " " + seller + " " + price.toString() + " " + description + " " + photoUrl);
-                              addProduct(namec, category, (widget.myUser!.name! + " " + widget.myUser!.surname!), price, description, photoUrl, widget.myUser!.email!);
+                              await addProduct(namec, category, (widget.myUser!.name! + " " + widget.myUser!.surname!), price, description, photoUrl, widget.myUser!.email!);
                               widget.formKey.currentState!.reset();
                               _image = null;
                               String productKey = namec + widget.myUser!.name! + " " + widget.myUser!.surname!;
-                              updateSoldProducts(widget.myUser!.email!, productKey);
-                              showAlertDialog("Upload Sucsefull" , "Your prdoduct is added!");
+                              await updateSoldProducts(widget.myUser!.email!, productKey);
+                              await addNotificaitonToUser(widget.myUser!.email!, "You have successfully added a product. Now your product is visible to other users.");
+                              await showAlertDialog("Upload Successful" , "Your product is added!");
                               setState(() {});
                             }
                             else {

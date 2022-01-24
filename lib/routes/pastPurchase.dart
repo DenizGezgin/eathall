@@ -51,66 +51,68 @@ class _pastPurcheseState extends State<pastPurchese> {
     return Scaffold(
       appBar: AppBar(backgroundColor: AppColors.primary)
       ,
-      body: Column(
-        children: [
-          Row(
-            children: [
-              IconButton(onPressed: (){
-                asyncMethod();
-                print(myPosts.length);
-              }, icon: Icon(Icons.refresh, color: AppColors.primary,))
-            ],
-          ),
-          SingleChildScrollView(
-              child:  ListView.builder(
-                  itemCount: myPosts.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      semanticContainer: true,
-                      elevation: 2,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: ListTile(
-                        title: Text(
-                          myPosts[index].name!,
-                        ),
-                        subtitle: Text(
-                          "${myPosts[index].seller!}",
-                        ),
-                        leading: Image.network(myPosts[index].photoUrl!,fit: BoxFit.fill,),
-                        trailing: myUser!.bought_products![index]["isAlreadyRated"] ? RatingBarIndicator( //-0000.1
-                          rating: myPosts[index].rating!,
-                          itemBuilder: (context, index) => Icon(
-                            Icons.star_rate_outlined,
-                            color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                IconButton(onPressed: (){
+                  asyncMethod();
+                  print(myPosts.length);
+                }, icon: Icon(Icons.refresh, color: AppColors.primary,))
+              ],
+            ),
+            SingleChildScrollView(
+                child:  ListView.builder(
+                    itemCount: myPosts.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        semanticContainer: true,
+                        elevation: 2,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: ListTile(
+                          title: Text(
+                            myPosts[index].name!,
                           ),
-                          itemCount: 5,
-                          itemSize: 20.0,
-                          direction: Axis.horizontal,
-                        ) : FlatButton(onPressed: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RateOnItemPage(productKey:  myUser!.bought_products![index]["productKey"],
-                                                                      buyerMail: widget.userMail,
-                                                                        sellerMail:myPosts[index].sellerMail!, url:myPosts[index].photoUrl!, productName:myPosts[index].name!, seller:myPosts[index].seller! , index: index),
-                              ));
+                          subtitle: Text(
+                            "${myPosts[index].seller!}",
+                          ),
+                          leading: Image.network(myPosts[index].photoUrl!,fit: BoxFit.fill,),
+                          trailing: myUser!.bought_products![index]["isAlreadyRated"] ? RatingBarIndicator( //-0000.1
+                            rating: myPosts[index].rating!,
+                            itemBuilder: (context, index) => Icon(
+                              Icons.star_rate_outlined,
+                              color: Colors.amber,
+                            ),
+                            itemCount: 5,
+                            itemSize: 20.0,
+                            direction: Axis.horizontal,
+                          ) : FlatButton(onPressed: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RateOnItemPage(productKey:  myUser!.bought_products![index]["productKey"],
+                                                                        buyerMail: widget.userMail,
+                                                                          sellerMail:myPosts[index].sellerMail!, url:myPosts[index].photoUrl!, productName:myPosts[index].name!, seller:myPosts[index].seller! , index: index),
+                                ));
 
-                        }, child: Container(
-                            child: Text("Rate and\nComment", textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color:AppColors.purchaseAndAdd,
-                                )),
-                          padding: const EdgeInsets.only(left:3, right:3),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.purchaseAndAdd),
-                          ),
-                        ),),
-                      ),
-                    );
-                  })
-          ),
-        ]
+                          }, child: Container(
+                              child: Text("Rate and\nComment", textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color:AppColors.purchaseAndAdd,
+                                  )),
+                            padding: const EdgeInsets.only(left:3, right:3),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.purchaseAndAdd),
+                            ),
+                          ),),
+                        ),
+                      );
+                    })
+            ),
+          ]
+        ),
       ),
     );
   }
@@ -246,7 +248,7 @@ class _RateOnItemPageState extends State<RateOnItemPage> {
               await addPendingComment(widget.sellerMail, commentData, final_rating, widget.index, widget.productKey, widget.buyerMail);
               //put comment to user comment box
               await addNotificaitonToUser(widget.buyerMail, "You have made a comment or/and a rating to a product.");
-              await addNotificaitonToUser(widget.sellerMail, "You have recieved a pending comment for you product.");
+              await addNotificaitonToUser(widget.sellerMail, "You have recieved a pending comment for your product.");
               Navigator.pop(context);
 
               setState(() {

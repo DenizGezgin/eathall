@@ -123,9 +123,9 @@ class _ApproveCommentsState extends State<ApproveComments> {
                             leading: IconButton(onPressed: (){
                               addAprrovedComment(myPosts[index]["userMail"],myPosts[index], index);
                               addCommentProduct(myPosts[index]["productKey"], myPosts[index]);
-                              addNotificaitonToUser(myUser!.email!, "You have approved a comment succesfully.");
+                              addNotificaitonToUser(myUser!.email!, "You have approved a comment successfully.");
                               addNotificaitonToUser(myPosts[index]["userMail"], "Your comment is approved by the seller.");
-                              showAlertDialog("Success", "You have approved this comment succesfully.");
+                              showAlertDialog("Success", "You have approved this comment successfully.");
                             }, icon: Icon(Icons.check_box, color: AppColors.purchaseAndAdd, )),
                             trailing: RatingBarIndicator(
                               rating: myPosts[index]["rating"],
