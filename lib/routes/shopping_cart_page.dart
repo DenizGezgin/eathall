@@ -26,10 +26,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingCartPage extends StatefulWidget {
+
+
   @override
   State<ShoppingCartPage> createState() => _ShoppingCartPageState();
-  ShoppingCartPage({Key? key, this.myUser}) : super(key: key);
+  ShoppingCartPage({Key? key, this.myUser, }) : super(key: key);
   UserFirebase? myUser;
+
 }
 
 
@@ -82,11 +85,32 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
 
   double total = 0;
 
-  double getTotal(double total){
+  String getTotal(double total){
     for(Product prod in myPosts){
       total += prod!.price!.toDouble();
     }
-    return total!;
+
+    late String toReturn;
+
+
+    if(total >= 100){
+      total = total*80/100;
+      toReturn = total.toString() + "\nwith 20% off for minimum 100Tl purchases";
+    }
+    else if(total>= 75){
+      total = total*85/100;
+      toReturn = total.toString() + "\nwith 15% off for minimum 75TL purchases";
+    }
+    else if(total>= 50){
+      total = total*90/100;
+      toReturn = total.toString() + "\nwith 10% off for minimum 50TL purchases";
+    }
+    else{
+      total = total*95/100;
+      toReturn = total.toString() + "\nwith 5% off for all products";
+    }
+
+    return toReturn;
   }
 
 
@@ -95,10 +119,10 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         color: Colors.blue,
-        child: Text("Total Price: ${getTotal(0).toString()}", textAlign: TextAlign.center, style: TextStyle(
+        child: Text("Total Price: ${getTotal(0)}", textAlign: TextAlign.center, style: TextStyle(
           fontFamily: 'Sansita_Swashed',
           color: Colors.white,
-          fontSize: 30,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           letterSpacing: -0.7,
         ),
@@ -168,7 +192,6 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
 
             OutlinedButton(
                 onPressed: () {
-
 
                   Navigator.push(
                       context,

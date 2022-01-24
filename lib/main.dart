@@ -55,7 +55,6 @@ class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
 
   bool isLoggedIn = false;
-
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 

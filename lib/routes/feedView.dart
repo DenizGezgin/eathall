@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cs310_step3/routes/addProduct.dart';
+import 'package:cs310_step3/routes/discount_page.dart';
 import 'package:cs310_step3/routes/notifications_page.dart';
 import 'package:cs310_step3/routes/profile_page.dart';
 import 'package:cs310_step3/routes/redirection_page.dart';
@@ -24,6 +25,7 @@ List<Widget> createNavBar(UserFirebase? user)
 {
   if(user == null)
   {
+
     return <Widget>
     [
 
@@ -50,6 +52,7 @@ List<Widget> createNavBar(UserFirebase? user)
     {
       myUserGlobal = user;
     }
+
     return <Widget>
     [
 
@@ -248,9 +251,18 @@ class _MainFeedViewState extends State<MainFeedView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(16),
-                    child: ClipRect(
-                      child: Image.asset("assets/images/add_banner.png", fit: BoxFit.fill, height: 110, width: 330,),
+                    padding: EdgeInsets.all(8),
+                    child: OutlinedButton(
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DiscountsPage(myUser: myUserGlobal)
+                              )
+                          );
+                        },
+                        child: ClipRect(
+                          child: Image.asset("assets/images/discounts_special_offers.png", fit: BoxFit.fill, height: 110, width: 300,),),
                     ),
                   ),
                 ],
