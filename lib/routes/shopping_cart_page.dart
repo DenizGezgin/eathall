@@ -55,6 +55,7 @@ class  _ShoppingCartPageState extends State<ShoppingCartPage>{
 
   }
 
+
   Future<List<Product>> getPosts() async {
     List<Product> myPostsPrev = [];
     widget.myUser = await getUserWithMail(widget.myUser!.email!);

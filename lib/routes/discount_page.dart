@@ -132,6 +132,7 @@ class  _DiscountsPageState extends State<DiscountsPage>{
                       ),
                       child: Text("Apply\nDiscount")),*/
                 ],
+
               ),
               Row(
                 children: [

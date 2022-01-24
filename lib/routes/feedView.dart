@@ -266,6 +266,7 @@ class _MainFeedViewState extends State<MainFeedView> {
                     ),
                   ),
                 ],
+
               ),
 
               Text("Products", style: loginSignupOrContinueSmallTextStyleBlack,),
