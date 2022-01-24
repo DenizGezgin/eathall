@@ -16,7 +16,7 @@ class _RedirectionPageState extends State<RedirectionPage>{
     return Scaffold(
       backgroundColor: AppColors.loginToContinueBackGround,
       body: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
+
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(

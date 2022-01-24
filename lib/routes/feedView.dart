@@ -96,8 +96,6 @@ class _FeedViewState extends State<FeedView> {
     CollectionReference _collectionRef = FirebaseFirestore.instance.collection('products');
 
     Product sa;
-   //List<Product> allProducts = await getAllData();
-  // print(allProducts[1].seller);
 
 
     return Scaffold(

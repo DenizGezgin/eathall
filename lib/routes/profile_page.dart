@@ -331,29 +331,7 @@ class  _ProfilePageState extends State<ProfilePage>{
                        )
                    ),
                  ),
-                 /*Container(
-                   height: 60,
-                   width: 400,
-                   color: Colors.white,
 
-                   child: OutlinedButton(
-                     onPressed: () {
-                       Navigator.push(
-                           context,
-                           MaterialPageRoute(
-                             builder: (context) => SettingsPage(myUser: widget.myUser!),
-                           ));
-                     },
-                     child: Row(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Icon(Icons.settings, color: Colors.black),
-                         Text(" Settings",
-                             style: loginSignupOrContinueSmallTextStyleBlack),
-                       ],
-                     ),
-                   ),
-                 ),*/
                ],
              ),
            ),

@@ -416,13 +416,6 @@ class _MockPaymentPageState extends State<MockPaymentPage> {
                     print(namec + " " + cardno.toString() + " " + date + " " + security.toString());
                     widget.formKey.currentState!.reset();
 
-                    //String productKey = namec + widget.myUser!.name! + " " + widget.myUser!.surname!;
-                    //updateSoldProducts(widget.myUser!.email!, productKey);
-
-
-                    // PAST PURCHASE A EKLE
-                    // SATICININ SATIŞLARINA EKLENECEK
-                    //product key = foodnname+username + " " + usersurname
                     for (Product prod in myPosts){
                       String productKey = prod.name! + prod.seller!;
                       await addBoughtProd(widget.myUser!.email!, productKey);

@@ -181,164 +181,12 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
             ],
           ),
         ),
-       /* bottomNavigationBar:  TextButton(
-            onPressed: (){
 
-            },
-
-            child: Text("Delete all notifications", style: TextStyle(color: Colors.black)),
-            style: TextButton.styleFrom(
-            backgroundColor: Colors.grey,),
-          ),*/
-
-
-        /*SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IconButton(onPressed: (){
-                        showAlertDialog("Notification Heading", "Notification Description");
-                      },
-                          icon: Icon(Icons.notifications, size: 25, color: Colors.grey)),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              message(),
-                              timeAndDate(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-              ),Divider(
-                color: AppColors.primary,
-                thickness: 0.5,
-              ),
-
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IconButton(onPressed: (){
-                        showAlertDialog("Notification Heading", "Notification Description");
-                      },
-                          icon: Icon(Icons.notifications, size: 25, color: Colors.grey)),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              message(),
-                              timeAndDate(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-              ),Divider(
-                color: AppColors.primary,
-                thickness: 0.5,
-              ),
-
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IconButton(onPressed: (){
-                        showAlertDialog("Notification Heading", "Notification Description");
-                      },
-                          icon: Icon(Icons.notifications, size: 25, color: Colors.grey)),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              message(),
-                              timeAndDate(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-              ),
-              Divider(
-                color: AppColors.primary,
-                thickness: 0.5,
-              ),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IconButton(onPressed: (){
-                        showAlertDialog("Notification Heading", "Notification Description");
-                      },
-                          icon: Icon(Icons.notifications, size: 25, color: Colors.grey)),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              message(),
-                              timeAndDate(),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-              ),
-              Divider(
-                color: AppColors.primary,
-                thickness: 0.5,
-              ),
-            ],
-          )
-      ),
-
-       */
       );
     }
     else {
       return RedirectionPage();
-      /*Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: AppBar(
-            backgroundColor: AppColors.primary,
-            centerTitle: true,
-            title: Text("Eathall", textAlign: TextAlign.center, style: TextStyle(
-              fontFamily: 'Sansita_Swashed',
-              color: Colors.white,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              letterSpacing: -0.7,
-            ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                onPressed:(){
-                  Navigator.pushNamed(context, "/notificationsPage");
-                },
-                icon: Icon(Icons.add_alert),
-              ),
-            ]
-        ),
-      );*/
+
     }
   }
 
@@ -410,11 +258,6 @@ class _NotificaitonsPageState extends State<NotificationsPage>{
 
 }
 
-/*
-void addNotification(List<notification> entries, notification notif) {
-  entries.add(notif);
-}
- */
 
 Widget displayNotifications(List<notification> entries){
   return ListView.separated(
