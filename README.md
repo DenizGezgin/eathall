@@ -1,16 +1,20 @@
-# cs310_step3
+# eathall
 
-A new Flutter project.
+A mobile application developed with Dart, Firebase, and Flutter that enables households to sell food and people to buy it.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Sell food items: Households can add food items for sale and set their prices.
+- Search and browse items: Buyers can search for items by category or tag, and browse through a list of available items.
+- Add items to cart: Buyers can add items to their cart for purchase.
+- Recommendation system: Based on user data, eathall provides personalized recommendations for items to purchase.
 
-A few resources to get you started if this is your first Flutter project:
+## Getting started
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+To get started with eathall, follow these steps:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Install Flutter: Follow the instructions at [flutter.dev](https://flutter.dev/docs/get-started/install) to install Flutter on your development machine.
+2. Clone the repository: `git clone https://github.com/DenizGezgin/eathall.git`
+3. Navigate to the project directory: `cd eathall`
+4. Install dependencies: `flutter pub get`
+5. Run the app: `flutter run`
