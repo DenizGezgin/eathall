@@ -1,4 +1,4 @@
-# eathall
+# Eathall
 
 A mobile application developed with Dart, Firebase, and Flutter that enables households to sell food and people to buy it.
 
